@@ -2,25 +2,7 @@
 
 #include <iostream>
 
-class Cat : public TestBase, RegisteredInFactory<Cat>
+TEST(Toto)
 {
-public:
-    Cat()
-    {
-        FACTORY_INIT;
-        std::cout << "Constructing Cat..." << std::endl;
-    }
-    
-    ~Cat() { }
-
-    static TestBase* CreateInstance()
-    {
-        return new Cat();
-    }
-    
-    void Run() override
-    {
-        std::cout << "Testing Cat..." << std::endl;
-    }
-};
-
+    std::cout << "Testing..." << std::endl;
+}
