@@ -1,6 +1,8 @@
 #include "testCore/factory.hpp"
 #include "testCore/testBase.hpp"
 
+#include <iostream>
+
 
 #define TEST(_TEST_NAME_)                                                   \
 void test_##_TEST_NAME_();                                                  \
