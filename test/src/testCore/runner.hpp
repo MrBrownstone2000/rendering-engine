@@ -1,12 +1,16 @@
 #ifndef __RUNNER_HPP__
 #define __RUNNER_HPP__
 
-#include "testCore/factory.hpp"
-#include "testCore/base.hpp"
+#include <functional>
+#include <string>
 
 namespace test
 {
-    void TestAll();
+    // Run all tests from all modules
+    void Run();
+
+    // Run a test from a module
+    void RunIndividualTest(const std::string& module, const std::string& name, std::function<void()> testFunction);
 }
 
 #endif

@@ -3,6 +3,7 @@
 
 #include "testCore/factory.hpp"
 #include "testCore/base.hpp"
+#include "testCore/runner.hpp"
 
 #include <iostream>
 #include <string>
@@ -19,7 +20,7 @@ class _TEST_NAME_ : public test::TestBase, test::RegisteredInFactory<_TEST_MODUL
 public:                                                                     \
     _TEST_NAME_()                                                           \
     {                                                                       \
-        FACTORY_INIT;                                                       \
+        TEST_FACTORY_INIT;                                                  \
     }                                                                       \
                                                                             \
     static TestBase* CreateInstance()                                       \
@@ -29,9 +30,7 @@ public:                                                                     \
                                                                             \
     void Run() override                                                     \
     {                                                                       \
-        std::cout << "Running " << #_TEST_NAME_ << std::endl;               \
-        std::cout << "From module " << _TEST_MODULE_ << std::endl;               \
-        test_##_TEST_NAME_();                                               \
+        test::RunIndividualTest(_TEST_MODULE_, #_TEST_NAME_, test_##_TEST_NAME_);\
     }                                                                       \
 };                                                                          \
                                                                             \
