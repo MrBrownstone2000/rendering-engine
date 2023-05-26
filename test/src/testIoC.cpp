@@ -37,89 +37,92 @@ struct Dependant
 
 using namespace engine;
 
-TEST(IoC_PolymorphicResolve)
+TEST_MODULE(IoC)
 {
-    // Init test method
-    std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
-
-    pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
-    assert(69 == pIoC->Resolve<Base>()->test());
-}
-
-TEST(IoC_SimpleResolveFailure)
-{
-    // Init test method
-    std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
-
-    bool hasException = false;
-    try
+    TEST(PolymorphicResolve)
     {
-        pIoC->Resolve<Base>()->test();
+        // Init test method
+        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+
+        pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
+        assert(69 == pIoC->Resolve<Base>()->test());
     }
-    catch(std::runtime_error&)
+
+    TEST(SimpleResolveFailure)
     {
-        hasException = true;
+        // Init test method
+        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+
+        bool hasException = false;
+        try
+        {
+            pIoC->Resolve<Base>()->test();
+        }
+        catch(std::runtime_error&)
+        {
+            hasException = true;
+        }
+        assert(hasException);
     }
-    assert(hasException);
-}
 
-TEST(IoC_ParameterizedResolve)
-{
-    // Init test method
-    std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+    TEST(ParameterizedResolve)
+    {
+        // Init test method
+        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
 
-    pIoC->Register<ParameterizedClass>([](ParameterizedClass::IocParams p){
-        return std::make_shared<ParameterizedClass>(std::move(p));
-    });
-    assert(pIoC->Resolve<ParameterizedClass>({"toto"})->s == "toto");
-}
+        pIoC->Register<ParameterizedClass>([](ParameterizedClass::IocParams p){
+            return std::make_shared<ParameterizedClass>(std::move(p));
+        });
+        assert(pIoC->Resolve<ParameterizedClass>({"toto"})->s == "toto");
+    }
 
-TEST(IoC_CascadedResolve)
-{
-    // Init test method
-    std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+    TEST(CascadedResolve)
+    {
+        // Init test method
+        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
 
-    pIoC->Register<Dependant>([=] {
-        return std::make_shared<Dependant>(pIoC->Resolve<Base>());
-    });
-    pIoC->Register<Base>([] { return std::make_shared<Base>(); });
-    assert(42 == pIoC->Resolve<Base>()->test());
-}
+        pIoC->Register<Dependant>([=] {
+            return std::make_shared<Dependant>(pIoC->Resolve<Base>());
+        });
+        pIoC->Register<Base>([] { return std::make_shared<Base>(); });
+        assert(42 == pIoC->Resolve<Base>()->test());
+    }
 
-TEST(IoC_IndependantResolve)
-{
-    // Init test method
-    std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+    TEST(IndependantResolve)
+    {
+        // Init test method
+        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
 
-    pIoC->Register<ParameterizedClass>([](ParameterizedClass::IocParams p){
-        return std::make_shared<ParameterizedClass>(std::move(p));
-    });
+        pIoC->Register<ParameterizedClass>([](ParameterizedClass::IocParams p){
+            return std::make_shared<ParameterizedClass>(std::move(p));
+        });
 
-    auto pFirst = pIoC->Resolve<ParameterizedClass>({ .s = "first" });
-    auto pSecond = pIoC->Resolve<ParameterizedClass>({ .s = "second" });
+        auto pFirst = pIoC->Resolve<ParameterizedClass>({ .s = "first" });
+        auto pSecond = pIoC->Resolve<ParameterizedClass>({ .s = "second" });
 
-    assert(pFirst->s == "first");
-    assert(pSecond->s == "second");
+        assert(pFirst->s == "first");
+        assert(pSecond->s == "second");
 
-    pFirst->s = "toto";
+        pFirst->s = "toto";
 
-    assert(pFirst->s == "toto");
-    assert(pSecond->s == "second");
-}
+        assert(pFirst->s == "toto");
+        assert(pSecond->s == "second");
+    }
 
-TEST(IoC_ReplacementInjection)
-{
-    // Init test method
-    std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+    TEST(ReplacementInjection)
+    {
+        // Init test method
+        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
 
-    pIoC->Register<Dependant>([=] {
-        return std::make_shared<Dependant>(pIoC->Resolve<Base>());
-    });
-    pIoC->Register<Base>([] { return std::make_shared<Base>(); });
+        pIoC->Register<Dependant>([=] {
+            return std::make_shared<Dependant>(pIoC->Resolve<Base>());
+        });
+        pIoC->Register<Base>([] { return std::make_shared<Base>(); });
 
-    assert(42 == pIoC->Resolve<Base>()->test());
+        assert(42 == pIoC->Resolve<Base>()->test());
 
-    pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
+        pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
 
-    assert(69 == pIoC->Resolve<Base>()->test());
+        assert(69 == pIoC->Resolve<Base>()->test());
+    }
 }

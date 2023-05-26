@@ -38,60 +38,63 @@ struct Dependant
 
 using namespace engine;
 
-TEST(Sing_PolymorphicResolveDirect)
+TEST_MODULE(Singletons)
 {
-    // Init test method
-    std::shared_ptr<ioc::Singletons> pSing = std::make_unique<ioc::Singletons>();
-
-    pSing->Register<Base>([] { return std::make_shared<Derived>(); });
-    assert(69 == pSing->Resolve<Base>()->test());
-}
-
-TEST(Sing_PolymorphicResolveIndirect)
-{
-    // Init test method
-    std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
-    std::shared_ptr<ioc::Singletons> pSing = std::make_unique<ioc::Singletons>();
-
-    pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
-    pSing->Register<Base>([=] { return pIoC->Resolve<Base>(); });
-    assert(69 == pSing->Resolve<Base>()->test());
-}
-
-TEST(Sing_SimpleResolveFailure)
-{
-    // Init test method
-    std::shared_ptr<ioc::Singletons> pSing = std::make_unique<ioc::Singletons>();
-
-    bool hasException = false;
-    try
+    TEST(PolymorphicResolveDirect)
     {
-        pSing->Resolve<Base>()->test();
+        // Init test method
+        std::shared_ptr<ioc::Singletons> pSing = std::make_unique<ioc::Singletons>();
+
+        pSing->Register<Base>([] { return std::make_shared<Derived>(); });
+        assert(69 == pSing->Resolve<Base>()->test());
     }
-    catch(std::runtime_error&)
+
+    TEST(PolymorphicResolveIndirect)
     {
-        hasException = true;
+        // Init test method
+        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+        std::shared_ptr<ioc::Singletons> pSing = std::make_unique<ioc::Singletons>();
+
+        pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
+        pSing->Register<Base>([=] { return pIoC->Resolve<Base>(); });
+        assert(69 == pSing->Resolve<Base>()->test());
     }
-    assert(hasException);
-}
 
-TEST(Sing_DependantResolve)
-{
-    // Init test method
-    std::shared_ptr<ioc::Singletons> pSing = std::make_unique<ioc::Singletons>();
+    TEST(SimpleResolveFailure)
+    {
+        // Init test method
+        std::shared_ptr<ioc::Singletons> pSing = std::make_unique<ioc::Singletons>();
 
-    pSing->Register<ParameterizedClass>([](){
-        return std::make_shared<ParameterizedClass>(ParameterizedClass::IocParams{ .s = "first" });
-    });
+        bool hasException = false;
+        try
+        {
+            pSing->Resolve<Base>()->test();
+        }
+        catch(std::runtime_error&)
+        {
+            hasException = true;
+        }
+        assert(hasException);
+    }
 
-    auto pFirst = pSing->Resolve<ParameterizedClass>();
-    auto pSecond = pSing->Resolve<ParameterizedClass>();
+    TEST(DependantResolve)
+    {
+        // Init test method
+        std::shared_ptr<ioc::Singletons> pSing = std::make_unique<ioc::Singletons>();
 
-    assert(pFirst->s == "first");
-    assert(pSecond->s == "first");
+        pSing->Register<ParameterizedClass>([](){
+            return std::make_shared<ParameterizedClass>(ParameterizedClass::IocParams{ .s = "first" });
+        });
 
-    pFirst->s = "second";
+        auto pFirst = pSing->Resolve<ParameterizedClass>();
+        auto pSecond = pSing->Resolve<ParameterizedClass>();
 
-    assert(pFirst->s == "second");
-    assert(pSecond->s == "second");
+        assert(pFirst->s == "first");
+        assert(pSecond->s == "first");
+
+        pFirst->s = "second";
+
+        assert(pFirst->s == "second");
+        assert(pSecond->s == "second");
+    }
 }

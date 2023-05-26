@@ -4,7 +4,9 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <map>
 #include <cassert>
+#include <iostream>
 
 // Basic auto registering factory framework
 // Inspired by https://github.com/gsuberland/autoregistering-cpp-factory
@@ -13,6 +15,7 @@ class TestBase;
 
 // Cannot use std::function, because it has no operator==...
 using Generator = TestBase*(*)();
+using Map = std::map<std::string, std::vector<Generator>>;
 
 // Static Factory, responsible for storing Test Classes creation functions
 class TestFactory
@@ -20,44 +23,37 @@ class TestFactory
 public:
     TestFactory() = delete;
 
-    static bool Register(Generator gen)
+    static bool Register(Generator gen, const std::string& module)
     {
-        auto it = std::find(GetGenerator().begin(), GetGenerator().end(), gen);
-        if (it == GetGenerator().end())
+        auto& generators = GetModules()[module];
+
+        auto it = std::find(generators.begin(), generators.end(), gen);
+        if (it == generators.end())
         {
-            GetGenerator().push_back(gen);
+            generators.push_back(gen);
             return true;
         }
         return false;
     }
 
-    static TestBase* Create(size_t index)
+    static Map& GetModules()
     {
-        assert(index < GetGenerator().size());
-        return GetGenerator()[index]();
-    }
-
-    static size_t GetCount() { return GetGenerator().size(); }
-    
-private:
-    static std::vector<Generator>& GetGenerator()
-    {
-        static std::vector<Generator> generators;
-        return generators;
+        static Map modules;
+        return modules;
     }
 };
 
 // Makes it possible to register the Test Class, using CRTP
-template <class CTest> // CTest is derived from TestsBasec
+template <const char* Module, class CTest> // CTest is derived from TestsBasec
 class RegisteredInFactory
 {
 protected:
     static bool _FACTORY_INIT;
 };
 
-template<class CTest>
-bool RegisteredInFactory<CTest>::_FACTORY_INIT =
-    TestFactory::Register(CTest::CreateInstance);
+template<const char* Module, class CTest>
+bool RegisteredInFactory<Module, CTest>::_FACTORY_INIT =
+    TestFactory::Register(CTest::CreateInstance, Module);
 
 // Access _FACTORY_INIT in Test Class constructor
 // => runs Factory::Register()
