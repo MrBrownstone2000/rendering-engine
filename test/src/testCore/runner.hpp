@@ -4,6 +4,9 @@
 #include "testCore/factory.hpp"
 #include "testCore/base.hpp"
 
-void TestAll();
+namespace test
+{
+    void TestAll();
+}
 
 #endif

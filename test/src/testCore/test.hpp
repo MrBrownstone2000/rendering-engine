@@ -14,7 +14,7 @@ namespace                                                                   \
 
 #define TEST(_TEST_NAME_)                                                   \
 void test_##_TEST_NAME_();                                                  \
-class _TEST_NAME_ : public TestBase, RegisteredInFactory<_TEST_MODULE_, _TEST_NAME_>       \
+class _TEST_NAME_ : public test::TestBase, test::RegisteredInFactory<_TEST_MODULE_, _TEST_NAME_>       \
 {                                                                           \
 public:                                                                     \
     _TEST_NAME_()                                                           \

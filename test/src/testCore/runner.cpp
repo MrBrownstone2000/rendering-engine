@@ -1,15 +1,18 @@
 #include "runner.hpp"
 
-void TestAll()
+namespace test
 {
-    for (const auto& m : TestFactory::GetModules())
+    void TestAll()
     {
-        std::cout << "Module: " << m.first << std::endl;
-        for (auto gen : m.second)
+        for (const auto& m : TestFactory::GetModules())
         {
-            TestBase* test = gen();
-            test->Run();
-            delete test;
+            std::cout << "Module: " << m.first << std::endl;
+            for (auto gen : m.second)
+            {
+                TestBase* test = gen();
+                test->Run();
+                delete test;
+            }
         }
     }
 }

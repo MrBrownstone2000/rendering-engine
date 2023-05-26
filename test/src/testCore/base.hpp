@@ -1,14 +1,17 @@
 #ifndef __TESTBASE_HPP__
 #define __TESTBASE_HPP__
 
-class TestBase
+namespace test
 {
-protected:
-	TestBase() = default;
-public:
-    virtual ~TestBase() = default;
-    virtual void Run() = 0;
-};
+    class TestBase
+    {
+    protected:
+        TestBase() = default;
+    public:
+        virtual ~TestBase() = default;
+        virtual void Run() = 0;
+    };
+}
 
 #endif
 

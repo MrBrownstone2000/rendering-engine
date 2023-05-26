@@ -5,6 +5,6 @@
 int main()
 {
     std::cout << "Running tests..." << std::endl;
-    TestAll();
+    test::TestAll();
     return 0;
 }
