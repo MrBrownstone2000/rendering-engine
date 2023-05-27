@@ -7,7 +7,7 @@ target = debug
 CFLAGS = -std=gnu++2b -I$(SRC)
 
 ifeq ($(target), debug)
-  CFLAGS += -g -Wall -Wextra -Wshadow
+  CFLAGS += -g -Wall -Wextra
   OBJ = obj/debug
 else ifeq ($(target), release)
   CFLAGS += -O3 -DNDEBUG
