@@ -72,7 +72,7 @@ $(INCLUDES_DIR)/%: $(SRC)/%
 	mkdir -p $(dir $@) && cp $< $@
 
 runTest: test
-	LD_LIBRARY_PATH=$(LIB_DIR) $(TEST)/test.out
+	@LD_LIBRARY_PATH=$(LIB_DIR) $(TEST)/test.out
 
 test: all
 	cd $(TEST) && $(MAKE)

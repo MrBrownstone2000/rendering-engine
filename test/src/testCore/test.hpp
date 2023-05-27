@@ -28,9 +28,9 @@ public:                                                                     \
         return new _TEST_NAME_();                                           \
     }                                                                       \
                                                                             \
-    void Run() override                                                     \
+    bool Run() override                                                     \
     {                                                                       \
-        test::RunIndividualTest(_TEST_MODULE_, #_TEST_NAME_, test_##_TEST_NAME_);\
+        return test::RunIndividualTest(#_TEST_NAME_, test_##_TEST_NAME_);\
     }                                                                       \
 };                                                                          \
                                                                             \

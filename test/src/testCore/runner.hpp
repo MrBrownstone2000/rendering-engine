@@ -10,7 +10,7 @@ namespace test
     void Run();
 
     // Run a test from a module
-    void RunIndividualTest(const std::string& module, const std::string& name, std::function<void()> testFunction);
+    bool RunIndividualTest(const std::string& name, std::function<void()> testFunction);
 }
 
 #endif

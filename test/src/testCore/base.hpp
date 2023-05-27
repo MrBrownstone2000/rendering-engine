@@ -9,7 +9,7 @@ namespace test
         TestBase() = default;
     public:
         virtual ~TestBase() = default;
-        virtual void Run() = 0;
+        virtual bool Run() = 0;
     };
 }
 
