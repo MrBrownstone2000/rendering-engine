@@ -97,7 +97,7 @@ namespace test
     }
 
     template <typename T>
-    void expect(bool expr)
+    void expect(T expr)
     {
         if (!expr){
             std::stringstream ss;
