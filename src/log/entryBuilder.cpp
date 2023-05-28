@@ -11,7 +11,7 @@ namespace engine::log
 {
     EntryBuilder::EntryBuilder(const char* fileName, const char* functionName, int sourceLine)
         : Entry{
-            .m_level = Level::Error,
+            .m_level = Level::Warn,
             .m_message = ""s,
             .m_fileName = fileName,
             .m_functionName = functionName,

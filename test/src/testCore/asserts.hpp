@@ -6,7 +6,13 @@
 #include <string>
 #include <sstream>
 
-#define STR(a) #a
+template <typename T>
+std::string ToString(const T& val)
+{
+    std::stringstream ss;
+    ss << val;
+    return ss.str();
+}
 
 namespace test
 {
@@ -29,9 +35,9 @@ namespace test
     {
         if (a != b){
             std::stringstream ss;
-            ss << STR(a) << " == " << STR(b) << std::endl;
-            ss << "values are: " << a;
-            ss << " and " << b;
+            ss << "a" << " == " << "b" << std::endl;
+            ss << "values are: " << ToString(a);
+            ss << " and " << ToString(b);
             throw test::assert_failed(ss.str());
         }
     }
@@ -41,9 +47,9 @@ namespace test
     {
         if (a == b){
             std::stringstream ss;
-            ss << STR(a) << " != " << STR(b) << std::endl;
-            ss << "values are: " << a;
-            ss << " and " << b;
+            ss << "a" << " != " << "b" << std::endl;
+            ss << "values are: " << ToString(a);
+            ss << " and " << ToString(b);
             throw test::assert_failed(ss.str());
         }
     }
@@ -53,9 +59,9 @@ namespace test
     {
         if (a > b){
             std::stringstream ss;
-            ss << STR(a) << " <= " << STR(b) << std::endl;
-            ss << "values are: " << a;
-            ss << " and " << b;
+            ss << "a" << " <= " << "b" << std::endl;
+            ss << "values are: " << ToString(a);
+            ss << " and " << ToString(b);
             throw test::assert_failed(ss.str());
         }
     }
@@ -65,9 +71,9 @@ namespace test
     {
         if (a < b){
             std::stringstream ss;
-            ss << STR(a) << " >= " << STR(b) << std::endl;
-            ss << "values are: " << a;
-            ss << " and " << b;
+            ss << "a" << " >= " << "b" << std::endl;
+            ss << "values are: " << ToString(a);
+            ss << " and " << ToString(b);
             throw test::assert_failed(ss.str());
         }
     }
@@ -77,9 +83,9 @@ namespace test
     {
         if (a >= b){
             std::stringstream ss;
-            ss << STR(a) << " < " << STR(b) << std::endl;
-            ss << "values are: " << a;
-            ss << " and " << b;
+            ss << "a" << " < " << "b" << std::endl;
+            ss << "values are: " << ToString(a);
+            ss << " and " << ToString(b);
             throw test::assert_failed(ss.str());
         }
     }
@@ -89,9 +95,9 @@ namespace test
     {
         if (a <= b){
             std::stringstream ss;
-            ss << STR(a) << " > " << STR(b) << std::endl;
-            ss << "values are: " << a;
-            ss << " and " << b;
+            ss << "a" << " > " << "b" << std::endl;
+            ss << "values are: " << ToString(a);
+            ss << " and " << ToString(b);
             throw test::assert_failed(ss.str());
         }
     }
