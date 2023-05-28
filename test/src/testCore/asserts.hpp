@@ -2,8 +2,11 @@
 #define __ASSERTS_HPP__
 
 #include <exception>
+#include <functional>
 #include <string>
 #include <sstream>
+
+#define STR(a) #a
 
 namespace test
 {
@@ -20,81 +23,106 @@ namespace test
     private:
         std::string msg;
     };
-}
 
-#define expect_eq(a, b)                             \
-if (a != b){                                        \
-    std::stringstream ss;                           \
-    ss << #a << " == " << #b << std::endl;          \
-    ss << "values are: " << a;                      \
-    ss << " and " << b;                             \
-    throw test::assert_failed(ss.str());            \
-}
-
-#define expect_neq(a, b)                            \
-if (a == b){                                        \
-    std::stringstream ss;                           \
-    ss << #a << " != " << #b << std::endl;          \
-    ss << "values are: " << a;                      \
-    ss << " and " << b;                             \
-    throw test::assert_failed(ss.str());            \
-}
-
-#define expect_lteq(a, b)                           \
-if (a > b){                                         \
-    std::stringstream ss;                           \
-    ss << #a << " <= " << #b << std::endl;          \
-    ss << "values are: " << a;                      \
-    ss << " and " << b;                             \
-    throw test::assert_failed(ss.str());            \
-}
-
-#define expect_gteq(a, b)                           \
-if (a < b){                                         \
-    std::stringstream ss;                           \
-    ss << #a << " >= " << #b << std::endl;          \
-    ss << "values are: " << a;                      \
-    ss << " and " << b;                             \
-    throw test::assert_failed(ss.str());            \
-}
-
-#define expect_lt(a, b)                             \
-if (a >= b){                                        \
-    std::stringstream ss;                           \
-    ss << #a << " < " << #b << std::endl;           \
-    ss << "values are: " << a;                      \
-    ss << " and " << b;                             \
-    throw test::assert_failed(ss.str());            \
-}
-
-#define expect_gt(a, b)                             \
-if (a <= b){                                        \
-    std::stringstream ss;                           \
-    ss << #a << " > " << #b << std::endl;           \
-    ss << "values are: " << a;                      \
-    ss << " and " << b;                             \
-    throw test::assert_failed(ss.str());            \
-}
-
-#define expect(expr)                                \
-if (!(expr)){                                       \
-    std::stringstream ss;                           \
-    ss << #expr << " is not true";                  \
-    throw test::assert_failed(ss.str());            \
-}
-
-#define expect_exception(exception, code)           \
-    bool caught = false;                            \
-    try {                                           \
-        code;                                       \
-    } catch(const exception& e) {                   \
-        caught = true;                              \
-    }                                               \
-    if (!caught) {                                  \
-        std::stringstream ss;                       \
-        ss << "Did not catch exception ";           \
-        ss << #exception;                           \
-        throw test::assert_failed(ss.str());        \
+    template <typename T, typename U>
+    void expect_eq(T&& a, U&& b)
+    {
+        if (a != b){
+            std::stringstream ss;
+            ss << STR(a) << " == " << STR(b) << std::endl;
+            ss << "values are: " << a;
+            ss << " and " << b;
+            throw test::assert_failed(ss.str());
+        }
     }
+
+    template <typename T, typename U>
+    void expect_neq(T&& a, U&& b)
+    {
+        if (a == b){
+            std::stringstream ss;
+            ss << STR(a) << " != " << STR(b) << std::endl;
+            ss << "values are: " << a;
+            ss << " and " << b;
+            throw test::assert_failed(ss.str());
+        }
+    }
+
+    template <typename T, typename U>
+    void expect_lteq(T&& a, U&& b)
+    {
+        if (a > b){
+            std::stringstream ss;
+            ss << STR(a) << " <= " << STR(b) << std::endl;
+            ss << "values are: " << a;
+            ss << " and " << b;
+            throw test::assert_failed(ss.str());
+        }
+    }
+
+    template <typename T, typename U>
+    void expect_gteq(T&& a, U&& b)
+    {
+        if (a < b){
+            std::stringstream ss;
+            ss << STR(a) << " >= " << STR(b) << std::endl;
+            ss << "values are: " << a;
+            ss << " and " << b;
+            throw test::assert_failed(ss.str());
+        }
+    }
+
+    template <typename T, typename U>
+    void expect_lt(T&& a, U&& b)
+    {
+        if (a >= b){
+            std::stringstream ss;
+            ss << STR(a) << " < " << STR(b) << std::endl;
+            ss << "values are: " << a;
+            ss << " and " << b;
+            throw test::assert_failed(ss.str());
+        }
+    }
+
+    template <typename T, typename U>
+    void expect_gt(T&& a, U&& b)
+    {
+        if (a <= b){
+            std::stringstream ss;
+            ss << STR(a) << " > " << STR(b) << std::endl;
+            ss << "values are: " << a;
+            ss << " and " << b;
+            throw test::assert_failed(ss.str());
+        }
+    }
+
+    template <typename T>
+    void expect(bool expr)
+    {
+        if (!expr){
+            std::stringstream ss;
+            ss << "expression is not true";
+            throw test::assert_failed(ss.str());
+        }
+    }
+
+    template <typename E>
+    void expect_exception(std::function<void()> function)
+    {
+        bool caught = false;
+        try {
+            function();
+        } catch(const E& e) {
+            caught = true;
+        }
+        if (!caught) {
+            std::stringstream ss;
+            ss << "Did not catch exception ";
+            ss << typeid(E).name();
+            throw test::assert_failed(ss.str());
+        }
+    }
+}
+
 
 #endif

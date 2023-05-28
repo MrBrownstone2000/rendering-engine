@@ -46,7 +46,7 @@ TEST_MODULE(IoC)
         std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
 
         pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
-        expect_eq(69, pIoC->Resolve<Base>()->test());
+        test::expect_eq(69, pIoC->Resolve<Base>()->test());
     }
 
     TEST(SimpleResolveFailure)
@@ -54,7 +54,7 @@ TEST_MODULE(IoC)
         // Init test method
         std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
 
-        expect_exception(std::runtime_error, pIoC->Resolve<Base>()->test());
+        test::expect_exception<std::runtime_error>([pIoC] { pIoC->Resolve<Base>()->test(); });
     }
 
     TEST(ParameterizedResolve)
@@ -65,7 +65,7 @@ TEST_MODULE(IoC)
         pIoC->Register<ParameterizedClass>([](ParameterizedClass::IocParams p){
             return std::make_shared<ParameterizedClass>(std::move(p));
         });
-        expect_eq(pIoC->Resolve<ParameterizedClass>({"toto"})->s, "toto");
+        test::expect_eq(pIoC->Resolve<ParameterizedClass>({"toto"})->s, "toto");
     }
 
     TEST(CascadedResolve)
@@ -77,7 +77,7 @@ TEST_MODULE(IoC)
             return std::make_shared<Dependant>(pIoC->Resolve<Base>());
         });
         pIoC->Register<Base>([] { return std::make_shared<Base>(); });
-        expect_eq(42, pIoC->Resolve<Base>()->test());
+        test::expect_eq(42, pIoC->Resolve<Base>()->test());
     }
 
     TEST(IndependantResolve)
@@ -92,13 +92,13 @@ TEST_MODULE(IoC)
         auto pFirst = pIoC->Resolve<ParameterizedClass>({ .s = "first" });
         auto pSecond = pIoC->Resolve<ParameterizedClass>({ .s = "second" });
 
-        expect_eq(pFirst->s, "first");
-        expect_eq(pSecond->s, "second");
+        test::expect_eq(pFirst->s, "first");
+        test::expect_eq(pSecond->s, "second");
 
         pFirst->s = "toto";
 
-        expect_eq(pFirst->s, "toto");
-        expect_eq(pSecond->s, "second");
+        test::expect_eq(pFirst->s, "toto");
+        test::expect_eq(pSecond->s, "second");
     }
 
     TEST(ReplacementInjection)
@@ -111,10 +111,10 @@ TEST_MODULE(IoC)
         });
         pIoC->Register<Base>([] { return std::make_shared<Base>(); });
 
-        expect_eq(42, pIoC->Resolve<Base>()->test());
+        test::expect_eq(42, pIoC->Resolve<Base>()->test());
 
         pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
 
-        expect_eq(69, pIoC->Resolve<Base>()->test());
+        test::expect_eq(69, pIoC->Resolve<Base>()->test());
     }
 }

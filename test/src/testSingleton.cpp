@@ -47,7 +47,7 @@ TEST_MODULE(Singletons)
         std::shared_ptr<ioc::Singletons> pSing = std::make_unique<ioc::Singletons>();
 
         pSing->Register<Base>([] { return std::make_shared<Derived>(); });
-        expect_eq(69, pSing->Resolve<Base>()->test());
+        test::expect_eq(69, pSing->Resolve<Base>()->test());
     }
 
     TEST(PolymorphicResolveIndirect)
@@ -58,7 +58,7 @@ TEST_MODULE(Singletons)
 
         pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
         pSing->Register<Base>([=] { return pIoC->Resolve<Base>(); });
-        expect_eq(69, pSing->Resolve<Base>()->test());
+        test::expect_eq(69, pSing->Resolve<Base>()->test());
     }
 
     TEST(SimpleResolveFailure)
@@ -66,7 +66,7 @@ TEST_MODULE(Singletons)
         // Init test method
         std::shared_ptr<ioc::Singletons> pSing = std::make_unique<ioc::Singletons>();
 
-        expect_exception(std::runtime_error, pSing->Resolve<Base>()->test());
+        test::expect_exception<std::runtime_error>([pSing] { pSing->Resolve<Base>()->test(); });
     }
 
     TEST(DependantResolve)
@@ -81,12 +81,12 @@ TEST_MODULE(Singletons)
         auto pFirst = pSing->Resolve<ParameterizedClass>();
         auto pSecond = pSing->Resolve<ParameterizedClass>();
 
-        expect_eq(pFirst->s, "first");
-        expect_eq(pSecond->s, "first");
+        test::expect_eq(pFirst->s, "first");
+        test::expect_eq(pSecond->s, "first");
 
         pFirst->s = "second";
 
-        expect_eq(pFirst->s, "second");
-        expect_eq(pSecond->s, "second");
+        test::expect_eq(pFirst->s, "second");
+        test::expect_eq(pSecond->s, "second");
     }
 }

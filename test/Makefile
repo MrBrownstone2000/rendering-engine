@@ -4,7 +4,7 @@ EXEC = test.out
 
 target = debug
 
-CFLAGS = -std=gnu++2b -I$(SRC)
+CFLAGS = -std=c++23 -I$(SRC)
 
 ifeq ($(target), debug)
   CFLAGS += -g -Wall -Wextra
@@ -26,6 +26,10 @@ OBJ_LIST = $(addprefix $(OBJ)/, $(patsubst %.cpp, %.o, $(SRC_LIST:$(SRC)/%=%)))
 
 OBJ_DIRS = $(sort $(dir $(OBJ_LIST)))
 
+# stack trace not working...
+# -lstdc++_libbacktrace
+LDFLAGS = -l$(LIB)
+
 .PHONY: all clean test
 
 # ====== Rules ======
@@ -35,7 +39,7 @@ clean:
 	rm -rf obj $(EXEC)
 
 $(EXEC): $(OBJ_LIST)
-	g++ -L $(LIB_DIR) -l $(LIB) -o $@ $^
+	g++ -std=c++23 -o $@ $^ -L $(LIB_DIR) $(LDFLAGS) 
 
 $(OBJ_DIRS):
 	mkdir -p $@

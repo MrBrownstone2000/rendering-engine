@@ -4,7 +4,7 @@ LIB_NAME = libEngine.so
 
 target = debug
 
-CFLAGS = -std=gnu++2b -fpic
+CFLAGS = -std=c++23 -fpic
 
 ifeq ($(target), debug)
   CFLAGS += -g -Wall -Wextra 
@@ -46,6 +46,7 @@ OBJ_DIRS = $(sort $(dir $(OBJ_LIST)))
 
 # ====== Libraries ======
 CFLAGS += $(shell pkg-config --cflags sdl2 glew) -I contrib/imgui
+# -lstdc++_libbacktrace
 LDFLAGS += $(shell pkg-config --libs sdl2 glew) -ldl
 
 # ====== Rules ======
@@ -58,7 +59,7 @@ veryclean: clean
 	cd $(TEST) && $(MAKE) clean
 
 $(LIB): $(OBJ_LIST) | $(LIB_DIR)
-	g++ -shared -o $@ $^
+	g++ -std=c++23 -shared -o $@ $^ $(LDFLAGS)
 
 $(LIB_DIR):
 	mkdir -p $@
