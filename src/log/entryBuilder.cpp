@@ -46,4 +46,35 @@ namespace engine::log
             m_pDest->Submit(*this);
         }
     }
+
+    EntryBuilder& EntryBuilder::trace(const std::string& msg)
+    {
+        return level(Level::Trace).msg(msg);
+    }
+
+    EntryBuilder& EntryBuilder::debug(const std::string& msg)
+    {
+        return level(Level::Debug).msg(msg);
+    }
+    
+    EntryBuilder& EntryBuilder::info(const std::string& msg)
+    {
+        return level(Level::Info).msg(msg);
+    }
+    
+    EntryBuilder& EntryBuilder::warn(const std::string& msg)
+    {
+        return level(Level::Warn).msg(msg);
+    }
+    
+    EntryBuilder& EntryBuilder::error(const std::string& msg)
+    {
+        return level(Level::Error).msg(msg);
+    }
+    
+    EntryBuilder& EntryBuilder::fatal(const std::string& msg)
+    {
+        return level(Level::Fatal).msg(msg);
+    }
+    
 }

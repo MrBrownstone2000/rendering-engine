@@ -25,7 +25,7 @@ TEST_MODULE(Logging)
     TEST(FluentLogs)
     {
         MockChannel chan;
-        engineLog.level(log::Level::Info).msg("HI").chan(&chan);
+        engineLog.info("HI").chan(&chan);
 
         test::expect(chan.m_entry.m_level == log::Level::Info);
         test::expect_eq(chan.m_entry.m_message, "HI");
