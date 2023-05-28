@@ -16,12 +16,12 @@ namespace test
         char underlineBold[] = "\033[1;4m";
         char normal[] = "\033[0m";
     }
-    void Run()
+    bool Run()
     {
         int fails = 0;
         for (const auto& m : TestFactory::GetModules())
         {
-            std::cout << underlineBold << "Testing Module: " << m.first << normal << std::endl;
+            std::cout << std::endl << underlineBold << "Testing Module: " << m.first << normal << std::endl;
             for (auto gen : m.second)
             {
                 TestBase* test = gen();
@@ -31,9 +31,15 @@ namespace test
             }
         }
         if (!fails)
+        {
             std::cout << green << "All tests Passed" << std::endl;
+            return true;
+        }
         else
-            std::cout << redBold << "ERROR: " << fails << " tests Failed" << std::endl;
+        {
+            std::cout << redBold << "ERROR: " << fails << " test(s) Failed" << std::endl;
+            return false;
+        }
     }
 
     bool RunIndividualTest(const std::string& name, std::function<void()> testFunction)

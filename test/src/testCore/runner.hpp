@@ -7,7 +7,7 @@
 namespace test
 {
     // Run all tests from all modules
-    void Run();
+    bool Run();
 
     // Run a test from a module
     bool RunIndividualTest(const std::string& name, std::function<void()> testFunction);

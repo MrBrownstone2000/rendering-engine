@@ -1,4 +1,5 @@
 #include "engine/ioc/container.hpp"
+
 #include "testCore/test.hpp"
 
 #include <algorithm>
@@ -45,7 +46,7 @@ TEST_MODULE(IoC)
         std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
 
         pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
-        assert(69 == pIoC->Resolve<Base>()->test());
+        expect_eq(69, pIoC->Resolve<Base>()->test());
     }
 
     TEST(SimpleResolveFailure)
@@ -53,16 +54,7 @@ TEST_MODULE(IoC)
         // Init test method
         std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
 
-        bool hasException = false;
-        try
-        {
-            pIoC->Resolve<Base>()->test();
-        }
-        catch(std::runtime_error&)
-        {
-            hasException = true;
-        }
-        assert(hasException);
+        expect_exception(std::runtime_error, pIoC->Resolve<Base>()->test());
     }
 
     TEST(ParameterizedResolve)
@@ -73,7 +65,7 @@ TEST_MODULE(IoC)
         pIoC->Register<ParameterizedClass>([](ParameterizedClass::IocParams p){
             return std::make_shared<ParameterizedClass>(std::move(p));
         });
-        assert(pIoC->Resolve<ParameterizedClass>({"toto"})->s == "toto");
+        expect_eq(pIoC->Resolve<ParameterizedClass>({"toto"})->s, "toto");
     }
 
     TEST(CascadedResolve)
@@ -85,7 +77,7 @@ TEST_MODULE(IoC)
             return std::make_shared<Dependant>(pIoC->Resolve<Base>());
         });
         pIoC->Register<Base>([] { return std::make_shared<Base>(); });
-        assert(42 == pIoC->Resolve<Base>()->test());
+        expect_eq(42, pIoC->Resolve<Base>()->test());
     }
 
     TEST(IndependantResolve)
@@ -100,13 +92,13 @@ TEST_MODULE(IoC)
         auto pFirst = pIoC->Resolve<ParameterizedClass>({ .s = "first" });
         auto pSecond = pIoC->Resolve<ParameterizedClass>({ .s = "second" });
 
-        assert(pFirst->s == "first");
-        assert(pSecond->s == "second");
+        expect_eq(pFirst->s, "first");
+        expect_eq(pSecond->s, "second");
 
         pFirst->s = "toto";
 
-        assert(pFirst->s == "toto");
-        assert(pSecond->s == "second");
+        expect_eq(pFirst->s, "toto");
+        expect_eq(pSecond->s, "second");
     }
 
     TEST(ReplacementInjection)
@@ -119,10 +111,10 @@ TEST_MODULE(IoC)
         });
         pIoC->Register<Base>([] { return std::make_shared<Base>(); });
 
-        assert(42 == pIoC->Resolve<Base>()->test());
+        expect_eq(42, pIoC->Resolve<Base>()->test());
 
         pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
 
-        assert(69 == pIoC->Resolve<Base>()->test());
+        expect_eq(69, pIoC->Resolve<Base>()->test());
     }
 }

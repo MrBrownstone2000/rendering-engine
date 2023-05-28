@@ -4,6 +4,7 @@
 
 int main()
 {
-    test::Run();
-    return 0;
+    if (test::Run())
+        return 0;
+    return 1;
 }
