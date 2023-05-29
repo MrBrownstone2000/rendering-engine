@@ -13,12 +13,14 @@ namespace engine::log
         public:
             virtual ~IDriver() = default;
             virtual void Submit(const Entry& entry) = 0;
+            virtual void Flush() = 0;
     };
 
     class ITextDriver : public IDriver
     {
         public:
             virtual void Submit(const Entry& entry) = 0;
+            virtual void Flush() = 0;
             virtual void SetFormatter(std::shared_ptr<ITextFormatter>) = 0;
     };
 }

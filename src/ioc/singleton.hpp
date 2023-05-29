@@ -45,12 +45,12 @@ namespace engine::ioc
                         entry = pInstance;
                         return pInstance;
                     } catch (const std::bad_cast&) {
-                        throw std::runtime_error( std::format("Could not resolve Singleton mapped type\nfrom: [{}]\nto: [{}]\n",
-                                    entry.type().name(), typeid(Generator<T>).name()));
+                        Check(false).msg( std::format("Could not resolve Singleton mapped type\nfrom: [{}]\nto: [{}]\n",
+                                    entry.type().name(), typeid(Generator<T>).name())).ex();
                     }
                 }
                 else
-                    throw std::runtime_error{ std::format("Could not find generator for type [{}] in Singleton container",
+                    throw ServiceNotFound{ std::format("Could not find generator for type [{}] in Singleton container",
                             typeid(T).name()) };
             }
 

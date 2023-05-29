@@ -20,4 +20,9 @@ namespace engine::log
     {
         m_formatter = std::move(formatter);
     }
+
+    void FileDriver::Flush()
+    {
+        m_file.flush();
+    }
 }

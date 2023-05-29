@@ -8,6 +8,9 @@
 #include <memory>
 #include <format>
 
+#include "exception.hpp"
+#include "../util/assert.hpp"
+
 namespace engine::ioc
 {
     template<class T>
@@ -60,12 +63,12 @@ namespace engine::ioc
                     try {
                         return std::any_cast<G>(entry)(std::forward<Ps>(arg)...);
                     } catch (const std::bad_cast&) {
-                        throw std::runtime_error( std::format("Could not resolve IoC mapped type\nfrom: [{}]\nto: [{}]\n",
-                                    entry.type().name(), typeid(Generator<T>).name()));
+                        Check(false).msg( std::format("Could not resolve IoC mapped type\nfrom: [{}]\nto: [{}]\n",
+                                    entry.type().name(), typeid(Generator<T>).name())).ex();
                     }
                 }
                 else
-                    throw std::runtime_error{ std::format("Could not find generator for type [{}] in IoC container",
+                    throw ServiceNotFound{ std::format("Could not find generator for type [{}] in IoC container",
                             typeid(T).name()) };
             }
 

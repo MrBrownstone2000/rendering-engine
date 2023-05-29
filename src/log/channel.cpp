@@ -24,6 +24,12 @@ namespace engine::log
             d->Submit(entry);
     }
 
+    void Channel::Flush() 
+    {
+        for (auto& d : m_drivers)
+            d->Flush();
+    }
+
     void Channel::Attach(std::shared_ptr<IDriver> driver) 
     {
         m_drivers.push_back(std::move(driver));

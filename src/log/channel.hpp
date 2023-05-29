@@ -15,6 +15,7 @@ namespace engine::log
         public:
             virtual ~IChannel() = default;
             virtual void Submit(Entry& entry) = 0;
+            virtual void Flush() = 0;
             virtual void Attach(std::shared_ptr<IDriver> driver) = 0;
             virtual void Attach(std::shared_ptr<IPolicy> policy) = 0;
     };
@@ -26,6 +27,7 @@ namespace engine::log
             ~Channel();
 
             void Submit(Entry& entry) override;
+            void Flush() override;
             void Attach(std::shared_ptr<IDriver> driver) override;
             void Attach(std::shared_ptr<IPolicy> policy) override;
         

@@ -8,6 +8,7 @@
 
 #include "engine/ioc/container.hpp"
 #include "engine/log/severityLevelPolicy.hpp"
+#include "engine/util/assert.hpp"
 
 using namespace engine;
 
@@ -33,6 +34,13 @@ int main()
     engineLog.fatal("Oh No!");
     engineLog.warn("warning");
     f();
+
+    try {
+        int x = 0, y = 1;
+        Check(x > y).msg("Ooop").watch(x).watch(y).ex();
+    } catch (const std::exception& e) {
+        std::cout << e.what() << std::endl;
+    }
 
     if (test::Run())
         return 0;

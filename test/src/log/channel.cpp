@@ -21,6 +21,7 @@ class MockDriver : public log::IDriver
         {
             m_entry = entry;
         }
+        void Flush() override {}
 
         log::Entry m_entry;
 };

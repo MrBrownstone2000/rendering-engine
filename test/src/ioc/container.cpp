@@ -54,7 +54,7 @@ TEST_MODULE(IoC)
         // Init test method
         std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
 
-        test::expect_exception<std::runtime_error>([pIoC] { pIoC->Resolve<Base>()->test(); });
+        test::expect_exception<ioc::ServiceNotFound>([pIoC] { pIoC->Resolve<Base>()->test(); });
     }
 
     TEST(ParameterizedResolve)

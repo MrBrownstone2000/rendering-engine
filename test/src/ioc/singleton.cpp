@@ -66,7 +66,7 @@ TEST_MODULE(Singletons)
         // Init test method
         std::shared_ptr<ioc::Singletons> pSing = std::make_unique<ioc::Singletons>();
 
-        test::expect_exception<std::runtime_error>([pSing] { pSing->Resolve<Base>()->test(); });
+        test::expect_exception<ioc::ServiceNotFound>([pSing] { pSing->Resolve<Base>()->test(); });
     }
 
     TEST(DependantResolve)

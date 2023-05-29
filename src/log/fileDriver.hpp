@@ -18,6 +18,7 @@ namespace engine::log
             FileDriver(std::filesystem::path path, std::shared_ptr<ITextFormatter> formatter = {});
 
             void Submit(const Entry& entry) override;
+            void Flush() override;
             void SetFormatter(std::shared_ptr<ITextFormatter> formatter) override;
 
         private:
