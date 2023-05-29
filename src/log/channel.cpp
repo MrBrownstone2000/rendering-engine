@@ -29,7 +29,7 @@ namespace engine::log
         m_drivers.push_back(std::move(driver));
     }
 
-    void Channel::Attach(std::unique_ptr<IPolicy> policy)
+    void Channel::Attach(std::shared_ptr<IPolicy> policy)
     {
         m_policies.push_back(std::move(policy));
     }

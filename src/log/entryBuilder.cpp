@@ -17,6 +17,7 @@ namespace engine::log
             .m_functionName = functionName,
             .m_sourceLine = sourceLine,
             .m_timestamp = std::chrono::system_clock::now(),        
+            .m_trace{},
         }
     {
     }
@@ -39,12 +40,18 @@ namespace engine::log
         return *this;
     }
 
+    EntryBuilder& EntryBuilder::traceSkip(int depth)
+    {
+        m_traceSkipDepth = depth;
+        return *this;
+    }
+
     EntryBuilder::~EntryBuilder()
     {
         if (m_pDest)
         {
             if (m_level <= Level::Error)
-                m_trace.emplace();
+                m_trace.emplace(m_traceSkipDepth);
             m_pDest->Submit(*this);
         }
     }

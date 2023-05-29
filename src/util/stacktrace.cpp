@@ -8,11 +8,11 @@
 
 namespace engine::util
 {
-    StackTrace::StackTrace()
+    StackTrace::StackTrace(int traceSkipDepth)
     {
         m_trace = std::make_unique<backward::StackTrace>();
         m_trace->load_here(64);
-        m_trace->skip_n_firsts(6);
+        m_trace->skip_n_firsts(traceSkipDepth);
     }
 
     StackTrace::StackTrace(const StackTrace& src)

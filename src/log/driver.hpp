@@ -19,7 +19,7 @@ namespace engine::log
     {
         public:
             virtual void Submit(const Entry& entry) = 0;
-            virtual void SetFormatter(std::unique_ptr<ITextFormatter>) = 0;
+            virtual void SetFormatter(std::shared_ptr<ITextFormatter>) = 0;
     };
 }
 

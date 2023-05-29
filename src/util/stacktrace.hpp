@@ -13,7 +13,7 @@ namespace engine::util
     class StackTrace
     {
         public:
-            StackTrace();
+            StackTrace(int traceSkipDepth);
             StackTrace(const StackTrace& src);
             StackTrace& operator=(const StackTrace& src);
             ~StackTrace();

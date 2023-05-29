@@ -20,7 +20,7 @@ class MockChannel : public log::IChannel
         }
 
         void Attach(std::shared_ptr<log::IDriver>) override {}
-        void Attach(std::unique_ptr<log::IPolicy>) override {}
+        void Attach(std::shared_ptr<log::IPolicy>) override {}
         log::Entry m_entry;
 };
 

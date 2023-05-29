@@ -1,24 +1,28 @@
-#ifndef __DEBUGDRIVER_HPP__
-#define __DEBUGDRIVER_HPP__
+#ifndef __FILEDRIVER_HPP__
+#define __FILEDRIVER_HPP__
 
 #include "driver.hpp"
 #include "textFormatter.hpp"
+
+#include <filesystem>
 #include <memory>
+#include <fstream>
 
 namespace engine::log
 {
-    class IDebugDriver : public ITextDriver {};
+    class IFileDriver : public ITextDriver {};
 
-    class LinuxDebugDriver : public IDebugDriver
+    class FileDriver : public IFileDriver
     {
         public:
-            LinuxDebugDriver(std::shared_ptr<ITextFormatter> formatter = {});
+            FileDriver(std::filesystem::path path, std::shared_ptr<ITextFormatter> formatter = {});
 
             void Submit(const Entry& entry) override;
             void SetFormatter(std::shared_ptr<ITextFormatter> formatter) override;
 
         private:
             std::shared_ptr<ITextFormatter> m_formatter;
+            std::ofstream m_file;
 
     };
 }

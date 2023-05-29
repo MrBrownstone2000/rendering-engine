@@ -4,10 +4,10 @@ LIB_NAME = libEngine.so
 
 target = debug
 
-CFLAGS = -std=c++23 -fpic
+CFLAGS = -std=c++2b -fpic -g
 
 ifeq ($(target), debug)
-  CFLAGS += -g -Wall -Wextra 
+  CFLAGS += -Wall -Wextra 
   OBJ = obj/debug
 else ifeq ($(target), release)
   CFLAGS += -O3 -DNDEBUG
@@ -56,6 +56,7 @@ clean:
 	rm -rf obj
 
 veryclean: clean
+	rm -rf logs
 	cd $(TEST) && $(MAKE) clean
 
 $(LIB): $(OBJ_LIST) | $(LIB_DIR)

@@ -4,10 +4,10 @@ EXEC = test.out
 
 target = debug
 
-CFLAGS = -std=c++23 -I$(SRC)
+CFLAGS = -std=c++2b -g
 
 ifeq ($(target), debug)
-  CFLAGS += -g -Wall -Wextra
+  CFLAGS += -Wall -Wextra
   OBJ = obj/debug
 else ifeq ($(target), release)
   CFLAGS += -O3 -DNDEBUG
@@ -29,6 +29,7 @@ OBJ_DIRS = $(sort $(dir $(OBJ_LIST)))
 # stack trace not working...
 # -lstdc++_libbacktrace
 LDFLAGS = -l$(LIB) -lbfd -lunwind
+CFLAGS += -I$(SRC)
 
 .PHONY: all clean test
 

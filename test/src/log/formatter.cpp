@@ -24,7 +24,8 @@ TEST_MODULE(LogFormatter)
             .m_sourceLine = __LINE__,
             .m_timestamp = std::chrono::system_clock::time_point{
                 std::chrono::days{ 10000 }
-            }
+            },
+            .m_trace{},
         };
         
         test::expect_eq("@Info {1997-05-19 02:00:00.000000000} Hi\n  >> at src/log/formatter.cpp : in test_Format, line 24\n",

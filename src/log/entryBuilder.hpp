@@ -17,6 +17,7 @@ namespace engine::log
             EntryBuilder& msg(const std::string& msg);
             EntryBuilder& level(Level lvl);
             EntryBuilder& chan(IChannel* pChan);
+            EntryBuilder& traceSkip(int depth);
 
             EntryBuilder& verbose(const std::string& msg = "");
             EntryBuilder& debug(const std::string& msg = "");
@@ -29,6 +30,7 @@ namespace engine::log
 
         private:
             IChannel* m_pDest = nullptr;
+            int m_traceSkipDepth = 6;
     };
 }
 

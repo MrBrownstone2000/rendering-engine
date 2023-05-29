@@ -4,7 +4,7 @@
 
 namespace engine::log
 {
-    LinuxDebugDriver::LinuxDebugDriver(std::unique_ptr<ITextFormatter> formatter)
+    LinuxDebugDriver::LinuxDebugDriver(std::shared_ptr<ITextFormatter> formatter)
         : m_formatter(std::move(formatter))
     {
     }
@@ -17,7 +17,7 @@ namespace engine::log
         }
     }
 
-    void LinuxDebugDriver::SetFormatter(std::unique_ptr<ITextFormatter> formatter)
+    void LinuxDebugDriver::SetFormatter(std::shared_ptr<ITextFormatter> formatter)
     {
         m_formatter = std::move(formatter);
     }

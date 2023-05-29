@@ -8,6 +8,8 @@
 #include <memory>
 #include <format>
 
+#include "container.hpp"
+
 namespace engine::ioc
 {
     class Singletons
@@ -15,6 +17,12 @@ namespace engine::ioc
         public:
             template<class T>
             using Generator = std::function<std::shared_ptr<T>()>;
+
+            template<class T>
+            void RegisterPassThru()
+            {
+                Register<T>([] { return ioc::Get().Resolve<T>(); });
+            }
 
             template<class T>
             void Register(Generator<T> gen)
