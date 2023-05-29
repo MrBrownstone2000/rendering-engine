@@ -45,9 +45,9 @@ OBJ_DIRS = $(sort $(dir $(OBJ_LIST)))
 .PHONY: all veryclean clean test runTest includes
 
 # ====== Libraries ======
-CFLAGS += $(shell pkg-config --cflags sdl2 glew) -I contrib/imgui
+CFLAGS += $(shell pkg-config --cflags sdl2 glew) -I $(CONTRIB) -I $(SRC)
 # -lstdc++_libbacktrace
-LDFLAGS += $(shell pkg-config --libs sdl2 glew) -ldl
+LDFLAGS += $(shell pkg-config --libs sdl2 glew) -ldl -lbfd -lunwind
 
 # ====== Rules ======
 all: $(LIB) includes

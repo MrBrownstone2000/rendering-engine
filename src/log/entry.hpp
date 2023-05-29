@@ -3,8 +3,10 @@
 
 #include <string>
 #include <chrono>
+#include <optional>
 
 #include "level.hpp"
+#include "../util/stacktrace.hpp"
 
 namespace engine::log
 {
@@ -16,6 +18,7 @@ namespace engine::log
         const char* m_functionName;
         int m_sourceLine;
         std::chrono::system_clock::time_point m_timestamp;
+        std::optional<util::StackTrace> m_trace;
     };
 }
 

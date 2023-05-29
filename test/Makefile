@@ -28,7 +28,7 @@ OBJ_DIRS = $(sort $(dir $(OBJ_LIST)))
 
 # stack trace not working...
 # -lstdc++_libbacktrace
-LDFLAGS = -l$(LIB)
+LDFLAGS = -l$(LIB) -lbfd -lunwind
 
 .PHONY: all clean test
 

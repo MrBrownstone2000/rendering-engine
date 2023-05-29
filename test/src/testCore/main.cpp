@@ -13,9 +13,16 @@
 using namespace engine;
 #define engineLog log::EntryBuilder(__FILE__, __FUNCTION__, __LINE__)
 
+std::unique_ptr<log::IChannel> chan;
+
+void f()
+{
+    engineLog.chan(chan.get()).error("Error !");
+}
+
 int main()
 {
-    std::unique_ptr<log::IChannel> chan = std::make_unique<log::Channel>(
+    chan = std::make_unique<log::Channel>(
             std::vector<std::shared_ptr<log::IDriver>> {
                 std::make_shared<log::LinuxDebugDriver>(std::make_unique<log::TextFormatter>())
             });
@@ -23,7 +30,7 @@ int main()
 
     engineLog.chan(chan.get()).fatal("Oh No!");
     engineLog.chan(chan.get()).warn("warning");
-    engineLog.chan(chan.get()).error("Error !");
+    f();
 
     if (test::Run())
         return 0;

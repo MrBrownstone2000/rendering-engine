@@ -43,6 +43,8 @@ namespace engine::log
     {
         if (m_pDest)
         {
+            if (m_level <= Level::Error)
+                m_trace.emplace();
             m_pDest->Submit(*this);
         }
     }

@@ -27,7 +27,7 @@ TEST_MODULE(LogFormatter)
             }
         };
         
-        test::expect_eq("@Info {1997-05-19 02:00:00.000000000} Hi\n  >> at src/log/formatter.cpp : in test_Format, line 24",
+        test::expect_eq("@Info {1997-05-19 02:00:00.000000000} Hi\n  >> at src/log/formatter.cpp : in test_Format, line 24\n",
                 log::TextFormatter().Format(entry));
     }
 }
