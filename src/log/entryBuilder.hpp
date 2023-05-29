@@ -18,7 +18,7 @@ namespace engine::log
             EntryBuilder& level(Level lvl);
             EntryBuilder& chan(IChannel* pChan);
 
-            EntryBuilder& trace(const std::string& msg = "");
+            EntryBuilder& verbose(const std::string& msg = "");
             EntryBuilder& debug(const std::string& msg = "");
             EntryBuilder& info(const std::string& msg = "");
             EntryBuilder& warn(const std::string& msg = "");

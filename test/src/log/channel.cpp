@@ -5,8 +5,10 @@
 #include "engine/log/entryBuilder.hpp"
 #include "engine/log/channel.hpp"
 #include "engine/log/driver.hpp"
+#include "engine/log/severityLevelPolicy.hpp"
 
 #include <iostream>
+#include <memory>
 
 using namespace engine;
 
@@ -48,6 +50,26 @@ TEST_MODULE(LogChannel)
         test::expect_eq(d2->m_entry.m_level, log::Level::Info);
         test::expect_eq(d2->m_entry.m_message, "HI");
         test::expect_eq(d2->m_entry.m_sourceLine, __LINE__ - 8);
+    }
+
+    TEST(SeverityLevelPolicy)
+    {
+        log::Channel chan;
+        auto d = std::make_shared<MockDriver>();
+        chan.Attach(d);
+        chan.Attach(std::make_unique<log::SeverityLevelPolicy>(log::Level::Info));
+
+        engineLog.info("HI").chan(&chan);
+
+        test::expect_eq(d->m_entry.m_level, log::Level::Info);
+        test::expect_eq(d->m_entry.m_message, "HI");
+        test::expect_eq(d->m_entry.m_sourceLine, __LINE__ - 4);
+
+        engineLog.debug("Hello").chan(&chan);
+
+        test::expect_eq(d->m_entry.m_level, log::Level::Info);
+        test::expect_eq(d->m_entry.m_message, "HI");
+        test::expect_eq(d->m_entry.m_sourceLine, __LINE__ - 10);
     }
 }
 

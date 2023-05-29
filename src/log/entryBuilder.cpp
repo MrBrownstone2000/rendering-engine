@@ -47,9 +47,9 @@ namespace engine::log
         }
     }
 
-    EntryBuilder& EntryBuilder::trace(const std::string& msg)
+    EntryBuilder& EntryBuilder::verbose(const std::string& msg)
     {
-        return level(Level::Trace).msg(msg);
+        return level(Level::Verbose).msg(msg);
     }
 
     EntryBuilder& EntryBuilder::debug(const std::string& msg)

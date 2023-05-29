@@ -6,7 +6,7 @@ namespace engine::log
     {
         switch (level)
         {
-            case Level::Trace: return "Trace";
+            case Level::Verbose: return "Verbose";
             case Level::Debug: return "Debug";
             case Level::Info: return "Info";
             case Level::Warn: return "Warn";

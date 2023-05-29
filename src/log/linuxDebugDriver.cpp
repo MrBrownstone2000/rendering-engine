@@ -13,7 +13,7 @@ namespace engine::log
     {
         if (m_formatter)
         {
-            std::cout << m_formatter->Format(entry);
+            std::cout << m_formatter->Format(entry) << std::endl;
         }
     }
 

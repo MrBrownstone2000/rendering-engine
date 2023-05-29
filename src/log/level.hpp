@@ -7,12 +7,13 @@ namespace engine::log
 {
     enum class Level
     {
-        Trace,
-        Debug,
-        Info,
-        Warn,
-        Error,
-        Fatal,
+        None,
+        Fatal,  // Big error, the program should terminate immediately
+        Error,  // Error, the program should try to recover
+        Warn,   // Potentially undesirable state
+        Info,   // Tracks the flow of the program
+        Debug,  // Tracing intermediate steps of a process
+        Verbose,// Same as debug, but much more detailed
     };
 
     std::string GetLevelName(Level level);
