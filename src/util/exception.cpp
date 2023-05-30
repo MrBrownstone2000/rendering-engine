@@ -1,5 +1,7 @@
 #include "exception.hpp"
 
+#include "debug.hpp"
+
 namespace engine::util
 {
     BufferedException::BufferedException(std::string msg)
@@ -10,8 +12,8 @@ namespace engine::util
     const char* BufferedException::what() const noexcept
     {
         using namespace std::string_literals;
-        // TODO: https://stackoverflow.com/questions/281818/unmangling-the-result-of-stdtype-infoname
-        m_buffer = "["s + typeid(const_cast<BufferedException&>(*this)).name() + "]"s;
+        const char* exceptionType = typeid(const_cast<BufferedException&>(*this)).name();
+        m_buffer = "["s + Demangle(exceptionType) + "]"s;
         if (!m_msg.empty())
         {
             m_buffer += ": "s;

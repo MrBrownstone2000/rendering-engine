@@ -10,6 +10,7 @@
 
 #include "exception.hpp"
 #include "../util/assert.hpp"
+#include "../util/debug.hpp"
 
 namespace engine::ioc
 {
@@ -63,13 +64,16 @@ namespace engine::ioc
                     try {
                         return std::any_cast<G>(entry)(std::forward<Ps>(arg)...);
                     } catch (const std::bad_cast&) {
-                        Check(false).msg( std::format("Could not resolve IoC mapped type\nfrom: [{}]\nto: [{}]\n",
-                                    entry.type().name(), typeid(Generator<T>).name())).ex();
+                        Check(false).msg(
+                            std::format("Could not resolve IoC mapped type\nfrom: [{}]\nto: [{}]\n",
+                                util::Demangle(entry.type().name()),
+                                util::Demangle(typeid(Generator<T>).name()))
+                            ).ex();
                     }
                 }
                 else
                     throw ServiceNotFound{ std::format("Could not find generator for type [{}] in IoC container",
-                            typeid(T).name()) };
+                            util::Demangle(typeid(T).name())) };
             }
 
         private:

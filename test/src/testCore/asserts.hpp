@@ -6,16 +6,19 @@
 #include <string>
 #include <sstream>
 
-template <typename T>
-std::string ToString(const T& val)
-{
-    std::stringstream ss;
-    ss << val;
-    return ss.str();
-}
+#include "demangle.hpp"
 
 namespace test
 {
+    template <typename T>
+    std::string ToString(const T& val)
+    {
+        std::stringstream ss;
+        ss << val;
+        return ss.str();
+    }
+
+
     class assert_failed : public std::exception
     {
     public:
@@ -123,8 +126,9 @@ namespace test
         }
         if (!caught) {
             std::stringstream ss;
-            ss << "Did not catch exception ";
-            ss << typeid(E).name();
+            ss << "Did not catch exception [";
+            ss << Demangle(typeid(E).name());
+            ss << "]";
             throw test::assert_failed(ss.str());
         }
     }

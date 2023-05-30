@@ -26,7 +26,7 @@ class MockChannel : public log::IChannel
 };
 
 template<>
-inline std::string ToString<log::Level>(const log::Level& lvl)
+inline std::string test::ToString<log::Level>(const log::Level& lvl)
 {
     return log::GetLevelName(lvl);
 }

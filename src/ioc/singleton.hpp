@@ -9,6 +9,7 @@
 #include <format>
 
 #include "container.hpp"
+#include "../util/debug.hpp"
 
 namespace engine::ioc
 {
@@ -45,13 +46,16 @@ namespace engine::ioc
                         entry = pInstance;
                         return pInstance;
                     } catch (const std::bad_cast&) {
-                        Check(false).msg( std::format("Could not resolve Singleton mapped type\nfrom: [{}]\nto: [{}]\n",
-                                    entry.type().name(), typeid(Generator<T>).name())).ex();
+                        Check(false).msg(
+                            std::format("Could not resolve Singleton mapped type\nfrom: [{}]\nto: [{}]\n",
+                                util::Demangle(entry.type().name()),
+                                util::Demangle(typeid(Generator<T>).name())
+                        )).ex();
                     }
                 }
                 else
                     throw ServiceNotFound{ std::format("Could not find generator for type [{}] in Singleton container",
-                            typeid(T).name()) };
+                            util::Demangle(typeid(T).name())) };
             }
 
         private:
