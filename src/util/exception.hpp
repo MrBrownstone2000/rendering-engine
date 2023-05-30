@@ -1,8 +1,7 @@
 #ifndef __EXCEPTION_HPP__
 #define __EXCEPTION_HPP__
 
-#include <exception>
-#include <string>
+#include "../pch.hpp"
 
 namespace engine::util
 {

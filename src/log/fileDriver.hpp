@@ -4,9 +4,7 @@
 #include "driver.hpp"
 #include "textFormatter.hpp"
 
-#include <filesystem>
-#include <memory>
-#include <fstream>
+#include "../pch.hpp"
 
 namespace engine::log
 {

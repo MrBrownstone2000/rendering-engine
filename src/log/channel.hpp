@@ -1,8 +1,7 @@
 #ifndef __CHANNEL_HPP__
 #define __CHANNEL_HPP__
 
-#include <memory>
-#include <vector>
+#include "../pch.hpp"
 
 namespace engine::log
 {

@@ -7,9 +7,6 @@
 #include "engine/log/driver.hpp"
 #include "engine/log/severityLevelPolicy.hpp"
 
-#include <iostream>
-#include <memory>
-
 using namespace engine;
 
 #define engineLog log::EntryBuilder(__FILE__, __FUNCTION__, __LINE__)

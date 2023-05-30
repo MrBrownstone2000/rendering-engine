@@ -1,8 +1,7 @@
 #ifndef __STACKTRACE_HPP__
 #define __STACKTRACE_HPP__
 
-#include <memory>
-#include <string>
+#include "../pch.hpp"
 
 namespace backward {
     class StackTrace;

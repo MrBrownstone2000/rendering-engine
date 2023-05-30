@@ -1,9 +1,10 @@
 #ifndef __DEBUGDRIVER_HPP__
 #define __DEBUGDRIVER_HPP__
 
+#include "../pch.hpp"
+
 #include "driver.hpp"
 #include "textFormatter.hpp"
-#include <memory>
 
 namespace engine::log
 {

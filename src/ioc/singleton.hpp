@@ -1,12 +1,7 @@
 #ifndef __SINGLETON_HPP__
 #define __SINGLETON_HPP__
 
-#include <unordered_map>
-#include <typeindex>
-#include <any>
-#include <functional>
-#include <memory>
-#include <format>
+#include "../pch.hpp"
 
 #include "container.hpp"
 #include "../util/debug.hpp"

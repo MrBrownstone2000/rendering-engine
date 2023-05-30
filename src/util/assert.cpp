@@ -3,9 +3,6 @@
 #include "log/log.hpp"
 #include "log/channel.hpp"
 
-#include <cstdlib>
-#include <utility>
-
 namespace engine::util
 {
     namespace

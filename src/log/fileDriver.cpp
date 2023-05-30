@@ -1,5 +1,4 @@
 #include "fileDriver.hpp"
-#include <filesystem>
 
 namespace engine::log
 {

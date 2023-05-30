@@ -1,7 +1,7 @@
 #ifndef __ENTRYBUILDER_HPP__
 #define __ENTRYBUILDER_HPP__
 
-#include <string>
+#include "../pch.hpp"
 
 #include "entry.hpp"
 

@@ -1,12 +1,7 @@
 #ifndef __CONTAINER_HPP__
 #define __CONTAINER_HPP__
 
-#include <unordered_map>
-#include <typeindex>
-#include <any>
-#include <functional>
-#include <memory>
-#include <format>
+#include "../pch.hpp"
 
 #include "exception.hpp"
 #include "../util/assert.hpp"

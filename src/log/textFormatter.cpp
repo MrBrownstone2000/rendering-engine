@@ -2,10 +2,6 @@
 #include "level.hpp"
 #include "entry.hpp"
 
-#include <chrono>
-#include <format>
-#include <sstream>
-
 namespace engine::log
 {
     std::string TextFormatter::Format(const Entry& e) const

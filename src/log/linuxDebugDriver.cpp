@@ -1,7 +1,5 @@
 #include "linuxDebugDriver.hpp"
 
-#include <iostream>
-
 namespace engine::log
 {
     LinuxDebugDriver::LinuxDebugDriver(std::shared_ptr<ITextFormatter> formatter)

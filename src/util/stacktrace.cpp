@@ -1,7 +1,5 @@
 #include "stacktrace.hpp"
 
-#include <sstream>
-
 #define BACKWARD_HAS_BFD 1
 #define BACKWARD_HAS_LIBUNWIND 1
 #include "backward/backward.hpp"

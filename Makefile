@@ -26,6 +26,9 @@ TEST = test
 CONTRIB = contrib
 
 # ====== Setup ======
+PCH = $(SRC)/pch.hpp
+PCH_COMPILED = $(INCLUDES_DIR)/pch.hpp.gch
+
 SRC_LIST = $(shell find $(SRC) -type f -name *.cpp)
 HDR_LIST = $(patsubst $(SRC)/%, %, $(shell find $(SRC) -type f -name *.hpp))
 
@@ -53,7 +56,7 @@ LDFLAGS += $(shell pkg-config --libs sdl2 glew) -ldl -lbfd -lunwind
 all: $(LIB) includes
 
 clean:
-	rm -rf obj
+	rm -rf $(OUTPUT_DIR)/lib $(OBJ)/tmp
 
 veryclean: clean
 	rm -rf logs
@@ -66,6 +69,9 @@ $(LIB_DIR):
 	mkdir -p $@
 
 $(OBJ_DIRS):
+	mkdir -p $@
+
+$(INCLUDES_DIR):
 	mkdir -p $@
 
 includes: $(INCLUDES_LIST)
@@ -84,5 +90,8 @@ DEPFLAGS = -MMD -MF $(@:.o=.d)
 DEP := $(patsubst %.o, %.d, $(OBJ_LIST))
 -include $(DEP)
 
-$(OBJ)/tmp/%.o: %.cpp | $(OBJ_DIRS)
+$(OBJ)/tmp/%.o: %.cpp $(PCH_COMPILED) | $(OBJ_DIRS)
 	g++ $(CFLAGS) -c $< -o $@ $(DEPFLAGS)
+
+$(PCH_COMPILED): $(PCH) | $(INCLUDES_DIR)
+	g++ $(CFLAGS) $< -o $@

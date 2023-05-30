@@ -1,9 +1,7 @@
 #ifndef __ENTRY_HPP__
 #define __ENTRY_HPP__
 
-#include <string>
-#include <chrono>
-#include <optional>
+#include "../pch.hpp"
 
 #include "level.hpp"
 #include "../util/stacktrace.hpp"
