@@ -32,12 +32,12 @@ namespace test
         }
         if (!fails)
         {
-            std::cout << green << "All tests Passed" << std::endl;
+            std::cout << green << "All tests Passed" << normal << std::endl;
             return true;
         }
         else
         {
-            std::cout << redBold << "ERROR: " << fails << " test(s) Failed" << std::endl;
+            std::cout << redBold << "ERROR: " << fails << " test(s) Failed" << normal << std::endl;
             return false;
         }
     }
