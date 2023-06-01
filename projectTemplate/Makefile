@@ -1,6 +1,7 @@
+$(error This is a project template, and should not be compiled or modified directly. Use the newProject.sh script to create a new project)
 # ====== Configuration ======
 SRC = src
-EXEC_NAME = test.out
+EXEC_NAME = @PROJECT.out
 
 target = debug
 

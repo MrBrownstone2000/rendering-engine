@@ -46,7 +46,7 @@ namespace engine::log
         });
 
         ioc::Get().Register<log::ISeverityLevelPolicy>([] {
-            return std::make_shared<log::SeverityLevelPolicy>(log::Level::Error);
+            return std::make_shared<log::SeverityLevelPolicy>(log::Level::Info);
         });
 
         // Init singleton

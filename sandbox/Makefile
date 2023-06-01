@@ -1,6 +1,6 @@
 # ====== Configuration ======
 SRC = src
-EXEC_NAME = test.out
+EXEC_NAME = sandbox.out
 
 target = debug
 

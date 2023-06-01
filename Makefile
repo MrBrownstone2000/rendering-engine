@@ -1,3 +1,9 @@
+# ====== Projets ======
+PROJECTS = sandbox test
+PROJECTS_RUN = $(addsuffix Run, $(PROJECTS))
+PROJECTS_CLEAN = $(addsuffix Clean, $(PROJECTS))
+PROJECTS_CLEAN_ALL = $(addsuffix CleanAll, $(PROJECTS))
+
 # ====== Configuration ======
 SRC = src
 LIB_NAME = libEngine.so
@@ -30,8 +36,8 @@ PCH = $(SRC)/pch.hpp
 PCH_DIR = $(OBJ)/tmp
 PCH_COMPILED = $(PCH_DIR)/pch.hpp.gch
 
-SRC_LIST = $(shell find $(SRC) -type f -name *.cpp)
-HDR_LIST = $(patsubst $(SRC)/%, %, $(shell find $(SRC) -type f -name *.hpp ! -name $(notdir $(PCH))))
+SRC_LIST = $(shell find $(SRC) -type f -name "*.cpp")
+HDR_LIST = $(patsubst $(SRC)/%, %, $(shell find $(SRC) -type f -name "*.hpp" ! -name $(notdir $(PCH))))
 
 CONTRIB = contrib
 CONTRIB_SRC = $(wildcard $(CONTRIB)/*/*.cpp)
@@ -46,7 +52,7 @@ OBJ_LIST = $(addprefix $(OBJ)/tmp/, $(patsubst %.cpp, %.o, $(SRC_LIST)))
 
 OBJ_DIRS = $(sort $(dir $(OBJ_LIST)))
 
-.PHONY: all veryclean clean cleanTest test runTest includes
+.PHONY: all veryclean clean includes $(PROJECTS) $(PROJECTS_RUN)
 
 # ====== Libraries ======
 CFLAGS += -I $(PCH_DIR) $(shell pkg-config --cflags sdl2 glew) -I $(CONTRIB) -I $(SRC)
@@ -56,14 +62,26 @@ LDFLAGS += $(shell pkg-config --libs sdl2 glew) -ldl -lbfd -lunwind
 # ====== Rules ======
 all: $(LIB) includes
 
+$(PROJECTS): all
+	cd $@ && make
+
+$(PROJECTS_RUN): all
+	cd $(shell target=$@ && echo $${target%"Run"}) && make run
+
+$(PROJECTS_CLEAN):
+	cd $(shell target=$@ && echo $${target%"Clean"}) && make clean
+
+$(PROJECTS_CLEAN_ALL):
+	cd $(shell target=$@ && echo $${target%"CleanAll"}) && make cleanAll
+
 clean:
 	rm -rf $(OUTPUT_DIR)/lib $(OBJ)/tmp/src $(OUTPUT_DIR)/include
 
 veryclean: clean
 	rm -rf logs $(OBJ)
 
-cleanTest:
-	cd $(TEST) && $(MAKE) clean
+cleanAll: veryclean $(PROJECTS_CLEAN_ALL)
+	rm -rf obj
 
 $(LIB): $(OBJ_LIST) | $(LIB_DIR)
 	g++ -std=c++23 -shared -o $@ $^ $(LDFLAGS)
@@ -84,12 +102,6 @@ includes: $(INCLUDES_LIST)
 
 $(INCLUDES_DIR)/%: $(SRC)/%
 	mkdir -p $(dir $@) && cp $< $@
-
-runTest: test
-	@LD_LIBRARY_PATH=$(LIB_DIR) $(TEST)/test.out
-
-test: all
-	cd $(TEST) && $(MAKE)
 	
 # ====== Dependency generation ======
 DEPFLAGS = -MMD -MF $(@:.o=.d)
