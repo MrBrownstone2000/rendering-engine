@@ -1,4 +1,6 @@
+#include "pch.hpp"
 #include "severityLevelPolicy.hpp"
+
 #include "entry.hpp"
 
 namespace engine::log

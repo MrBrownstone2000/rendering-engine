@@ -27,10 +27,11 @@ CONTRIB = contrib
 
 # ====== Setup ======
 PCH = $(SRC)/pch.hpp
-PCH_COMPILED = $(SRC)/pch.hpp.gch
+PCH_DIR = $(OBJ)/tmp
+PCH_COMPILED = $(PCH_DIR)/pch.hpp.gch
 
 SRC_LIST = $(shell find $(SRC) -type f -name *.cpp)
-HDR_LIST = $(patsubst $(SRC)/%, %, $(shell find $(SRC) -type f -name *.hpp))
+HDR_LIST = $(patsubst $(SRC)/%, %, $(shell find $(SRC) -type f -name *.hpp ! -name $(notdir $(PCH))))
 
 CONTRIB = contrib
 CONTRIB_SRC = $(wildcard $(CONTRIB)/*/*.cpp)
@@ -45,10 +46,10 @@ OBJ_LIST = $(addprefix $(OBJ)/tmp/, $(patsubst %.cpp, %.o, $(SRC_LIST)))
 
 OBJ_DIRS = $(sort $(dir $(OBJ_LIST)))
 
-.PHONY: all veryclean clean test runTest includes
+.PHONY: all veryclean clean cleanTest test runTest includes
 
 # ====== Libraries ======
-CFLAGS += $(shell pkg-config --cflags sdl2 glew) -I $(CONTRIB) -I $(SRC)
+CFLAGS += -I $(PCH_DIR) $(shell pkg-config --cflags sdl2 glew) -I $(CONTRIB) -I $(SRC)
 # -lstdc++_libbacktrace
 LDFLAGS += $(shell pkg-config --libs sdl2 glew) -ldl -lbfd -lunwind
 
@@ -60,12 +61,17 @@ clean:
 
 veryclean: clean
 	rm -rf logs $(OBJ)
+
+cleanTest:
 	cd $(TEST) && $(MAKE) clean
 
 $(LIB): $(OBJ_LIST) | $(LIB_DIR)
 	g++ -std=c++23 -shared -o $@ $^ $(LDFLAGS)
 
 $(LIB_DIR):
+	mkdir -p $@
+
+$(PCH_DIR):
 	mkdir -p $@
 
 $(OBJ_DIRS):
@@ -93,5 +99,5 @@ DEP := $(patsubst %.o, %.d, $(OBJ_LIST))
 $(OBJ)/tmp/%.o: %.cpp $(PCH_COMPILED) | $(OBJ_DIRS)
 	g++ $(CFLAGS) -c $< -o $@ $(DEPFLAGS)
 
-$(PCH_COMPILED): $(PCH) | $(INCLUDES_DIR)
+$(PCH_COMPILED): $(PCH) | $(PCH_DIR)
 	g++ $(CFLAGS) $< -o $@

@@ -4,7 +4,8 @@
 #include "macros.hpp"
 #include "exception.hpp"
 
-#include "../pch.hpp"
+#include <sstream>
+#include <string>
 
 namespace engine::util
 {

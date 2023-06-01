@@ -1,7 +1,7 @@
 #ifndef __TEXTFORMATTER_HPP__
 #define __TEXTFORMATTER_HPP__
 
-#include "../pch.hpp"
+#include <string>
 
 namespace engine::log
 {

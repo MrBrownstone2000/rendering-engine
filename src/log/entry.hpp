@@ -1,10 +1,11 @@
 #ifndef __ENTRY_HPP__
 #define __ENTRY_HPP__
 
-#include "../pch.hpp"
-
 #include "level.hpp"
 #include "../util/stacktrace.hpp"
+
+#include <chrono>
+#include <optional>
 
 namespace engine::log
 {

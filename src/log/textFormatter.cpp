@@ -1,4 +1,6 @@
+#include "pch.hpp"
 #include "textFormatter.hpp"
+
 #include "level.hpp"
 #include "entry.hpp"
 

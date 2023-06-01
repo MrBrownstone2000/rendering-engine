@@ -1,15 +1,17 @@
+#include "pch.hpp"
 #include "log.hpp"
 
-#include "../ioc/singleton.hpp"
-#include "../ioc/container.hpp"
-#include "../log/channel.hpp"
-#include "../log/driver.hpp"
-#include "../log/severityLevelPolicy.hpp"
-#include "../log/linuxDebugDriver.hpp"
+#include "ioc/singleton.hpp"
+#include "ioc/container.hpp"
+#include "log/channel.hpp"
+#include "log/driver.hpp"
+#include "log/severityLevelPolicy.hpp"
+#include "log/linuxDebugDriver.hpp"
 #include "log/fileDriver.hpp"
 #include "log/level.hpp"
 #include "log/textFormatter.hpp"
 
+// toto
 namespace engine::log
 {
     IChannel* GetDefaultChannel()

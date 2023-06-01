@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "linuxDebugDriver.hpp"
 
 namespace engine::log

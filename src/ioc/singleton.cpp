@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "singleton.hpp"
 
 namespace engine::ioc

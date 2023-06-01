@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "fileDriver.hpp"
 
 namespace engine::log

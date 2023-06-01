@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "level.hpp"
 
 namespace engine::log

@@ -1,11 +1,15 @@
 #ifndef __CONTAINER_HPP__
 #define __CONTAINER_HPP__
 
-#include "../pch.hpp"
-
 #include "exception.hpp"
 #include "../util/assert.hpp"
 #include "../util/debug.hpp"
+
+#include <any>
+#include <functional>
+#include <memory>
+#include <format>
+#include <typeindex>
 
 namespace engine::ioc
 {

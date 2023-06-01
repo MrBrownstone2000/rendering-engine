@@ -1,7 +1,6 @@
 #ifndef __SINGLETON_HPP__
 #define __SINGLETON_HPP__
 
-#include "../pch.hpp"
 
 #include "container.hpp"
 #include "../util/debug.hpp"
