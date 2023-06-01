@@ -4,10 +4,10 @@ EXEC = test.out
 
 target = debug
 
-CFLAGS = -std=c++2b -g
+CFLAGS = -Wall -Wextra -std=c++2b -g
 
 ifeq ($(target), debug)
-  CFLAGS += -Wall -Wextra
+  CFLAGS += 
   OBJ = obj/debug
 else ifeq ($(target), release)
   CFLAGS += -O3 -DNDEBUG

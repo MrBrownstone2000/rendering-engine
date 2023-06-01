@@ -4,10 +4,10 @@ LIB_NAME = libEngine.so
 
 target = debug
 
-CFLAGS = -std=c++2b -fpic -g
+CFLAGS = -Wall -Wextra -std=c++2b -fpic -g
 
 ifeq ($(target), debug)
-  CFLAGS += -Wall -Wextra 
+  CFLAGS += 
   OBJ = obj/debug
 else ifeq ($(target), release)
   CFLAGS += -O3 -DNDEBUG
