@@ -25,7 +25,7 @@ TEST_MODULE(LogFormatter)
                 std::chrono::days{ 10000 }
             };
 
-        entry.m_oss << "Hi";
+        entry.m_oss << "Hi\n";
         
         test::expect_eq("@Info {1997-05-19 02:00:00.000000000}: \n  Hi\n  >> at src/log/formatter.cpp : in test_Format, line 23\n",
                 log::TextFormatter().Format(entry));
