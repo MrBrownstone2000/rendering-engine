@@ -42,11 +42,11 @@ TEST_MODULE(LogChannel)
         engineLog.info("HI").chan(&chan);
 
         test::expect_eq(d1->m_entry.m_level, log::Level::Info);
-        test::expect_eq(d1->m_entry.m_message, "HI");
+        test::expect_eq(d1->m_entry.m_oss.str(), "HI\n");
         test::expect_eq(d1->m_entry.m_sourceLine, __LINE__ - 4);
 
         test::expect_eq(d2->m_entry.m_level, log::Level::Info);
-        test::expect_eq(d2->m_entry.m_message, "HI");
+        test::expect_eq(d2->m_entry.m_oss.str(), "HI\n");
         test::expect_eq(d2->m_entry.m_sourceLine, __LINE__ - 8);
     }
 
@@ -60,13 +60,13 @@ TEST_MODULE(LogChannel)
         engineLog.info("HI").chan(&chan);
 
         test::expect_eq(d->m_entry.m_level, log::Level::Info);
-        test::expect_eq(d->m_entry.m_message, "HI");
+        test::expect_eq(d->m_entry.m_oss.str(), "HI\n");
         test::expect_eq(d->m_entry.m_sourceLine, __LINE__ - 4);
 
         engineLog.debug("Hello").chan(&chan);
 
         test::expect_eq(d->m_entry.m_level, log::Level::Info);
-        test::expect_eq(d->m_entry.m_message, "HI");
+        test::expect_eq(d->m_entry.m_oss.str(), "HI\n");
         test::expect_eq(d->m_entry.m_sourceLine, __LINE__ - 10);
     }
 }

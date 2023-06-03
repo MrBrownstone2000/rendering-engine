@@ -57,6 +57,4 @@ namespace engine::util
         (M_USE_ASSERT ? engine::util::Assertion::Consequence::Terminate : \
          engine::util::Assertion::Consequence::Log))
 
-#define watch(expr) watchValue((expr), M_STR(expr))
-
 #endif

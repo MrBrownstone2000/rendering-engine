@@ -8,21 +8,17 @@ using namespace std::literals;
 namespace engine::log
 {
     EntryBuilder::EntryBuilder(const char* fileName, const char* functionName, int sourceLine)
-        : Entry{
-            .m_level = Level::Warn,
-            .m_message = ""s,
-            .m_fileName = fileName,
-            .m_functionName = functionName,
-            .m_sourceLine = sourceLine,
-            .m_timestamp = std::chrono::system_clock::now(),        
-            .m_trace{},
-        }
     {
+        m_level = Level::Warn;
+        m_fileName = fileName;
+        m_functionName = functionName;
+        m_sourceLine = sourceLine;
+        m_timestamp = std::chrono::system_clock::now();
     }
 
     EntryBuilder& EntryBuilder::msg(const std::string& msg)
     {
-        m_message = std::move(msg);
+        m_oss << msg << "\n";
         return *this;
     }
 

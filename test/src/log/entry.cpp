@@ -39,7 +39,7 @@ TEST_MODULE(LogEntry)
         engineLog.level(log::Level::Info).msg("HI").chan(&chan);
 
         test::expect_eq(chan.m_entry.m_level, log::Level::Info);
-        test::expect_eq(chan.m_entry.m_message, "HI");
+        test::expect_eq(chan.m_entry.m_oss.str(), "HI\n");
         test::expect_eq(chan.m_entry.m_sourceLine, __LINE__ - 4);
     }
 
@@ -49,7 +49,7 @@ TEST_MODULE(LogEntry)
         engineLog.info("HI").chan(&chan);
 
         test::expect_eq(chan.m_entry.m_level, log::Level::Info);
-        test::expect_eq(chan.m_entry.m_message, "HI");
+        test::expect_eq(chan.m_entry.m_oss.str(), "HI\n");
         test::expect_eq(chan.m_entry.m_sourceLine, __LINE__ - 4);
     }
 }

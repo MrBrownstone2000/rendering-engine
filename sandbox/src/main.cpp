@@ -40,5 +40,8 @@ int main()
         std::cout << e.what() << std::endl;
     }
 
+    int i = 666;
+    engineLog.msg("Hi !").watch(i).msg("Bye!!").level(log::Level::Info);
+
     return 0;
 }

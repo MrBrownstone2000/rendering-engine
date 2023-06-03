@@ -18,6 +18,12 @@ namespace engine::log
             EntryBuilder& chan(IChannel* pChan);
             EntryBuilder& traceSkip(int depth);
 
+            template <typename T>
+            EntryBuilder& watchValue(T&& val, const char* name) {
+                m_oss << name << " => " << std::forward<T>(val) << "\n";
+                return *this;
+            }
+
             EntryBuilder& verbose(const std::string& msg = "");
             EntryBuilder& debug(const std::string& msg = "");
             EntryBuilder& info(const std::string& msg = "");
