@@ -18,6 +18,13 @@ namespace engine::log
     {
         public:
             std::string Format(const Entry&) const override;
+        private:
+            std::string c_fatal =  "\033[1;38;5;196m";
+            std::string c_error = "\033[38;5;196m";
+            std::string c_warn = "\033[38;5;202m";
+            std::string c_info = "\033[38;5;77m";
+            std::string c_debug = "\033[38;5;12m";
+            std::string c_normal = "\033[0m";
     };
 }
 
