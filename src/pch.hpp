@@ -18,6 +18,7 @@
 
 #include "log/log.hpp"
 #include "util/assert.hpp"
+#include "util/macros.hpp"
 #include "util/types.hpp"
 
 #endif

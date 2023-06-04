@@ -9,6 +9,7 @@
 #include "engine/util/assert.hpp"
 
 #include "engine/window/window.hpp"
+#include "engine/events/mouseEvent.hpp"
 
 using namespace engine;
 
@@ -29,6 +30,9 @@ void Boot()
 int main()
 {
     Boot();
+
+    events::MouseButtonPressedEvent e(666);
+    engineLog.info(e);
 
     std::unique_ptr<window::IWindow> w = window::Create(800, 600);
     while(w->OnUpdate())
