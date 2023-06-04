@@ -5,16 +5,10 @@
 #include "GL/glew.h"
 #include <memory>
 
+#include "../renderer/openGLContext.hpp"
+
 namespace engine::window
 {
-    class WindowImpl
-    {
-        public:
-            SDL_Window* window;
-            SDL_GLContext glContext;
-            static inline bool isGlewInit = false;
-    };
-
     void Boot()
     {
         Check(SDL_Init(SDL_INIT_VIDEO) >= 0)
@@ -26,17 +20,16 @@ namespace engine::window
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
     }
 
-    std::unique_ptr<Window> Create(uint width, uint height)
+    std::unique_ptr<IWindow> Create(uint width, uint height)
     {
         return std::make_unique<SDLWindow>(width, height);
     }
 
     SDLWindow::SDLWindow(uint width, uint height)
-        : m_pImpl(std::make_unique<WindowImpl>())
     {
         engineLog.info("Creating Window");
 
-        m_pImpl->window = SDL_CreateWindow(
+        m_window = SDL_CreateWindow(
                 "GUI App",
                 SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED,
@@ -45,12 +38,11 @@ namespace engine::window
                 SDL_WINDOW_RESIZABLE    //  | SDL_WINDOW_FULLSCREEN
                 );
 
-        Check(m_pImpl->window).msg("Error: could not create window...");
+        Check(m_window).msg("Error: could not create window...");
 
-        m_pImpl->glContext = SDL_GL_CreateContext(m_pImpl->window);
-        Check(m_pImpl->glContext).msg("Error: [GL] failed to get GL context from window");
+        m_context = std::make_unique<renderer::OpenGLContext>(m_window);
 
-        if (!WindowImpl::isGlewInit)
+        if (!m_isGlewInit)
         {
             GLenum err = glewInit();
             if (err != GLEW_OK)
@@ -59,14 +51,13 @@ namespace engine::window
                 oss << "GLEW Error: " << glewGetErrorString(err) << "\n";
                 Check(false).msg(oss.str());
             }
-            WindowImpl::isGlewInit = true;
+            m_isGlewInit = true;
         }
     }
 
     SDLWindow::~SDLWindow()
     {
-        SDL_GL_DeleteContext(m_pImpl->glContext);
-        SDL_DestroyWindow(m_pImpl->window);
+        SDL_DestroyWindow(m_window);
     }
 
     bool SDLWindow::OnUpdate()
@@ -80,7 +71,7 @@ namespace engine::window
                 return false;
             else if (event.type == SDL_WINDOWEVENT &&
                     event.window.event == SDL_WINDOWEVENT_CLOSE &&
-                    event.window.windowID == SDL_GetWindowID(m_pImpl->window)
+                    event.window.windowID == SDL_GetWindowID(m_window)
                     )
                 return false;
             else if (event.type == SDL_KEYDOWN)
@@ -102,6 +93,6 @@ namespace engine::window
     
     void SDLWindow::SwapBuffers()
     {
-        SDL_GL_SwapWindow(m_pImpl->window);
+        m_context->SwapBuffers();
     }
 }

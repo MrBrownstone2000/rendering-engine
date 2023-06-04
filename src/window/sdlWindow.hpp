@@ -2,12 +2,14 @@
 #define __SDLWINDOW_HPP__
 
 #include "window.hpp"
+#include "../renderer/context.hpp"
+#include <SDL.h>
 #include <memory>
 
 namespace engine::window
 {
     class WindowImpl;
-    class SDLWindow : public Window
+    class SDLWindow : public IWindow
     {
         public:
             SDLWindow(uint width, uint height);
@@ -17,7 +19,10 @@ namespace engine::window
             void SwapBuffers();
 
         private:
-            std::unique_ptr<WindowImpl> m_pImpl;
+            SDL_Window* m_window;
+            std::unique_ptr<renderer::IContext> m_context;
+
+            static inline bool m_isGlewInit = false;
     };
 }
 

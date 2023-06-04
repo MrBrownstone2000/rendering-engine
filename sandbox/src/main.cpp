@@ -30,7 +30,7 @@ int main()
 {
     Boot();
 
-    std::unique_ptr<window::Window> w = window::Create(800, 600);
+    std::unique_ptr<window::IWindow> w = window::Create(800, 600);
     while(w->OnUpdate())
     {
         w->SwapBuffers();

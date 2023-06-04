@@ -8,20 +8,20 @@ namespace engine::window
 {
     void Boot();
 
-    class Window
+    class IWindow
     {
         public:
-            Window() = default;
-            virtual ~Window() = default;
+            IWindow() = default;
+            virtual ~IWindow() = default;
 
-            Window(const Window& rhs) = delete;
-            Window& operator=(const Window& rhs) = delete;
+            IWindow(const IWindow& rhs) = delete;
+            IWindow& operator=(const IWindow& rhs) = delete;
 
             virtual bool OnUpdate() = 0;
             virtual void SwapBuffers() = 0;
     };
 
-    std::unique_ptr<Window> Create(uint width, uint height);
+    std::unique_ptr<IWindow> Create(uint width, uint height);
 }
 
 #endif
