@@ -3,6 +3,7 @@
 
 #include <any>
 #include <chrono>
+#include <cstdint>
 #include <filesystem>
 #include <format>
 #include <fstream>
@@ -14,5 +15,9 @@
 #include <unordered_map>
 #include <optional>
 #include <vector>
+
+#include "log/log.hpp"
+#include "util/assert.hpp"
+#include "util/types.hpp"
 
 #endif

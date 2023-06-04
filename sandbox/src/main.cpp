@@ -8,40 +8,33 @@
 #include "engine/log/severityLevelPolicy.hpp"
 #include "engine/util/assert.hpp"
 
+#include "engine/window/window.hpp"
+
 using namespace engine;
 
 void Boot()
 {
+
     log::Boot();
+    window::Boot();
 
     // We can change the components used for logging before logging for the first time
     ioc::Get().Register<log::ISeverityLevelPolicy>([] {
         return std::make_shared<log::SeverityLevelPolicy>(log::Level::Debug);
     });
-}
 
-void f()
-{
-    engineLog.error("Error !");
+    engineLog.info("Engine has Booted");
 }
 
 int main()
 {
     Boot();
 
-    engineLog.fatal("Oh No!");
-    engineLog.warn("warning");
-    f();
-
-    try {
-        int x = 0, y = 1;
-        Check(x > y).msg("Ooop").watch(x).watch(y).ex();
-    } catch (const std::exception& e) {
-        std::cout << e.what() << std::endl;
+    std::unique_ptr<window::Window> w = window::Create(800, 600);
+    while(w->OnUpdate())
+    {
+        w->SwapBuffers();
     }
-
-    int i = 666;
-    engineLog.msg("Hi !").watch(i).msg("Bye!!").level(log::Level::Info);
 
     return 0;
 }
