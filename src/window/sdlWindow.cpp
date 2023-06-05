@@ -14,23 +14,23 @@ namespace engine::window
         Check(SDL_Init(SDL_INIT_VIDEO) >= 0)
             .msg("Error: Could not initalize SDL...");
 
-        const char* glsl_version = "#version 460";
+        // const char* glsl_version = "#version 460";
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
     }
 
-    std::unique_ptr<IWindow> Create(uint width, uint height)
+    std::unique_ptr<IWindow> Create(uint width, uint height, std::string title)
     {
-        return std::make_unique<SDLWindow>(width, height);
+        return std::make_unique<SDLWindow>(width, height, title);
     }
 
-    SDLWindow::SDLWindow(uint width, uint height)
+    SDLWindow::SDLWindow(uint width, uint height, std::string title)
     {
         engineLog.info("Creating Window");
 
         m_window = SDL_CreateWindow(
-                "GUI App",
+                title.c_str(),
                 SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED,
                 width, height,
@@ -39,6 +39,11 @@ namespace engine::window
                 );
 
         Check(m_window).msg("Error: could not create window...");
+
+        SDL_GL_SetSwapInterval(1);
+        m_width = width;
+        m_height = height;
+        m_vsync = true;
 
         m_context = std::make_unique<renderer::OpenGLContext>(m_window);
 
@@ -54,10 +59,35 @@ namespace engine::window
             m_isGlewInit = true;
         }
     }
+    uint SDLWindow::GetWidth() const
+    {
+        return m_width;
+    }
+
+    uint SDLWindow::GetHeight() const
+    {
+        return m_height;
+    }
+
+    void SDLWindow::SetVSync(bool enabled)
+    {
+        m_vsync = enabled;
+        SDL_GL_SetSwapInterval(enabled);
+    }
+
+    bool SDLWindow::IsVSync() const
+    {
+        return m_vsync;
+    }
 
     SDLWindow::~SDLWindow()
     {
         SDL_DestroyWindow(m_window);
+    }
+
+    void SDLWindow::SetEventCallback(const EventCallback& cb)
+    {
+        m_eventCallback = cb;
     }
 
     bool SDLWindow::OnUpdate()

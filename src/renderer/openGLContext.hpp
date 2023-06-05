@@ -10,6 +10,8 @@ namespace engine::renderer
     {
         public:
             OpenGLContext(SDL_Window* window);
+            ~OpenGLContext();
+
             void SwapBuffers() override;
 
         private:

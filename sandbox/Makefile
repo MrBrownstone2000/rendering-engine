@@ -29,7 +29,7 @@ OBJ_LIST = $(addprefix $(OBJ)/tmp/, $(patsubst %.cpp, %.o, $(SRC_LIST:$(SRC)/%=%
 
 OBJ_DIRS = $(sort $(dir $(OBJ_LIST)))
 
-LDFLAGS = -l$(LIB)
+LDFLAGS = -l$(LIB) $(shell pkg-config --libs glew)
 CFLAGS += -I$(SRC)
 
 .PHONY: all clean run cleanAll

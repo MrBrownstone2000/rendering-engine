@@ -10,6 +10,11 @@ namespace engine::renderer
         Check(m_context).msg("Error: [GL] failed to get GL context from window");
     }
 
+    OpenGLContext::~OpenGLContext()
+    {
+        SDL_GL_DeleteContext(m_context);
+    }
+
     void OpenGLContext::SwapBuffers()
     {
         SDL_GL_SwapWindow(m_window);

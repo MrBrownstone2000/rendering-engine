@@ -5,6 +5,7 @@
 #include "../renderer/context.hpp"
 #include <SDL.h>
 #include <memory>
+#include <string>
 
 namespace engine::window
 {
@@ -12,15 +13,25 @@ namespace engine::window
     class SDLWindow : public IWindow
     {
         public:
-            SDLWindow(uint width, uint height);
+            SDLWindow(uint width, uint height, std::string title);
             ~SDLWindow();
 
-            bool OnUpdate();
-            void SwapBuffers();
+            virtual bool IsVSync() const override;
+            virtual uint GetWidth() const override;
+            virtual uint GetHeight() const override;
+
+            bool OnUpdate() override;
+            void SwapBuffers() override;
+            virtual void SetEventCallback(const EventCallback& cb) override;
+            virtual void SetVSync(bool enabled) override;
 
         private:
             SDL_Window* m_window;
             std::unique_ptr<renderer::IContext> m_context;
+            uint m_width, m_height;
+            bool m_vsync;
+
+            EventCallback m_eventCallback;
 
             static inline bool m_isGlewInit = false;
     };

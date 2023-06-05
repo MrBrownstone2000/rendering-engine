@@ -11,6 +11,7 @@
 #include "engine/window/window.hpp"
 #include "engine/events/mouseEvent.hpp"
 
+#include <GL/glew.h>
 using namespace engine;
 
 void Boot()
@@ -34,9 +35,11 @@ int main()
     events::MouseButtonPressedEvent e(666);
     engineLog.info(e);
 
-    std::unique_ptr<window::IWindow> w = window::Create(800, 600);
+    std::unique_ptr<window::IWindow> w = window::Create(800, 600, "HI");
     while(w->OnUpdate())
     {
+        glClearColor(0, 0, 1, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
         w->SwapBuffers();
     }
 

@@ -6,6 +6,7 @@ namespace engine::renderer
     class IContext
     {
         public:
+            virtual ~IContext() = default;
             virtual void SwapBuffers() = 0;
     };
 }
