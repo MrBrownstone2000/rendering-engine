@@ -12,28 +12,20 @@
 #include "engine/events/mouseEvent.hpp"
 
 #include "engine/app.hpp"
+#include "engine/boot.hpp"
 
 #include <GL/glew.h>
 
 using namespace engine;
 
-void Boot()
+int main()
 {
-
-    log::Boot();
-    window::Boot();
+    engine::Boot();
 
     // We can change the components used for logging before logging for the first time
     ioc::Get().Register<log::ISeverityLevelPolicy>([] {
         return std::make_shared<log::SeverityLevelPolicy>(log::Level::Debug);
     });
-
-    engineLog.info("Engine has Booted");
-}
-
-int main()
-{
-    Boot();
 
     engine::Application app;
     app.Run();
