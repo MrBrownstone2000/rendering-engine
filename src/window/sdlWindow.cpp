@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "sdlWindow.hpp"
+#include "../events/windowEvent.hpp"
 
 #include "SDL.h"
 #include "GL/glew.h"
@@ -90,7 +91,7 @@ namespace engine::window
         m_eventCallback = cb;
     }
 
-    bool SDLWindow::OnUpdate()
+    void SDLWindow::HandleEvents()
     {
         SDL_Event event;
         while (SDL_PollEvent(&event))
@@ -98,27 +99,45 @@ namespace engine::window
             // ImGui_ImplSDL2_ProcessEvent(&event);
             // "close requested" event: we close the window
             if (event.type == SDL_QUIT)
-                return false;
+            {
+                events::WindowCloseEvent e;
+                m_eventCallback(e);
+            }
             else if (event.type == SDL_WINDOWEVENT &&
                     event.window.event == SDL_WINDOWEVENT_CLOSE &&
                     event.window.windowID == SDL_GetWindowID(m_window)
                     )
-                return false;
+            {
+                events::WindowCloseEvent e;
+                m_eventCallback(e);
+            }
             else if (event.type == SDL_KEYDOWN)
             {
                 if (event.key.keysym.sym == SDLK_ESCAPE)
-                    return false;
+                {
+                    events::WindowCloseEvent e;
+                    m_eventCallback(e);
+                }
             }
             // Change the viewport when the window is resized
-            // else if (event.type == SDL_WINDOWEVENT &&
-            //         event.window.event == SDL_WINDOWEVENT_RESIZED)
-            // {
-            // }
+            else if (event.type == SDL_WINDOWEVENT &&
+                    event.window.event == SDL_WINDOWEVENT_RESIZED)
+            {
+                m_width = event.window.data1;
+                m_height = event.window.data2;
+
+                events::WindowResizeEvent e(m_width, m_height);
+                m_eventCallback(e);
+            }
             // if (event.type == SDL_MOUSEWHEEL)
             // {
             // }
         }
-        return true;
+    }
+
+    void SDLWindow::OnUpdate()
+    {
+        HandleEvents();
     }
     
     void SDLWindow::SwapBuffers()

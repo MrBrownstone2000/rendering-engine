@@ -20,10 +20,13 @@ namespace engine::window
             virtual uint GetWidth() const override;
             virtual uint GetHeight() const override;
 
-            bool OnUpdate() override;
+            void OnUpdate() override;
             void SwapBuffers() override;
             virtual void SetEventCallback(const EventCallback& cb) override;
             virtual void SetVSync(bool enabled) override;
+
+        private:
+            void HandleEvents();
 
         private:
             SDL_Window* m_window;

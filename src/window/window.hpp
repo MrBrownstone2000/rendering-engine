@@ -21,7 +21,7 @@ namespace engine::window
             virtual uint GetHeight() const = 0;
             virtual bool IsVSync() const = 0;
 
-            virtual bool OnUpdate() = 0;
+            virtual void OnUpdate() = 0;
             virtual void SwapBuffers() = 0;
             virtual void SetVSync(bool enabled) = 0;
             virtual void SetEventCallback(const EventCallback& cb) = 0;

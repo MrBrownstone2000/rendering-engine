@@ -22,6 +22,7 @@ namespace engine::events
         Keyboard    = M_BIT(1),
         Mouse       = M_BIT(2),
         MouseButton = M_BIT(3),
+        Window      = M_BIT(4),
     };
 
 #define EVENT_CLASS_TYPE(type) \
