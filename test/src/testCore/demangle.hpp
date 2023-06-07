@@ -4,7 +4,7 @@
 #include <string>
 namespace test
 {
-    const char* Demangle(const char* name);
+    std::string Demangle(const char* name);
 }
 
 #endif
