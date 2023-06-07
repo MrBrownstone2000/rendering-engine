@@ -25,6 +25,8 @@ namespace engine
             std::unique_ptr<window::IWindow> m_window;
             bool m_running = true;
     };
+    Application* GetApp();
+    void UserBoot();
 }
 
 #endif

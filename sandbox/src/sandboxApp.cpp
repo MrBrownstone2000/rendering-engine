@@ -16,19 +16,17 @@
 
 #include <GL/glew.h>
 
-using namespace engine;
-
-int main()
+namespace engine
 {
-    engine::Boot();
+    void UserBoot()
+    {
+        ioc::Get().Register<log::ISeverityLevelPolicy>([] {
+                return std::make_shared<log::SeverityLevelPolicy>(log::Level::Debug);
+                });
+    }
 
-    // We can change the components used for logging before logging for the first time
-    ioc::Get().Register<log::ISeverityLevelPolicy>([] {
-        return std::make_shared<log::SeverityLevelPolicy>(log::Level::Debug);
-    });
-
-    engine::Application app;
-    app.Run();
-
-    return 0;
+    Application* GetApp()
+    {
+        return new engine::Application;
+    }
 }
