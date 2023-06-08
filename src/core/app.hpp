@@ -1,9 +1,9 @@
 #ifndef __APP_HPP__
 #define __APP_HPP__
 
-#include "events/event.hpp"
-#include "events/windowEvent.hpp"
-#include "window/window.hpp"
+#include "../events/event.hpp"
+#include "../events/windowEvent.hpp"
+#include "../window/window.hpp"
 #include <memory>
 
 namespace engine
