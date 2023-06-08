@@ -43,7 +43,7 @@ TEST_MODULE(IoC)
     TEST(PolymorphicResolve)
     {
         // Init test method
-        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+        std::shared_ptr<ioc::Container> pIoC = std::make_shared<ioc::Container>();
 
         pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
         test::expect_eq(69, pIoC->Resolve<Base>()->test());
@@ -52,7 +52,7 @@ TEST_MODULE(IoC)
     TEST(SimpleResolveFailure)
     {
         // Init test method
-        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+        std::shared_ptr<ioc::Container> pIoC = std::make_shared<ioc::Container>();
 
         test::expect_exception<ioc::ServiceNotFound>([pIoC] { pIoC->Resolve<Base>()->test(); });
     }
@@ -60,7 +60,7 @@ TEST_MODULE(IoC)
     TEST(ParameterizedResolve)
     {
         // Init test method
-        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+        std::shared_ptr<ioc::Container> pIoC = std::make_shared<ioc::Container>();
 
         pIoC->Register<ParameterizedClass>([](ParameterizedClass::IocParams p){
             return std::make_shared<ParameterizedClass>(std::move(p));
@@ -71,13 +71,13 @@ TEST_MODULE(IoC)
     TEST(CascadedResolve)
     {
         // Init test method
-        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+        std::shared_ptr<ioc::Container> pIoC = std::make_shared<ioc::Container>();
 
-        pIoC->Register<Dependant>([=] {
+        pIoC->Register<Dependant>([&] {
             return std::make_shared<Dependant>(pIoC->Resolve<Base>());
         });
         pIoC->Register<Base>([] { return std::make_shared<Base>(); });
-        test::expect_eq(42, pIoC->Resolve<Base>()->test());
+        test::expect_eq(42, pIoC->Resolve<Dependant>()->pDependency->test());
     }
 
     TEST(IndependantResolve)
@@ -104,9 +104,9 @@ TEST_MODULE(IoC)
     TEST(ReplacementInjection)
     {
         // Init test method
-        std::shared_ptr<ioc::Container> pIoC = std::make_unique<ioc::Container>();
+        std::shared_ptr<ioc::Container> pIoC = std::make_shared<ioc::Container>();
 
-        pIoC->Register<Dependant>([=] {
+        pIoC->Register<Dependant>([&] {
             return std::make_shared<Dependant>(pIoC->Resolve<Base>());
         });
         pIoC->Register<Base>([] { return std::make_shared<Base>(); });
