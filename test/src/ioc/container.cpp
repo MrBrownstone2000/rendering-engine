@@ -111,10 +111,10 @@ TEST_MODULE(IoC)
         });
         pIoC->Register<Base>([] { return std::make_shared<Base>(); });
 
-        test::expect_eq(42, pIoC->Resolve<Base>()->test());
+        test::expect_eq(42, pIoC->Resolve<Dependant>()->pDependency->test());
 
         pIoC->Register<Base>([] { return std::make_shared<Derived>(); });
 
-        test::expect_eq(69, pIoC->Resolve<Base>()->test());
+        test::expect_eq(69, pIoC->Resolve<Dependant>()->pDependency->test());
     }
 }
