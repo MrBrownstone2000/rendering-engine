@@ -32,11 +32,49 @@ namespace engine::events
             uint m_width, m_height;
     };
 
+    class WindowMovedEvent : public Event
+    {
+        public:
+            WindowMovedEvent(int x, int y)
+                : m_x(x), m_y(y)
+            {}
+
+            inline int getX() const { return m_x; }
+            inline int getY() const { return m_y; }
+
+            std::string ToString() const override
+            {
+                std::stringstream ss;
+                ss << "WindowMovedEvent: " << m_x << ", " << m_y;
+                return ss.str();
+            }
+
+            EVENT_CLASS_TYPE(WindowMoved)
+            EVENT_CLASS_CATEGORY(Window)
+
+        private:
+            int m_x, m_y;
+    };
+
     class WindowCloseEvent : public Event
     {
         public:
             EVENT_CLASS_CATEGORY(Window)
             EVENT_CLASS_TYPE(WindowClose)
+    };
+
+    class WindowFocusEvent : public Event
+    {
+        public:
+            EVENT_CLASS_CATEGORY(Window)
+            EVENT_CLASS_TYPE(WindowFocus)
+    };
+
+    class WindowLostFocusEvent : public Event
+    {
+        public:
+            EVENT_CLASS_CATEGORY(Window)
+            EVENT_CLASS_TYPE(WindowLostFocus)
     };
 }
 

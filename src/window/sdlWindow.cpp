@@ -1,3 +1,4 @@
+#include "events/mouseEvent.hpp"
 #include "pch.hpp"
 #include "sdlWindow.hpp"
 #include "../events/windowEvent.hpp"
@@ -93,45 +94,113 @@ namespace engine::window
 
     void SDLWindow::HandleEvents()
     {
+        using namespace events;
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
             // ImGui_ImplSDL2_ProcessEvent(&event);
-            // "close requested" event: we close the window
+            // ========== Window Events ==========
             if (event.type == SDL_QUIT)
             {
-                events::WindowCloseEvent e;
-                m_eventCallback(e);
-            }
-            else if (event.type == SDL_WINDOWEVENT &&
-                    event.window.event == SDL_WINDOWEVENT_CLOSE &&
-                    event.window.windowID == SDL_GetWindowID(m_window)
-                    )
-            {
-                events::WindowCloseEvent e;
+                WindowCloseEvent e;
                 m_eventCallback(e);
             }
             else if (event.type == SDL_KEYDOWN)
             {
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                 {
-                    events::WindowCloseEvent e;
+                    WindowCloseEvent e;
                     m_eventCallback(e);
                 }
             }
-            // Change the viewport when the window is resized
-            else if (event.type == SDL_WINDOWEVENT &&
-                    event.window.event == SDL_WINDOWEVENT_RESIZED)
+            else if (event.type == SDL_WINDOWEVENT && event.window.windowID == SDL_GetWindowID(m_window))
             {
-                m_width = event.window.data1;
-                m_height = event.window.data2;
+                switch (event.window.event)
+                {
+                    case SDL_WINDOWEVENT_CLOSE:
+                    {
+                        WindowCloseEvent e;
+                        m_eventCallback(e);
+                        break;
+                    }
+                    case SDL_WINDOWEVENT_FOCUS_GAINED:
+                    {
+                        WindowFocusEvent e;
+                        m_eventCallback(e);
+                        break;
+                    }
+                    case SDL_WINDOWEVENT_FOCUS_LOST:
+                    {
+                        WindowLostFocusEvent e;
+                        m_eventCallback(e);
+                        break;
+                    }
+                    case SDL_WINDOWEVENT_RESIZED:
+                    {
+                        m_width = event.window.data1;
+                        m_height = event.window.data2;
 
-                events::WindowResizeEvent e(m_width, m_height);
-                m_eventCallback(e);
+                        WindowResizeEvent e(m_width, m_height);
+                        m_eventCallback(e);
+                        break;
+                    }
+                    case SDL_WINDOWEVENT_MOVED:
+                    {
+                        WindowMovedEvent e(event.window.data1, event.window.data2);
+                        m_eventCallback(e);
+                        break;
+                    }
+                }
             }
-            // if (event.type == SDL_MOUSEWHEEL)
-            // {
-            // }
+            // ========== Mouse Events ==========
+            if (event.type == SDL_MOUSEBUTTONDOWN)
+            {
+                MouseButtonType b = GetMouseButtonType(event.button.button);
+                if (b != MouseButtonType::Unsupported)
+                {
+                    MouseButtonPressedEvent e(b);
+                    m_eventCallback(e);
+                }
+                break;
+            }
+            if (event.type == SDL_MOUSEBUTTONUP)
+            {
+                MouseButtonType b = GetMouseButtonType(event.button.button);
+                if (b != MouseButtonType::Unsupported)
+                {
+                    MouseButtonReleasedEvent e(b);
+                    m_eventCallback(e);
+                }
+                break;
+            }
+            if (event.type == SDL_MOUSEWHEEL)
+            {
+                MouseScrolledEvent e(event.wheel.preciseX, event.wheel.preciseY);
+                m_eventCallback(e);
+                break;
+            }
+            if (event.type == SDL_MOUSEMOTION)
+            {
+                MouseMovedEvent e(event.motion.x, event.motion.y,
+                        event.motion.xrel, event.motion.yrel);
+                m_eventCallback(e);
+                break;
+            }
+        }
+    }
+
+    events::MouseButtonType SDLWindow::GetMouseButtonType(u8 sdlButton) const
+    {
+        switch (sdlButton)
+        {
+            case SDL_BUTTON_LEFT:
+                return events::MouseButtonType::Left;
+            case SDL_BUTTON_RIGHT:
+                return events::MouseButtonType::Right;
+            case SDL_BUTTON_MIDDLE:
+                return events::MouseButtonType::Middle;
+            default:
+                return events::MouseButtonType::Unsupported;
         }
     }
 

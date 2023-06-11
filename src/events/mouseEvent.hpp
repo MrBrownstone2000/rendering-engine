@@ -8,17 +8,20 @@ namespace engine::events
     class MouseMovedEvent : public Event
     {
         public:
-            MouseMovedEvent(float x, float y)
-                : m_posX(x), m_posY(y)
+            MouseMovedEvent(int x, int y, int relX, int relY)
+                : m_posX(x), m_posY(y), m_relX(relX), m_relY(relY)
             {}
 
-            inline float getX() const { return m_posX; }
-            inline float getY() const { return m_posY; }
+            inline int getX() const { return m_posX; }
+            inline int getY() const { return m_posY; }
+            inline int relX() const { return m_relX; }
+            inline int relY() const { return m_relY; }
 
             std::string ToString() const override
             {
                 std::stringstream ss;
                 ss << "MouseMovedEvent: " << m_posX << ", " << m_posY;
+                ss << " - " << m_relX << ", " << m_relY;
                 return ss.str();
             }
 
@@ -26,7 +29,8 @@ namespace engine::events
             EVENT_CLASS_CATEGORY(Input | Mouse)
 
         private:
-            float m_posX, m_posY;
+            int m_posX, m_posY;
+            int m_relX, m_relY;
     };
 
     class MouseScrolledEvent : public Event
@@ -53,22 +57,30 @@ namespace engine::events
             float m_offsetX, m_offsetY;
     };
 
+    enum MouseButtonType
+    {
+        Left,
+        Right,
+        Middle,
+        Unsupported
+    };
+
     class MouseButtonEvent : public Event
     {
         public:
-            inline int GetMouseButton() const { return m_button; }
+            inline MouseButtonType GetMouseButton() const { return m_button; }
 
             EVENT_CLASS_CATEGORY(Mouse | Input | MouseButton)
 
         protected:
-            MouseButtonEvent(int button) : m_button(button) {}
-            int m_button;
+            MouseButtonEvent(MouseButtonType button) : m_button(button) {}
+            MouseButtonType m_button;
     };
 
     class MouseButtonPressedEvent : public MouseButtonEvent
     {
         public:
-            MouseButtonPressedEvent(int button)
+            MouseButtonPressedEvent(MouseButtonType button)
                 : MouseButtonEvent(button)
             {}
 
@@ -85,7 +97,7 @@ namespace engine::events
     class MouseButtonReleasedEvent : public MouseButtonEvent
     {
         public:
-            MouseButtonReleasedEvent(int button)
+            MouseButtonReleasedEvent(MouseButtonType button)
                 : MouseButtonEvent(button)
             {}
 
