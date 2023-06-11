@@ -136,6 +136,7 @@ namespace engine::window
 
                         WindowResizeEvent e(m_width, m_height);
                         m_eventCallback(e);
+                        glViewport(0, 0, m_width, m_height);
                         break;
                     }
                     case SDL_WINDOWEVENT_MOVED:

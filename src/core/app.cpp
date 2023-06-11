@@ -1,6 +1,7 @@
 #include "app.hpp"
 #include "events/eventDispatcher.hpp"
 #include "ioc/container.hpp"
+#include "layer.hpp"
 #include "log/log.hpp"
 #include "log/severityLevelPolicy.hpp"
 #include "events/keyEvent.hpp"
@@ -22,23 +23,45 @@ namespace engine
 
     void Application::OnEvent(events::Event& e)
     {
-        engineLog.info(e); 
+        engineLog.verbose(e);
 
         events::EventDispatcher dispatcher(e);
         dispatcher.Dispatch<events::WindowCloseEvent>(M_BIND_EVENT_CB(OnWindowClose));
         dispatcher.Dispatch<events::KeyPressedEvent>(M_BIND_EVENT_CB(OnKeyPressed));
+
+        for (auto it = m_layerStack.end(); it != m_layerStack.begin(); --it)
+        {
+            (*it)->OnEvent(e);
+            if (e)
+                break;
+        }
     }
 
     void Application::Run()
     {
         while(m_running)
         {
-            m_window->OnUpdate();
             glClearColor(0, 0, 1, 1);
             glClear(GL_COLOR_BUFFER_BIT);
+
+            for (ILayer* layer : m_layerStack)
+                layer->OnUpdate();
+
+            m_window->OnUpdate();
             m_window->SwapBuffers();
         }
     }
+
+    void Application::PushLayer(ILayer* layer)
+    {
+        m_layerStack.PushLayer(layer);
+    }
+
+    void Application::PushOverlay(ILayer* overlay)
+    {
+        m_layerStack.PushOverlay(overlay);
+    }
+
 
     bool Application::OnWindowClose(events::WindowCloseEvent&)
     {

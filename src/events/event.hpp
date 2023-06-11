@@ -48,6 +48,7 @@ namespace engine::events
             }
 
             operator std::string() { return ToString(); }
+            operator bool() { return m_handled; }
 
         protected:
             bool m_handled = false;
