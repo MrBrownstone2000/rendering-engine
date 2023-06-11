@@ -3,6 +3,7 @@
 
 #include "../events/event.hpp"
 #include "../events/windowEvent.hpp"
+#include "../events/keyEvent.hpp"
 #include "../window/window.hpp"
 #include <memory>
 
@@ -20,6 +21,8 @@ namespace engine
 
         private:
             bool OnWindowClose(events::WindowCloseEvent& e);
+            bool OnKeyPressed(events::KeyPressedEvent& e);
+            bool OnKeyReleased(events::KeyReleasedEvent& e);
 
         private:
             std::unique_ptr<window::IWindow> m_window;

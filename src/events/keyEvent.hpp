@@ -2,6 +2,7 @@
 #define __KEYEVENT_HPP__
 
 #include "event.hpp"
+#include "keyCodes.hpp"
 #include <sstream>
 
 namespace engine::events
@@ -9,19 +10,19 @@ namespace engine::events
     class KeyEvent : public Event
     {
         public:
-            inline int GetKeyCode() const { return m_keyCode; }
+            inline KeyCode GetKeyCode() const { return m_keyCode; }
 
             EVENT_CLASS_CATEGORY(Keyboard | Input)
 
         protected:
-            KeyEvent(int keycode) : m_keyCode(keycode) {}
-            int m_keyCode;
+            KeyEvent(KeyCode keycode) : m_keyCode(keycode) {}
+            KeyCode m_keyCode;
     };
 
     class KeyPressedEvent : public KeyEvent
     {
         public:
-            KeyPressedEvent(int keycode, bool repeated)
+            KeyPressedEvent(KeyCode keycode, bool repeated)
                 : KeyEvent(keycode), m_repeated(repeated)
             {}
 
@@ -29,7 +30,7 @@ namespace engine::events
             std::string ToString() const override
             {
                 std::stringstream ss;
-                ss << "KeyPressedEvent: " << m_keyCode;
+                ss << "KeyPressedEvent: " << int(m_keyCode);
                 if (m_repeated)
                     ss << " (repeated)";
                 return ss.str();
@@ -44,14 +45,14 @@ namespace engine::events
     class KeyReleasedEvent : public KeyEvent
     {
         public:
-            KeyReleasedEvent(int keycode)
+            KeyReleasedEvent(KeyCode keycode)
                 : KeyEvent(keycode)
             {}
 
             std::string ToString() const override
             {
                 std::stringstream ss;
-                ss << "KeyReleasedEvent: " << m_keyCode;
+                ss << "KeyReleasedEvent: " << int(m_keyCode);
                 return ss.str();
             }
 

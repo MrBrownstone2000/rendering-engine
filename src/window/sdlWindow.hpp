@@ -1,16 +1,16 @@
 #ifndef __SDLWINDOW_HPP__
 #define __SDLWINDOW_HPP__
 
-#include "events/mouseEvent.hpp"
 #include "window.hpp"
 #include "../renderer/context.hpp"
-#include <SDL.h>
+
 #include <memory>
 #include <string>
 
+class SDL_Window;
+
 namespace engine::window
 {
-    class WindowImpl;
     class SDLWindow : public IWindow
     {
         public:
@@ -28,7 +28,6 @@ namespace engine::window
 
         private:
             void HandleEvents();
-            events::MouseButtonType GetMouseButtonType(u8 sdlButton) const;
 
         private:
             SDL_Window* m_window;

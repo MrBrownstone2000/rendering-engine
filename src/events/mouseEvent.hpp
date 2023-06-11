@@ -62,7 +62,7 @@ namespace engine::events
         Left,
         Right,
         Middle,
-        Unsupported
+        Unknown
     };
 
     class MouseButtonEvent : public Event

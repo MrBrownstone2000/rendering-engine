@@ -1,7 +1,9 @@
+#include "events/keyEvent.hpp"
 #include "events/mouseEvent.hpp"
 #include "pch.hpp"
 #include "sdlWindow.hpp"
 #include "../events/windowEvent.hpp"
+#include "input.hpp"
 
 #include "SDL.h"
 #include "GL/glew.h"
@@ -105,14 +107,6 @@ namespace engine::window
                 WindowCloseEvent e;
                 m_eventCallback(e);
             }
-            else if (event.type == SDL_KEYDOWN)
-            {
-                if (event.key.keysym.sym == SDLK_ESCAPE)
-                {
-                    WindowCloseEvent e;
-                    m_eventCallback(e);
-                }
-            }
             else if (event.type == SDL_WINDOWEVENT && event.window.windowID == SDL_GetWindowID(m_window))
             {
                 switch (event.window.event)
@@ -155,8 +149,8 @@ namespace engine::window
             // ========== Mouse Events ==========
             if (event.type == SDL_MOUSEBUTTONDOWN)
             {
-                MouseButtonType b = GetMouseButtonType(event.button.button);
-                if (b != MouseButtonType::Unsupported)
+                MouseButtonType b = input::GetMouseButtonType(event.button.button);
+                if (b != MouseButtonType::Unknown)
                 {
                     MouseButtonPressedEvent e(b);
                     m_eventCallback(e);
@@ -165,8 +159,8 @@ namespace engine::window
             }
             if (event.type == SDL_MOUSEBUTTONUP)
             {
-                MouseButtonType b = GetMouseButtonType(event.button.button);
-                if (b != MouseButtonType::Unsupported)
+                MouseButtonType b = input::GetMouseButtonType(event.button.button);
+                if (b != MouseButtonType::Unknown)
                 {
                     MouseButtonReleasedEvent e(b);
                     m_eventCallback(e);
@@ -186,21 +180,27 @@ namespace engine::window
                 m_eventCallback(e);
                 break;
             }
-        }
-    }
-
-    events::MouseButtonType SDLWindow::GetMouseButtonType(u8 sdlButton) const
-    {
-        switch (sdlButton)
-        {
-            case SDL_BUTTON_LEFT:
-                return events::MouseButtonType::Left;
-            case SDL_BUTTON_RIGHT:
-                return events::MouseButtonType::Right;
-            case SDL_BUTTON_MIDDLE:
-                return events::MouseButtonType::Middle;
-            default:
-                return events::MouseButtonType::Unsupported;
+            // ========== Keyboard Events ==========
+            if (event.type == SDL_KEYDOWN)
+            {
+                KeyCode k = input::GetKeyCode(event.key.keysym.sym);
+                if (k != KeyCode::Unknown)
+                {
+                    KeyPressedEvent e(k, event.key.repeat);
+                    m_eventCallback(e);
+                }
+                break;
+            }
+            if (event.type == SDL_KEYUP)
+            {
+                KeyCode k = input::GetKeyCode(event.key.keysym.sym);
+                if (k != KeyCode::Unknown)
+                {
+                    KeyReleasedEvent e(k);
+                    m_eventCallback(e);
+                }
+                break;
+            }
         }
     }
 
@@ -208,7 +208,7 @@ namespace engine::window
     {
         HandleEvents();
     }
-    
+
     void SDLWindow::SwapBuffers()
     {
         m_context->SwapBuffers();

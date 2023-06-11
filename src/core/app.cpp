@@ -3,6 +3,7 @@
 #include "ioc/container.hpp"
 #include "log/log.hpp"
 #include "log/severityLevelPolicy.hpp"
+#include "events/keyEvent.hpp"
 
 #include <GL/glew.h>
 
@@ -25,6 +26,7 @@ namespace engine
 
         events::EventDispatcher dispatcher(e);
         dispatcher.Dispatch<events::WindowCloseEvent>(M_BIND_EVENT_CB(OnWindowClose));
+        dispatcher.Dispatch<events::KeyPressedEvent>(M_BIND_EVENT_CB(OnKeyPressed));
     }
 
     void Application::Run()
@@ -41,6 +43,18 @@ namespace engine
     bool Application::OnWindowClose(events::WindowCloseEvent&)
     {
         m_running = false;
+        return true;
+    }
+
+    bool Application::OnKeyPressed(events::KeyPressedEvent& e)
+    {
+        if (e.GetKeyCode() == events::KeyCode::Escape)
+            m_running = false;
+        return true;
+    }
+
+    bool Application::OnKeyReleased(events::KeyReleasedEvent&)
+    {
         return true;
     }
 #undef M_BIND_EVENT_CB
