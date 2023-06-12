@@ -9,7 +9,5 @@ namespace engine
     {
         log::Boot();
         window::Boot();
-
-        engineLog.info("Engine has Booted");
     }
 }

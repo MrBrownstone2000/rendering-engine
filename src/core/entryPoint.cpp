@@ -9,6 +9,7 @@ int main()
 {
     Boot();
     UserBoot();
+    engineLog.info("Engine has Booted");
 
     Application* app = GetApp();
     app->Run();

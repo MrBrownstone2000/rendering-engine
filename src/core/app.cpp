@@ -29,9 +29,9 @@ namespace engine
         dispatcher.Dispatch<events::WindowCloseEvent>(M_BIND_EVENT_CB(OnWindowClose));
         dispatcher.Dispatch<events::KeyPressedEvent>(M_BIND_EVENT_CB(OnKeyPressed));
 
-        for (auto it = m_layerStack.end(); it != m_layerStack.begin(); --it)
+        for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
         {
-            (*it)->OnEvent(e);
+            (*--it)->OnEvent(e);
             if (e)
                 break;
         }
