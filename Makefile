@@ -60,12 +60,14 @@ CFLAGS += -I $(PCH_DIR) $(shell pkg-config --cflags sdl2 glew) -I $(CONTRIB) -I 
 LDFLAGS += $(shell pkg-config --libs sdl2 glew) -ldl -lbfd -lunwind
 
 # ====== Rules ======
-all: $(LIB) includes
+engine: $(LIB) includes
 
-$(PROJECTS): all
+all: engine $(PROJECTS)
+
+$(PROJECTS): engine
 	cd $@ && make
 
-$(PROJECTS_RUN): all
+$(PROJECTS_RUN): engine
 	cd $(shell target=$@ && echo $${target%"Run"}) && make run
 
 $(PROJECTS_CLEAN):
