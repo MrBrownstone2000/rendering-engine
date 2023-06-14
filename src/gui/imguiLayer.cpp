@@ -1,3 +1,4 @@
+#include "events/eventDispatcher.hpp"
 #include "pch.hpp"
 #include "imguiLayer.hpp"
 #include "../core/app.hpp"
@@ -64,9 +65,64 @@ namespace engine::gui
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
-    void ImGuiLayer::OnEvent(events::Event&)
+    void ImGuiLayer::OnEvent(events::Event& e)
     {
-        
+        events::EventDispatcher d(e); 
+        d.Dispatch<events::MouseButtonPressedEvent>(M_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressed));
+        d.Dispatch<events::MouseButtonReleasedEvent>(M_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleased));
+        d.Dispatch<events::MouseMovedEvent>(M_BIND_EVENT_FN(ImGuiLayer::OnMouseMoved));
+        d.Dispatch<events::MouseScrolledEvent>(M_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolled));
     }
 
+    bool ImGuiLayer::OnMouseButtonPressed(events::MouseButtonPressedEvent& e)
+    {
+        int mouse_button = e.GetMouseButton();
+        if (mouse_button == events::MouseButtonType::Unknown)
+            return false;
+
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
+        io.AddMouseButtonEvent(mouse_button, true);
+        // bd->MouseButtonsDown = bd->MouseButtonsDown | (1 << mouse_button);
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseButtonReleased(events::MouseButtonReleasedEvent& e)
+    {
+        int mouse_button = e.GetMouseButton();
+        if (mouse_button == events::MouseButtonType::Unknown)
+            return false;
+
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
+        io.AddMouseButtonEvent(mouse_button, false);
+        // bd->MouseButtonsDown = bd->MouseButtonsDown & ~(1 << mouse_button);
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseScrolled(events::MouseScrolledEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
+        io.AddMouseWheelEvent(-e.getX(), e.getY());
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseMoved(events::MouseMovedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        ImVec2 pos(e.getX(), e.getY());
+
+        // if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        // {
+        //     int window_x, window_y;
+        //     SDL_GetWindowPosition(SDL_GetWindowFromID(event->motion.windowID), &window_x, &window_y);
+        //     mouse_pos.x += window_x;
+        //     mouse_pos.y += window_y;
+        // }
+
+        io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
+        io.AddMousePosEvent(pos.x, pos.y);
+        return false;
+    }
 }

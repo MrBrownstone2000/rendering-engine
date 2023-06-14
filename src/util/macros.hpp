@@ -6,4 +6,6 @@
 
 #define watch(expr) watchValue((expr), M_STR(expr))
 
+#define M_BIND_EVENT_FN(fun) std::bind(&fun, this, std::placeholders::_1)
+
 #endif

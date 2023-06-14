@@ -18,7 +18,6 @@ namespace engine::window
         Check(SDL_Init(SDL_INIT_VIDEO) >= 0)
             .msg("Error: Could not initalize SDL...");
 
-        // const char* glsl_version = "#version 460";
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
@@ -100,7 +99,6 @@ namespace engine::window
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
-            // ImGui_ImplSDL2_ProcessEvent(&event);
             // ========== Window Events ==========
             if (event.type == SDL_QUIT)
             {

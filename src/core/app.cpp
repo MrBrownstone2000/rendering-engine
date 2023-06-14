@@ -12,13 +12,12 @@ namespace engine
 {
     Application* Application::s_instance = nullptr;
 
-#define M_BIND_EVENT_CB(fun) std::bind(&Application::fun, this, std::placeholders::_1)
     Application::Application()
         : m_window(window::Create(800, 600, "Hi!"))
     {
         Check(s_instance == nullptr).msg("The Application already exists !");
         s_instance = this;
-        m_window->SetEventCallback(M_BIND_EVENT_CB(OnEvent));
+        m_window->SetEventCallback(M_BIND_EVENT_FN(Application::OnEvent));
     }
 
     Application::~Application()
@@ -30,13 +29,13 @@ namespace engine
         engineLog.verbose(e);
 
         events::EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<events::WindowCloseEvent>(M_BIND_EVENT_CB(OnWindowClose));
-        dispatcher.Dispatch<events::KeyPressedEvent>(M_BIND_EVENT_CB(OnKeyPressed));
+        dispatcher.Dispatch<events::WindowCloseEvent>(M_BIND_EVENT_FN(Application::OnWindowClose));
+        dispatcher.Dispatch<events::KeyPressedEvent>(M_BIND_EVENT_FN(Application::OnKeyPressed));
 
         for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
         {
             (*--it)->OnEvent(e);
-            if (e)
+            if (e.isHandled())
                 break;
         }
     }
@@ -84,5 +83,4 @@ namespace engine
     {
         return true;
     }
-#undef M_BIND_EVENT_CB
 }
