@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "engine/engine.hpp"
+#include "engine/gui/imguiLayer.hpp"
 
 #include "engine/ioc/container.hpp"
 #include "engine/log/severityLevelPolicy.hpp"
@@ -31,6 +32,7 @@ namespace engine
             Sandbox()
             {
                 PushLayer(new ExampleLayer());
+                PushLayer(new gui::ImGuiLayer());
             }
 
             ~Sandbox()

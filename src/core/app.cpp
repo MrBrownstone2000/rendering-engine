@@ -10,10 +10,14 @@
 
 namespace engine
 {
+    Application* Application::s_instance = nullptr;
+
 #define M_BIND_EVENT_CB(fun) std::bind(&Application::fun, this, std::placeholders::_1)
     Application::Application()
         : m_window(window::Create(800, 600, "Hi!"))
     {
+        Check(s_instance == nullptr).msg("The Application already exists !");
+        s_instance = this;
         m_window->SetEventCallback(M_BIND_EVENT_CB(OnEvent));
     }
 

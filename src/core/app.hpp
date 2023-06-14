@@ -25,6 +25,9 @@ namespace engine
             void PushLayer(ILayer* layer);
             void PushOverlay(ILayer* overlay);
 
+            inline static Application& Get() { return *s_instance; }
+            inline window::IWindow& GetWindow() { return *m_window; }
+
         private:
             bool OnWindowClose(events::WindowCloseEvent& e);
             bool OnKeyPressed(events::KeyPressedEvent& e);
@@ -35,6 +38,8 @@ namespace engine
             bool m_running = true;
 
             LayerStack m_layerStack;
+
+            static Application* s_instance;
     };
     Application* GetApp();
     void UserBoot();
