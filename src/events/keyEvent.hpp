@@ -3,6 +3,7 @@
 
 #include "event.hpp"
 #include "keyCodes.hpp"
+#include "../util/types.hpp"
 #include <sstream>
 
 namespace engine::events
@@ -11,19 +12,22 @@ namespace engine::events
     {
         public:
             inline KeyCode GetKeyCode() const { return m_keyCode; }
+            inline u8 GetKeyMods() const { return m_mods; }
 
             EVENT_CLASS_CATEGORY(Keyboard | Input)
 
         protected:
-            KeyEvent(KeyCode keycode) : m_keyCode(keycode) {}
+            KeyEvent(KeyCode keycode, u8 mods) : m_keyCode(keycode), m_mods(mods) {}
+
             KeyCode m_keyCode;
+            u8 m_mods;
     };
 
     class KeyPressedEvent : public KeyEvent
     {
         public:
-            KeyPressedEvent(KeyCode keycode, bool repeated)
-                : KeyEvent(keycode), m_repeated(repeated)
+            KeyPressedEvent(KeyCode keycode, u8 mods, bool repeated)
+                : KeyEvent(keycode, mods), m_repeated(repeated)
             {}
 
             inline bool IsRepeated() const { return m_repeated; }
@@ -45,8 +49,8 @@ namespace engine::events
     class KeyReleasedEvent : public KeyEvent
     {
         public:
-            KeyReleasedEvent(KeyCode keycode)
-                : KeyEvent(keycode)
+            KeyReleasedEvent(KeyCode keycode, u8 mods)
+                : KeyEvent(keycode, mods)
             {}
 
             std::string ToString() const override
@@ -57,6 +61,19 @@ namespace engine::events
             }
 
             EVENT_CLASS_TYPE(KeyReleased)
+    };
+
+    class TextEvent : public Event
+    {
+        public:
+            TextEvent(const char* str) : m_str(str) {}
+            inline const char* GetText() const { return m_str; }
+
+            EVENT_CLASS_CATEGORY(Keyboard | Input)
+            EVENT_CLASS_TYPE(Text)
+
+        private:
+            const char* m_str;
     };
 };
 

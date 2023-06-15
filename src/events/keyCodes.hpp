@@ -1,8 +1,18 @@
 #ifndef __KEYCODES_HPP__
 #define __KEYCODES_HPP__
 
+#include "../util/macros.hpp"
+
 namespace engine::events
 {
+    enum KeyModifier
+    {
+        Shift = M_BIT(0),
+        Ctrl = M_BIT(1),
+        Alt = M_BIT(2),
+        Super = M_BIT(3)
+    };
+
     enum class KeyCode
     {
         Unknown = 0,

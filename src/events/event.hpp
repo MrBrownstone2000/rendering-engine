@@ -11,7 +11,7 @@ namespace engine::events
     {
         None,
         WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
-        KeyPressed, KeyReleased,
+        KeyPressed, KeyReleased, Text,
         MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
     };
 

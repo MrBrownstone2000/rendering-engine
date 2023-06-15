@@ -185,7 +185,16 @@ namespace engine::window
                 KeyCode k = input::GetKeyCode(event.key.keysym.sym);
                 if (k != KeyCode::Unknown)
                 {
-                    KeyPressedEvent e(k, event.key.repeat);
+                    u8 mods = 0;
+                    if (event.key.keysym.mod & KMOD_SHIFT)
+                        mods |= KeyModifier::Shift;
+                    if (event.key.keysym.mod & KMOD_ALT)
+                        mods |= KeyModifier::Alt;
+                    if (event.key.keysym.mod & KMOD_CTRL)
+                        mods |= KeyModifier::Ctrl;
+                    if (event.key.keysym.mod & KMOD_GUI)
+                        mods |= KeyModifier::Super;
+                    KeyPressedEvent e(k, mods, event.key.repeat);
                     m_eventCallback(e);
                 }
                 break;
@@ -195,10 +204,24 @@ namespace engine::window
                 KeyCode k = input::GetKeyCode(event.key.keysym.sym);
                 if (k != KeyCode::Unknown)
                 {
-                    KeyReleasedEvent e(k);
+                    u8 mods = 0;
+                    if (event.key.keysym.mod & KMOD_SHIFT)
+                        mods |= KeyModifier::Shift;
+                    if (event.key.keysym.mod & KMOD_ALT)
+                        mods |= KeyModifier::Alt;
+                    if (event.key.keysym.mod & KMOD_CTRL)
+                        mods |= KeyModifier::Ctrl;
+                    if (event.key.keysym.mod & KMOD_GUI)
+                        mods |= KeyModifier::Super;
+                    KeyReleasedEvent e(k, mods);
                     m_eventCallback(e);
                 }
                 break;
+            }
+            if (event.type == SDL_TEXTINPUT)
+            {
+                TextEvent e(event.text.text);
+                m_eventCallback(e);
             }
         }
     }
