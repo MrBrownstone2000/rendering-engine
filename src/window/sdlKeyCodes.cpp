@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "input.hpp"
+#include "sdlKeyCodes.hpp"
 
 #include <SDL.h>
 
@@ -17,6 +17,21 @@ namespace engine::window::input
                 return events::MouseButtonType::Middle;
             default:
                 return events::MouseButtonType::Unknown;
+        }
+    }
+
+    u8 GetSDLMouseButton(events::MouseButtonType button)
+    {
+        switch (button)
+        {
+            case events::MouseButtonType::Left:
+                return SDL_BUTTON_LEFT;
+            case events::MouseButtonType::Right:
+                return SDL_BUTTON_RIGHT;
+            case events::MouseButtonType::Middle:
+                return SDL_BUTTON_MIDDLE;
+            default:
+                return 0;
         }
     }
 
@@ -267,6 +282,255 @@ namespace engine::window::input
                 return events::KeyCode::RSuper;
             default:
                 return events::KeyCode::Unknown;
+        }
+    }
+
+    int GetSDLKeyCode(events::KeyCode key)
+    {
+        switch (key)
+        {
+            case events::KeyCode::Return:
+                return SDLK_RETURN; 
+            case events::KeyCode::Escape:
+                return SDLK_ESCAPE; 
+            case events::KeyCode::Backspace:
+                return SDLK_BACKSPACE; 
+            case events::KeyCode::Tab:
+                return SDLK_TAB; 
+            case events::KeyCode::Space:
+                return SDLK_SPACE; 
+            case events::KeyCode::Exclaim:
+                return SDLK_EXCLAIM; 
+            case events::KeyCode::Quotedbl:
+                return SDLK_QUOTEDBL; 
+            case events::KeyCode::Hash:
+                return SDLK_HASH; 
+            case events::KeyCode::Percent:
+                return SDLK_PERCENT; 
+            case events::KeyCode::Dollar:
+                return SDLK_DOLLAR; 
+            case events::KeyCode::Ampersand:
+                return SDLK_AMPERSAND; 
+            case events::KeyCode::Quote:
+                return SDLK_QUOTE; 
+            case events::KeyCode::Leftparen:
+                return SDLK_LEFTPAREN; 
+            case events::KeyCode::Rightparen:
+                return SDLK_RIGHTPAREN; 
+            case events::KeyCode::Asterisk:
+                return SDLK_ASTERISK; 
+            case events::KeyCode::Plus:
+                return SDLK_PLUS; 
+            case events::KeyCode::Comma:
+                return SDLK_COMMA; 
+            case events::KeyCode::Minus:
+                return SDLK_MINUS; 
+            case events::KeyCode::Period:
+                return SDLK_PERIOD; 
+            case events::KeyCode::Slash:
+                return SDLK_SLASH; 
+            case events::KeyCode::Key_0:
+                return SDLK_0; 
+            case events::KeyCode::Key_1:
+                return SDLK_1; 
+            case events::KeyCode::Key_2:
+                return SDLK_2; 
+            case events::KeyCode::Key_3:
+                return SDLK_3; 
+            case events::KeyCode::Key_4:
+                return SDLK_4; 
+            case events::KeyCode::Key_5:
+                return SDLK_5; 
+            case events::KeyCode::Key_6:
+                return SDLK_6; 
+            case events::KeyCode::Key_7:
+                return SDLK_7; 
+            case events::KeyCode::Key_8:
+                return SDLK_8; 
+            case events::KeyCode::Key_9:
+                return SDLK_9; 
+            case events::KeyCode::Colon:
+                return SDLK_COLON; 
+            case events::KeyCode::Semicolon:
+                return SDLK_SEMICOLON; 
+            case events::KeyCode::Less:
+                return SDLK_LESS; 
+            case events::KeyCode::Equals:
+                return SDLK_EQUALS; 
+            case events::KeyCode::Greater:
+                return SDLK_GREATER; 
+            case events::KeyCode::Question:
+                return SDLK_QUESTION; 
+            case events::KeyCode::At:
+                return SDLK_AT; 
+            case events::KeyCode::Leftbracket:
+                return SDLK_LEFTBRACKET; 
+            case events::KeyCode::Backslash:
+                return SDLK_BACKSLASH; 
+            case events::KeyCode::Rightbracket:
+                return SDLK_RIGHTBRACKET; 
+            case events::KeyCode::Caret:
+                return SDLK_CARET; 
+            case events::KeyCode::Underscore:
+                return SDLK_UNDERSCORE; 
+            case events::KeyCode::Backquote:
+                return SDLK_BACKQUOTE; 
+            case events::KeyCode::Key_a:
+                return SDLK_a; 
+            case events::KeyCode::Key_b:
+                return SDLK_b; 
+            case events::KeyCode::Key_c:
+                return SDLK_c; 
+            case events::KeyCode::Key_d:
+                return SDLK_d; 
+            case events::KeyCode::Key_e:
+                return SDLK_e; 
+            case events::KeyCode::Key_f:
+                return SDLK_f; 
+            case events::KeyCode::Key_g:
+                return SDLK_g; 
+            case events::KeyCode::Key_h:
+                return SDLK_h; 
+            case events::KeyCode::Key_i:
+                return SDLK_i; 
+            case events::KeyCode::Key_j:
+                return SDLK_j; 
+            case events::KeyCode::Key_k:
+                return SDLK_k; 
+            case events::KeyCode::Key_l:
+                return SDLK_l; 
+            case events::KeyCode::Key_m:
+                return SDLK_m; 
+            case events::KeyCode::Key_n:
+                return SDLK_n; 
+            case events::KeyCode::Key_o:
+                return SDLK_o; 
+            case events::KeyCode::Key_p:
+                return SDLK_p; 
+            case events::KeyCode::Key_q:
+                return SDLK_q; 
+            case events::KeyCode::Key_r:
+                return SDLK_r; 
+            case events::KeyCode::Key_s:
+                return SDLK_s; 
+            case events::KeyCode::Key_t:
+                return SDLK_t; 
+            case events::KeyCode::Key_u:
+                return SDLK_u; 
+            case events::KeyCode::Key_v:
+                return SDLK_v; 
+            case events::KeyCode::Key_w:
+                return SDLK_w; 
+            case events::KeyCode::Key_x:
+                return SDLK_x; 
+            case events::KeyCode::Key_y:
+                return SDLK_y; 
+            case events::KeyCode::Key_z:
+                return SDLK_z; 
+            case events::KeyCode::Capslock:
+                return SDLK_CAPSLOCK; 
+            case events::KeyCode::F1:
+                return SDLK_F1; 
+            case events::KeyCode::F2:
+                return SDLK_F2; 
+            case events::KeyCode::F3:
+                return SDLK_F3; 
+            case events::KeyCode::F4:
+                return SDLK_F4; 
+            case events::KeyCode::F5:
+                return SDLK_F5; 
+            case events::KeyCode::F6:
+                return SDLK_F6; 
+            case events::KeyCode::F7:
+                return SDLK_F7; 
+            case events::KeyCode::F8:
+                return SDLK_F8; 
+            case events::KeyCode::F9:
+                return SDLK_F9; 
+            case events::KeyCode::F10:
+                return SDLK_F10; 
+            case events::KeyCode::F11:
+                return SDLK_F11; 
+            case events::KeyCode::F12:
+                return SDLK_F12; 
+            case events::KeyCode::Printscreen:
+                return SDLK_PRINTSCREEN; 
+            case events::KeyCode::Scrolllock:
+                return SDLK_SCROLLLOCK; 
+            case events::KeyCode::Pause:
+                return SDLK_PAUSE; 
+            case events::KeyCode::Insert:
+                return SDLK_INSERT; 
+            case events::KeyCode::Home:
+                return SDLK_HOME; 
+            case events::KeyCode::Pageup:
+                return SDLK_PAGEUP; 
+            case events::KeyCode::Delete:
+                return SDLK_DELETE; 
+            case events::KeyCode::End:
+                return SDLK_END; 
+            case events::KeyCode::Pagedown:
+                return SDLK_PAGEDOWN; 
+            case events::KeyCode::Right:
+                return SDLK_RIGHT; 
+            case events::KeyCode::Left:
+                return SDLK_LEFT; 
+            case events::KeyCode::Down:
+                return SDLK_DOWN; 
+            case events::KeyCode::Up:
+                return SDLK_UP; 
+            case events::KeyCode::Numlockclear:
+                return SDLK_NUMLOCKCLEAR; 
+            case events::KeyCode::KP_Divide:
+                return SDLK_KP_DIVIDE; 
+            case events::KeyCode::KP_Multiply:
+                return SDLK_KP_MULTIPLY; 
+            case events::KeyCode::KP_Minus:
+                return SDLK_KP_MINUS; 
+            case events::KeyCode::KP_Plus:
+                return SDLK_KP_PLUS; 
+            case events::KeyCode::KP_Enter:
+                return SDLK_KP_ENTER; 
+            case events::KeyCode::KP_1:
+                return SDLK_KP_1; 
+            case events::KeyCode::KP_2:
+                return SDLK_KP_2; 
+            case events::KeyCode::KP_3:
+                return SDLK_KP_3; 
+            case events::KeyCode::KP_4:
+                return SDLK_KP_4; 
+            case events::KeyCode::KP_5:
+                return SDLK_KP_5; 
+            case events::KeyCode::KP_6:
+                return SDLK_KP_6; 
+            case events::KeyCode::KP_7:
+                return SDLK_KP_7; 
+            case events::KeyCode::KP_8:
+                return SDLK_KP_8; 
+            case events::KeyCode::KP_9:
+                return SDLK_KP_9; 
+            case events::KeyCode::KP_0:
+                return SDLK_KP_0; 
+            case events::KeyCode::KP_Period:
+                return SDLK_KP_PERIOD; 
+            case events::KeyCode::LCtrl:
+                return SDLK_LCTRL; 
+            case events::KeyCode::LShift:
+                return SDLK_LSHIFT; 
+            case events::KeyCode::LAlt:
+                return SDLK_LALT; 
+            case events::KeyCode::LSuper:
+                return SDLK_LGUI; 
+            case events::KeyCode::RCtrl:
+                return SDLK_RCTRL; 
+            case events::KeyCode::RShift:
+                return SDLK_RSHIFT; 
+            case events::KeyCode::RAlt:
+                return SDLK_RALT; 
+            case events::KeyCode::RSuper:
+                return SDLK_RGUI; 
+            default:
+                return SDLK_UNKNOWN;
         }
     }
 }

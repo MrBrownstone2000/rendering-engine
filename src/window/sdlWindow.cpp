@@ -3,7 +3,7 @@
 #include "pch.hpp"
 #include "sdlWindow.hpp"
 #include "../events/windowEvent.hpp"
-#include "input.hpp"
+#include "sdlKeyCodes.hpp"
 
 #include "SDL.h"
 #include "GL/glew.h"
