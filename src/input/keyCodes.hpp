@@ -3,7 +3,7 @@
 
 #include "../util/macros.hpp"
 
-namespace engine::events
+namespace engine::input
 {
     enum MouseButtonType
     {

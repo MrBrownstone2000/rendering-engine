@@ -148,8 +148,8 @@ namespace engine::window
             // ========== Mouse Events ==========
             if (event.type == SDL_MOUSEBUTTONDOWN)
             {
-                MouseButtonType b = input::GetMouseButtonType(event.button.button);
-                if (b != MouseButtonType::Unknown)
+                input::MouseButtonType b = input::GetMouseButtonType(event.button.button);
+                if (b != input::MouseButtonType::Unknown)
                 {
                     MouseButtonPressedEvent e(b);
                     m_eventCallback(e);
@@ -157,8 +157,8 @@ namespace engine::window
             }
             if (event.type == SDL_MOUSEBUTTONUP)
             {
-                MouseButtonType b = input::GetMouseButtonType(event.button.button);
-                if (b != MouseButtonType::Unknown)
+                input::MouseButtonType b = input::GetMouseButtonType(event.button.button);
+                if (b != input::MouseButtonType::Unknown)
                 {
                     MouseButtonReleasedEvent e(b);
                     m_eventCallback(e);
@@ -178,36 +178,36 @@ namespace engine::window
             // ========== Keyboard Events ==========
             if (event.type == SDL_KEYDOWN)
             {
-                KeyCode k = input::GetKeyCode(event.key.keysym.sym);
-                if (k != KeyCode::Unknown)
+                input::KeyCode k = input::GetKeyCode(event.key.keysym.sym);
+                if (k != input::KeyCode::Unknown)
                 {
                     u8 mods = 0;
                     if (event.key.keysym.mod & KMOD_SHIFT)
-                        mods |= KeyModifier::Shift;
+                        mods |= input::KeyModifier::Shift;
                     if (event.key.keysym.mod & KMOD_ALT)
-                        mods |= KeyModifier::Alt;
+                        mods |= input::KeyModifier::Alt;
                     if (event.key.keysym.mod & KMOD_CTRL)
-                        mods |= KeyModifier::Ctrl;
+                        mods |= input::KeyModifier::Ctrl;
                     if (event.key.keysym.mod & KMOD_GUI)
-                        mods |= KeyModifier::Super;
+                        mods |= input::KeyModifier::Super;
                     KeyPressedEvent e(k, mods, event.key.repeat);
                     m_eventCallback(e);
                 }
             }
             if (event.type == SDL_KEYUP)
             {
-                KeyCode k = input::GetKeyCode(event.key.keysym.sym);
-                if (k != KeyCode::Unknown)
+                input::KeyCode k = input::GetKeyCode(event.key.keysym.sym);
+                if (k != input::KeyCode::Unknown)
                 {
                     u8 mods = 0;
                     if (event.key.keysym.mod & KMOD_SHIFT)
-                        mods |= KeyModifier::Shift;
+                        mods |= input::KeyModifier::Shift;
                     if (event.key.keysym.mod & KMOD_ALT)
-                        mods |= KeyModifier::Alt;
+                        mods |= input::KeyModifier::Alt;
                     if (event.key.keysym.mod & KMOD_CTRL)
-                        mods |= KeyModifier::Ctrl;
+                        mods |= input::KeyModifier::Ctrl;
                     if (event.key.keysym.mod & KMOD_GUI)
-                        mods |= KeyModifier::Super;
+                        mods |= input::KeyModifier::Super;
                     KeyReleasedEvent e(k, mods);
                     m_eventCallback(e);
                 }

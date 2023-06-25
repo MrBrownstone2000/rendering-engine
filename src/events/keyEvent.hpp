@@ -11,22 +11,22 @@ namespace engine::events
     class KeyEvent : public Event
     {
         public:
-            inline KeyCode GetKeyCode() const { return m_keyCode; }
+            inline input::KeyCode GetKeyCode() const { return m_keyCode; }
             inline u8 GetKeyMods() const { return m_mods; }
 
             EVENT_CLASS_CATEGORY(Keyboard | Input)
 
         protected:
-            KeyEvent(KeyCode keycode, u8 mods) : m_keyCode(keycode), m_mods(mods) {}
+            KeyEvent(input::KeyCode keycode, u8 mods) : m_keyCode(keycode), m_mods(mods) {}
 
-            KeyCode m_keyCode;
+            input::KeyCode m_keyCode;
             u8 m_mods;
     };
 
     class KeyPressedEvent : public KeyEvent
     {
         public:
-            KeyPressedEvent(KeyCode keycode, u8 mods, bool repeated)
+            KeyPressedEvent(input::KeyCode keycode, u8 mods, bool repeated)
                 : KeyEvent(keycode, mods), m_repeated(repeated)
             {}
 
@@ -49,7 +49,7 @@ namespace engine::events
     class KeyReleasedEvent : public KeyEvent
     {
         public:
-            KeyReleasedEvent(KeyCode keycode, u8 mods)
+            KeyReleasedEvent(input::KeyCode keycode, u8 mods)
                 : KeyEvent(keycode, mods)
             {}
 

@@ -33,8 +33,12 @@ namespace engine::gui
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
         ImGuiStyle& style = ImGui::GetStyle();
-        style.WindowRounding = 0.0f;
-        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            ImGuiStyle& style = ImGui::GetStyle();
+            style.WindowRounding = 0.0f;
+            style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+        }
 
         // ImGui_ImplSDL2_InitForOpenGL(app.GetWindow(), void *sdl_gl_context)
 
@@ -77,26 +81,24 @@ namespace engine::gui
     bool ImGuiLayer::OnMouseButtonPressed(events::MouseButtonPressedEvent& e)
     {
         int mouse_button = e.GetMouseButton();
-        if (mouse_button == events::MouseButtonType::Unknown)
+        if (mouse_button == input::MouseButtonType::Unknown)
             return false;
 
         ImGuiIO& io = ImGui::GetIO();
         io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
         io.AddMouseButtonEvent(mouse_button, true);
-        // bd->MouseButtonsDown = bd->MouseButtonsDown | (1 << mouse_button);
         return false;
     }
 
     bool ImGuiLayer::OnMouseButtonReleased(events::MouseButtonReleasedEvent& e)
     {
         int mouse_button = e.GetMouseButton();
-        if (mouse_button == events::MouseButtonType::Unknown)
+        if (mouse_button == input::MouseButtonType::Unknown)
             return false;
 
         ImGuiIO& io = ImGui::GetIO();
         io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
         io.AddMouseButtonEvent(mouse_button, false);
-        // bd->MouseButtonsDown = bd->MouseButtonsDown & ~(1 << mouse_button);
         return false;
     }
 
@@ -113,16 +115,39 @@ namespace engine::gui
         ImGuiIO& io = ImGui::GetIO();
         ImVec2 pos(e.getX(), e.getY());
 
-        // if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        // {
-        //     int window_x, window_y;
-        //     SDL_GetWindowPosition(SDL_GetWindowFromID(event->motion.windowID), &window_x, &window_y);
-        //     mouse_pos.x += window_x;
-        //     mouse_pos.y += window_y;
-        // }
-
         io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
         io.AddMousePosEvent(pos.x, pos.y);
+        return false;
+    }
+
+    bool ImGuiLayer::OnText(events::TextEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddInputCharactersUTF8(e.GetText());
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyPressed(events::KeyPressedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.AddKeyEvent(ImGuiMod_Ctrl, (e.GetKeyMods() & input::KeyModifier::Ctrl) != 0);
+        io.AddKeyEvent(ImGuiMod_Shift, (e.GetKeyMods() & input::KeyModifier::Shift) != 0);
+        io.AddKeyEvent(ImGuiMod_Alt, (e.GetKeyMods() & input::KeyModifier::Alt) != 0);
+        io.AddKeyEvent(ImGuiMod_Super, (e.GetKeyMods() & input::KeyModifier::Super) != 0);
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyReleased(events::KeyReleasedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.AddKeyEvent(ImGuiMod_Ctrl, (e.GetKeyMods() & input::KeyModifier::Ctrl) != 0);
+        io.AddKeyEvent(ImGuiMod_Shift, (e.GetKeyMods() & input::KeyModifier::Shift) != 0);
+        io.AddKeyEvent(ImGuiMod_Alt, (e.GetKeyMods() & input::KeyModifier::Alt) != 0);
+        io.AddKeyEvent(ImGuiMod_Super, (e.GetKeyMods() & input::KeyModifier::Super) != 0);
+
         return false;
     }
 }

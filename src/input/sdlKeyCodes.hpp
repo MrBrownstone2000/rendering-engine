@@ -8,13 +8,13 @@
 namespace engine::input
 {
     // SDL to Engine KeyCodes
-    events::MouseButtonType GetMouseButtonType(u8 sdlButton);
-    events::KeyCode GetKeyCode(int sdlKey);
+    MouseButtonType GetMouseButtonType(u8 sdlButton);
+    KeyCode GetKeyCode(int sdlKey);
 
     // Engine to SDL KeyCodes
-    u8 GetSDLMouseButton(events::MouseButtonType button);
-    int GetSDLKeyCode(events::KeyCode key);
-    int GetSDLScanCode(events::KeyCode key);
+    u8 GetSDLMouseButton(MouseButtonType button);
+    int GetSDLKeyCode(KeyCode key);
+    int GetSDLScanCode(KeyCode key);
 }
 
 #endif

@@ -62,19 +62,19 @@ namespace engine::events
     class MouseButtonEvent : public Event
     {
         public:
-            inline MouseButtonType GetMouseButton() const { return m_button; }
+            inline input::MouseButtonType GetMouseButton() const { return m_button; }
 
             EVENT_CLASS_CATEGORY(Mouse | Input | MouseButton)
 
         protected:
-            MouseButtonEvent(MouseButtonType button) : m_button(button) {}
-            MouseButtonType m_button;
+            MouseButtonEvent(input::MouseButtonType button) : m_button(button) {}
+            input::MouseButtonType m_button;
     };
 
     class MouseButtonPressedEvent : public MouseButtonEvent
     {
         public:
-            MouseButtonPressedEvent(MouseButtonType button)
+            MouseButtonPressedEvent(input::MouseButtonType button)
                 : MouseButtonEvent(button)
             {}
 
@@ -91,7 +91,7 @@ namespace engine::events
     class MouseButtonReleasedEvent : public MouseButtonEvent
     {
         public:
-            MouseButtonReleasedEvent(MouseButtonType button)
+            MouseButtonReleasedEvent(input::MouseButtonType button)
                 : MouseButtonEvent(button)
             {}
 

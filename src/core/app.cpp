@@ -74,7 +74,7 @@ namespace engine
 
     bool Application::OnKeyPressed(events::KeyPressedEvent& e)
     {
-        if (e.GetKeyCode() == events::KeyCode::Escape)
+        if (e.GetKeyCode() == input::KeyCode::Escape)
             m_running = false;
         return true;
     }

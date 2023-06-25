@@ -19,11 +19,11 @@ namespace engine
         public:
             void OnUpdate() override
             {
-                if (input::Input::IsKeyPressed(events::KeyCode::Key_s))
+                if (input::Input::IsKeyPressed(input::KeyCode::Key_s))
                     engineLog.debug("Pressing key");
-                if (input::Input::IsMouseButtonPressed(events::MouseButtonType::Left))
+                if (input::Input::IsMouseButtonPressed(input::MouseButtonType::Left))
                     engineLog.debug("Pressing mouse");
-                if (input::Input::IsKeyPressed(events::KeyCode::Space))
+                if (input::Input::IsKeyPressed(input::KeyCode::Space))
                     std::cout << input::Input::GetMouseX() << ", " << input::Input::GetMouseY() << std::endl;
             }
 

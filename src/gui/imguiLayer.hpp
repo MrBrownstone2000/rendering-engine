@@ -24,6 +24,9 @@ namespace engine::gui
             bool OnMouseButtonReleased(events::MouseButtonReleasedEvent& e);
             bool OnMouseScrolled(events::MouseScrolledEvent& e);
             bool OnMouseMoved(events::MouseMovedEvent& e);
+            bool OnText(events::TextEvent& e);
+            bool OnKeyPressed(events::KeyPressedEvent& e);
+            bool OnKeyReleased(events::KeyReleasedEvent& e);
 
         private:
             float m_time = 0.f;
