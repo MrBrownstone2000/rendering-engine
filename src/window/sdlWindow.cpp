@@ -154,7 +154,6 @@ namespace engine::window
                     MouseButtonPressedEvent e(b);
                     m_eventCallback(e);
                 }
-                break;
             }
             if (event.type == SDL_MOUSEBUTTONUP)
             {
@@ -164,20 +163,17 @@ namespace engine::window
                     MouseButtonReleasedEvent e(b);
                     m_eventCallback(e);
                 }
-                break;
             }
             if (event.type == SDL_MOUSEWHEEL)
             {
                 MouseScrolledEvent e(event.wheel.preciseX, event.wheel.preciseY);
                 m_eventCallback(e);
-                break;
             }
             if (event.type == SDL_MOUSEMOTION)
             {
                 MouseMovedEvent e(event.motion.x, event.motion.y,
                         event.motion.xrel, event.motion.yrel);
                 m_eventCallback(e);
-                break;
             }
             // ========== Keyboard Events ==========
             if (event.type == SDL_KEYDOWN)
@@ -197,7 +193,6 @@ namespace engine::window
                     KeyPressedEvent e(k, mods, event.key.repeat);
                     m_eventCallback(e);
                 }
-                break;
             }
             if (event.type == SDL_KEYUP)
             {
@@ -216,7 +211,6 @@ namespace engine::window
                     KeyReleasedEvent e(k, mods);
                     m_eventCallback(e);
                 }
-                break;
             }
             if (event.type == SDL_TEXTINPUT)
             {
