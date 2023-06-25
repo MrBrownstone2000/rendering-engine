@@ -10,6 +10,7 @@
 
 #include "engine/core/layer.hpp"
 
+#include "engine/window/input.hpp"
 
 namespace engine
 {
@@ -18,6 +19,12 @@ namespace engine
         public:
             void OnUpdate() override
             {
+                if (input::Input::IsKeyPressed(events::KeyCode::Key_s))
+                    engineLog.debug("Pressing key");
+                if (input::Input::IsMouseButtonPressed(events::MouseButtonType::Left))
+                    engineLog.debug("Pressing mouse");
+                if (input::Input::IsKeyPressed(events::KeyCode::Space))
+                    std::cout << input::Input::GetMouseX() << ", " << input::Input::GetMouseY() << std::endl;
             }
 
             void OnEvent(events::Event&) override
