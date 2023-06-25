@@ -2,7 +2,7 @@
 #define __SDLINPUT_HPP__
 
 #include "input.hpp"
-#include "../events/keyCodes.hpp"
+#include "keyCodes.hpp"
 #include "../util/types.hpp"
 
 namespace engine::input

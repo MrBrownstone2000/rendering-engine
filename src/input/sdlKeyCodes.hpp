@@ -7,7 +7,7 @@
 
 namespace engine::input
 {
-    // SDL to engine KeyCodes
+    // SDL to Engine KeyCodes
     events::MouseButtonType GetMouseButtonType(u8 sdlButton);
     events::KeyCode GetKeyCode(int sdlKey);
 

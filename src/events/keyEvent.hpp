@@ -2,7 +2,7 @@
 #define __KEYEVENT_HPP__
 
 #include "event.hpp"
-#include "keyCodes.hpp"
+#include "../input/keyCodes.hpp"
 #include "../util/types.hpp"
 #include <sstream>
 

@@ -10,7 +10,7 @@
 
 #include "engine/core/layer.hpp"
 
-#include "engine/window/input.hpp"
+#include "engine/input/input.hpp"
 
 namespace engine
 {

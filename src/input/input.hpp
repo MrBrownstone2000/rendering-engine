@@ -1,8 +1,7 @@
 #ifndef __INPUT_HPP__
 #define __INPUT_HPP__
 
-#include "../events/keyCodes.hpp"
-#include "../events/mouseEvent.hpp"
+#include "keyCodes.hpp"
 
 namespace engine::input
 {

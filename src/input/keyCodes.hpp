@@ -5,6 +5,14 @@
 
 namespace engine::events
 {
+    enum MouseButtonType
+    {
+        Left,
+        Right,
+        Middle,
+        Unknown
+    };
+
     enum KeyModifier
     {
         Shift = M_BIT(0),

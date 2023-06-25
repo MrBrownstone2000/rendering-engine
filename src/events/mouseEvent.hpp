@@ -2,6 +2,8 @@
 #define __MOUSEEVENT_HPP__
 
 #include "event.hpp"
+#include "../input/keyCodes.hpp"
+
 #include <sstream>
 namespace engine::events
 {
@@ -55,14 +57,6 @@ namespace engine::events
 
         private:
             float m_offsetX, m_offsetY;
-    };
-
-    enum MouseButtonType
-    {
-        Left,
-        Right,
-        Middle,
-        Unknown
     };
 
     class MouseButtonEvent : public Event
