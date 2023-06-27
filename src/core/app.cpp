@@ -1,6 +1,6 @@
 #include "app.hpp"
 #include "events/eventDispatcher.hpp"
-#include "ioc/container.hpp"
+#include "ioc/singleton.hpp"
 #include "layer.hpp"
 #include "log/log.hpp"
 #include "log/severityLevelPolicy.hpp"
@@ -10,18 +10,20 @@
 
 namespace engine
 {
-    Application* Application::s_instance = nullptr;
-
     Application::Application()
         : m_window(window::Create(800, 600, "Hi!"))
     {
-        Check(s_instance == nullptr).msg("The Application already exists !");
-        s_instance = this;
         m_window->SetEventCallback(M_BIND_EVENT_FN(Application::OnEvent));
     }
 
     Application::~Application()
     {
+    }
+
+    Application& Application::Get() 
+    { 
+        static std::shared_ptr<Application> app = ioc::Sing().Resolve<Application>();
+        return *app;
     }
 
     void Application::OnEvent(events::Event& e)

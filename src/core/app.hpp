@@ -25,7 +25,7 @@ namespace engine
             void PushLayer(ILayer* layer);
             void PushOverlay(ILayer* overlay);
 
-            inline static Application& Get() { return *s_instance; }
+            static Application& Get();
             inline window::IWindow& GetWindow() { return *m_window; }
 
         private:
@@ -38,10 +38,7 @@ namespace engine
             bool m_running = true;
 
             LayerStack m_layerStack;
-
-            static Application* s_instance;
     };
-    Application* GetApp();
     void UserBoot();
 }
 

@@ -2,6 +2,7 @@
 #include "pch.hpp"
 #include "app.hpp"
 #include "boot.hpp"
+#include "ioc/singleton.hpp"
 
 using namespace engine;
 
@@ -11,9 +12,8 @@ int main()
     UserBoot();
     engineLog.info("Engine has Booted");
 
-    Application* app = GetApp();
+    std::shared_ptr<Application> app = ioc::Sing().Resolve<Application>();
     app->Run();
-    delete app;
 
     return 0;
 }

@@ -6,8 +6,6 @@
 
 namespace engine::input
 {
-    Input* Input::s_implementation = new SDLInput;
-
     SDLInput::SDLInput()
     {
         m_keyStates = SDL_GetKeyboardState(nullptr);

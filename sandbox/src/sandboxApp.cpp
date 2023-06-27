@@ -6,6 +6,7 @@
 #include "engine/gui/imguiLayer.hpp"
 
 #include "engine/ioc/container.hpp"
+#include "engine/ioc/singleton.hpp"
 #include "engine/log/severityLevelPolicy.hpp"
 
 #include "engine/core/layer.hpp"
@@ -50,12 +51,11 @@ namespace engine
     void UserBoot()
     {
         ioc::Get().Register<log::ISeverityLevelPolicy>([] {
-                return std::make_shared<log::SeverityLevelPolicy>(log::Level::Debug);
-                });
-    }
+            return std::make_shared<log::SeverityLevelPolicy>(log::Level::Debug);
+        });
 
-    Application* GetApp()
-    {
-        return new Sandbox;
+        ioc::Sing().Register<Application>([] {
+            return std::make_shared<Sandbox>();
+        });
     }
 }
