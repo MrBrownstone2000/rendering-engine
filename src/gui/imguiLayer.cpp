@@ -104,13 +104,6 @@ namespace engine::gui
 
     void ImGuiLayer::OnImGuiRender()
     {
-        // ImGuiIO& io = ImGui::GetIO();
-        // Application& app = Application::Get();
-        // io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
-        // 
-        // float time = SDL_GetTicks();
-        // io.DeltaTime = m_time > 0.f ? (time - m_time) : (1.f / 60.f);
-        // m_time = time;
         static bool show = true;
         ImGui::ShowDemoWindow(&show);
     }

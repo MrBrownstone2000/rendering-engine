@@ -27,8 +27,6 @@ namespace engine::gui
 
         private:
             static void EventCallback(void* nativeEvent);
-
-            float m_time = 0.f;
     };
 }
 
