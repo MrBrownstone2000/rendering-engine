@@ -40,7 +40,6 @@ namespace engine
             Sandbox()
             {
                 PushLayer(new ExampleLayer());
-                PushLayer(new gui::ImGuiLayer());
             }
 
             ~Sandbox()
@@ -53,9 +52,10 @@ namespace engine
         ioc::Get().Register<log::ISeverityLevelPolicy>([] {
             return std::make_shared<log::SeverityLevelPolicy>(log::Level::Debug);
         });
+    }
 
-        ioc::Sing().Register<Application>([] {
-            return std::make_shared<Sandbox>();
-        });
+    Application* CreateApplication()
+    {
+        return new Sandbox;
     }
 }

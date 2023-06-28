@@ -19,4 +19,9 @@ namespace engine::renderer
     {
         SDL_GL_SwapWindow(m_window);
     }
+
+    void* OpenGLContext::GetNativeContext()
+    {
+        return &m_context;
+    }
 }

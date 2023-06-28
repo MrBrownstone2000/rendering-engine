@@ -55,7 +55,7 @@ OBJ_DIRS = $(sort $(dir $(OBJ_LIST)))
 .PHONY: all veryclean clean includes $(PROJECTS) $(PROJECTS_RUN)
 
 # ====== Libraries ======
-CFLAGS += -I $(PCH_DIR) $(shell pkg-config --cflags sdl2 glew) -I $(CONTRIB) -I $(SRC)
+CFLAGS += -I $(PCH_DIR) $(shell pkg-config --cflags sdl2 glew) -I $(CONTRIB) -I $(SRC) -I $(CONTRIB)/imgui
 # -lstdc++_libbacktrace
 LDFLAGS += $(shell pkg-config --libs sdl2 glew) -ldl -lbfd -lunwind
 

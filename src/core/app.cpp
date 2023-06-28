@@ -10,20 +10,22 @@
 
 namespace engine
 {
+    Application* Application::s_instance = nullptr;
+
     Application::Application()
         : m_window(window::Create(800, 600, "Hi!"))
     {
+        s_instance = this;
+
+        m_imGuiLayer = new gui::ImGuiLayer;
+        PushOverlay(m_imGuiLayer);
+
         m_window->SetEventCallback(M_BIND_EVENT_FN(Application::OnEvent));
+        m_window->SetImGuiCallback(m_imGuiLayer->GetEventCallback());
     }
 
     Application::~Application()
     {
-    }
-
-    Application& Application::Get() 
-    { 
-        static std::shared_ptr<Application> app = ioc::Sing().Resolve<Application>();
-        return *app;
     }
 
     void Application::OnEvent(events::Event& e)
@@ -52,6 +54,11 @@ namespace engine
             for (ILayer* layer : m_layerStack)
                 layer->OnUpdate();
 
+            m_imGuiLayer->Begin();
+            for (ILayer* layer : m_layerStack)
+                layer->OnImGuiRender();
+            m_imGuiLayer->End();
+
             m_window->OnUpdate();
             m_window->SwapBuffers();
         }
@@ -60,11 +67,13 @@ namespace engine
     void Application::PushLayer(ILayer* layer)
     {
         m_layerStack.PushLayer(layer);
+        layer->OnAttach();
     }
 
     void Application::PushOverlay(ILayer* overlay)
     {
         m_layerStack.PushOverlay(overlay);
+        overlay->OnAttach();
     }
 
 

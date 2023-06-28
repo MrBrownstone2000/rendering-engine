@@ -12,7 +12,7 @@ int main()
     UserBoot();
     engineLog.info("Engine has Booted");
 
-    std::shared_ptr<Application> app = ioc::Sing().Resolve<Application>();
+    Application* app = CreateApplication();
     app->Run();
 
     return 0;

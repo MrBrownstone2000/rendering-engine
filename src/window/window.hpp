@@ -6,6 +6,7 @@
 #include <string>
 #include "../util/types.hpp"
 #include "../events/event.hpp"
+#include "../renderer/context.hpp"
 
 namespace engine::window
 {
@@ -17,14 +18,20 @@ namespace engine::window
             using EventCallback = std::function<void(events::Event&)>;
             virtual ~IWindow() = default;
 
+            virtual bool IsVSync() const = 0;
             virtual uint GetWidth() const = 0;
             virtual uint GetHeight() const = 0;
-            virtual bool IsVSync() const = 0;
+            virtual void* GetNativeWindow() = 0;
+            virtual renderer::IContext* GetContext() = 0;
 
             virtual void OnUpdate() = 0;
             virtual void SwapBuffers() = 0;
             virtual void SetVSync(bool enabled) = 0;
             virtual void SetEventCallback(const EventCallback& cb) = 0;
+            void SetImGuiCallback(std::function<void(void*)> cb) { m_imGuiEventCallback = cb; }
+
+        protected:
+            std::function<void(void*)> m_imGuiEventCallback;
     };
 
     std::unique_ptr<IWindow> Create(uint width, uint height, std::string title);

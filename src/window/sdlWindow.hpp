@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <string>
+#include <functional>
 
 class SDL_Window;
 
@@ -20,11 +21,13 @@ namespace engine::window
             virtual bool IsVSync() const override;
             virtual uint GetWidth() const override;
             virtual uint GetHeight() const override;
+            virtual void* GetNativeWindow() override;
+            virtual renderer::IContext* GetContext() override;
 
             void OnUpdate() override;
             void SwapBuffers() override;
-            virtual void SetEventCallback(const EventCallback& cb) override;
             virtual void SetVSync(bool enabled) override;
+            virtual void SetEventCallback(const EventCallback& cb) override;
 
         private:
             void HandleEvents();

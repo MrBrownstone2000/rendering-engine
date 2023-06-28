@@ -4,8 +4,8 @@
 #include "../core/app.hpp"
 
 #include "imgui/imgui.h"
-#include "imgui/imgui_impl_opengl3.h"
-#include "imgui/imgui_impl_sdl2.h"
+#include "imgui/backends/imgui_impl_opengl3.h"
+#include "imgui/backends/imgui_impl_sdl2.h"
 
 #include <SDL.h>
 
@@ -20,134 +20,98 @@ namespace engine::gui
     {
     }
 
+    std::function<void(void*)> ImGuiLayer::GetEventCallback()
+    {
+        return EventCallback;
+    }
+
     void ImGuiLayer::OnAttach()
     {
+        // Setup Dear ImGui context
+        IMGUI_CHECKVERSION();
         ImGui::CreateContext();
-        ImGui::StyleColorsDark();
-
-        ImGuiIO& io = ImGui::GetIO();
-
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
+        // io.ConfigViewportsNoAutoMerge = true;
+        // io.ConfigViewportsNoTaskBarIcon = true;
+
+        ImGui::StyleColorsDark();
+
+        // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
         ImGuiStyle& style = ImGui::GetStyle();
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
-            ImGuiStyle& style = ImGui::GetStyle();
             style.WindowRounding = 0.0f;
             style.Colors[ImGuiCol_WindowBg].w = 1.0f;
         }
 
-        // ImGui_ImplSDL2_InitForOpenGL(app.GetWindow(), void *sdl_gl_context)
+        Application& app = Application::Get();
+        SDL_Window* window = static_cast<SDL_Window*>(app.GetWindow().GetNativeWindow());
+        SDL_GLContext* gl_context = static_cast<SDL_GLContext*>(app.GetWindow().GetContext()->GetNativeContext());
 
+        // Setup Platform/Renderer backends
+        ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
         ImGui_ImplOpenGL3_Init("#version 460");
     }
 
     void ImGuiLayer::OnDetach()
     {
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui_ImplSDL2_Shutdown();
+        ImGui::DestroyContext();
     }
 
-    void ImGuiLayer::OnUpdate()
+    void ImGuiLayer::EventCallback(void* nativeEvent)
+    {
+        ImGui_ImplSDL2_ProcessEvent((SDL_Event*) nativeEvent);
+    }
+
+    void ImGuiLayer::Begin()
+    {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplSDL2_NewFrame();
+        ImGui::NewFrame();
+    }
+
+    void ImGuiLayer::End()
     {
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::Get();
         io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
-        
-        float time = SDL_GetTicks();
-        io.DeltaTime = m_time > 0.f ? (time - m_time) : (1.f / 60.f);
-        m_time = time;
-
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui::NewFrame();
-
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
 
         ImGui::Render();
+        // glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+        // glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        // glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        // Update and Render additional Platform Windows
+        // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
+        //  For this specific demo app we could also call SDL_GL_MakeCurrent(window, gl_context) directly)
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
+            SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
+        }
     }
 
-    void ImGuiLayer::OnEvent(events::Event& e)
+    void ImGuiLayer::OnImGuiRender()
     {
-        events::EventDispatcher d(e); 
-        d.Dispatch<events::MouseButtonPressedEvent>(M_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressed));
-        d.Dispatch<events::MouseButtonReleasedEvent>(M_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleased));
-        d.Dispatch<events::MouseMovedEvent>(M_BIND_EVENT_FN(ImGuiLayer::OnMouseMoved));
-        d.Dispatch<events::MouseScrolledEvent>(M_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolled));
-    }
-
-    bool ImGuiLayer::OnMouseButtonPressed(events::MouseButtonPressedEvent& e)
-    {
-        int mouse_button = e.GetMouseButton();
-        if (mouse_button == input::MouseButtonType::Unknown)
-            return false;
-
-        ImGuiIO& io = ImGui::GetIO();
-        io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
-        io.AddMouseButtonEvent(mouse_button, true);
-        return false;
-    }
-
-    bool ImGuiLayer::OnMouseButtonReleased(events::MouseButtonReleasedEvent& e)
-    {
-        int mouse_button = e.GetMouseButton();
-        if (mouse_button == input::MouseButtonType::Unknown)
-            return false;
-
-        ImGuiIO& io = ImGui::GetIO();
-        io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
-        io.AddMouseButtonEvent(mouse_button, false);
-        return false;
-    }
-
-    bool ImGuiLayer::OnMouseScrolled(events::MouseScrolledEvent& e)
-    {
-        ImGuiIO& io = ImGui::GetIO();
-        io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
-        io.AddMouseWheelEvent(-e.getX(), e.getY());
-        return false;
-    }
-
-    bool ImGuiLayer::OnMouseMoved(events::MouseMovedEvent& e)
-    {
-        ImGuiIO& io = ImGui::GetIO();
-        ImVec2 pos(e.getX(), e.getY());
-
-        io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
-        io.AddMousePosEvent(pos.x, pos.y);
-        return false;
-    }
-
-    bool ImGuiLayer::OnText(events::TextEvent& e)
-    {
-        ImGuiIO& io = ImGui::GetIO();
-        io.AddInputCharactersUTF8(e.GetText());
-        return false;
-    }
-
-    bool ImGuiLayer::OnKeyPressed(events::KeyPressedEvent& e)
-    {
-        ImGuiIO& io = ImGui::GetIO();
-
-        io.AddKeyEvent(ImGuiMod_Ctrl, (e.GetKeyMods() & input::KeyModifier::Ctrl) != 0);
-        io.AddKeyEvent(ImGuiMod_Shift, (e.GetKeyMods() & input::KeyModifier::Shift) != 0);
-        io.AddKeyEvent(ImGuiMod_Alt, (e.GetKeyMods() & input::KeyModifier::Alt) != 0);
-        io.AddKeyEvent(ImGuiMod_Super, (e.GetKeyMods() & input::KeyModifier::Super) != 0);
-
-        return false;
-    }
-
-    bool ImGuiLayer::OnKeyReleased(events::KeyReleasedEvent& e)
-    {
-        ImGuiIO& io = ImGui::GetIO();
-
-        io.AddKeyEvent(ImGuiMod_Ctrl, (e.GetKeyMods() & input::KeyModifier::Ctrl) != 0);
-        io.AddKeyEvent(ImGuiMod_Shift, (e.GetKeyMods() & input::KeyModifier::Shift) != 0);
-        io.AddKeyEvent(ImGuiMod_Alt, (e.GetKeyMods() & input::KeyModifier::Alt) != 0);
-        io.AddKeyEvent(ImGuiMod_Super, (e.GetKeyMods() & input::KeyModifier::Super) != 0);
-
-        return false;
+        // ImGuiIO& io = ImGui::GetIO();
+        // Application& app = Application::Get();
+        // io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+        // 
+        // float time = SDL_GetTicks();
+        // io.DeltaTime = m_time > 0.f ? (time - m_time) : (1.f / 60.f);
+        // m_time = time;
+        static bool show = true;
+        ImGui::ShowDemoWindow(&show);
     }
 }

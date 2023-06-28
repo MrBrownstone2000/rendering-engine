@@ -5,6 +5,7 @@
 #include "../events/event.hpp"
 #include "../events/windowEvent.hpp"
 #include "../events/keyEvent.hpp"
+#include "../gui/imguiLayer.hpp"
 #include "../window/window.hpp"
 #include <memory>
 
@@ -25,7 +26,7 @@ namespace engine
             void PushLayer(ILayer* layer);
             void PushOverlay(ILayer* overlay);
 
-            static Application& Get();
+            static Application& Get() { return *s_instance; }
             inline window::IWindow& GetWindow() { return *m_window; }
 
         private:
@@ -35,11 +36,15 @@ namespace engine
 
         private:
             std::unique_ptr<window::IWindow> m_window;
+            gui::ImGuiLayer* m_imGuiLayer;
             bool m_running = true;
 
             LayerStack m_layerStack;
+
+            static Application* s_instance;
     };
     void UserBoot();
+    Application* CreateApplication();
 }
 
 #endif

@@ -1,9 +1,9 @@
+#include "pch.hpp"
 #include "events/keyEvent.hpp"
 #include "events/mouseEvent.hpp"
-#include "pch.hpp"
 #include "sdlWindow.hpp"
-#include "../events/windowEvent.hpp"
-#include "../input/sdlKeyCodes.hpp"
+#include "events/windowEvent.hpp"
+#include "input/sdlKeyCodes.hpp"
 
 #include "SDL.h"
 #include "GL/glew.h"
@@ -72,6 +72,16 @@ namespace engine::window
         return m_height;
     }
 
+    void* SDLWindow::GetNativeWindow() 
+    {
+        return m_window;
+    }
+
+    renderer::IContext* SDLWindow::GetContext()
+    {
+        return m_context.get();
+    }
+
     void SDLWindow::SetVSync(bool enabled)
     {
         m_vsync = enabled;
@@ -96,9 +106,12 @@ namespace engine::window
     void SDLWindow::HandleEvents()
     {
         using namespace events;
+        Check(m_imGuiEventCallback);
+
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
+            m_imGuiEventCallback(&event);
             // ========== Window Events ==========
             if (event.type == SDL_QUIT)
             {

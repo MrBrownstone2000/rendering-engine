@@ -6,6 +6,8 @@
 #include "../events/keyEvent.hpp"
 #include "../events/windowEvent.hpp"
 
+#include <functional>
+
 namespace engine::gui
 {
     class ImGuiLayer : public ILayer
@@ -14,21 +16,18 @@ namespace engine::gui
             ImGuiLayer();
             ~ImGuiLayer();
 
-            void OnAttach();
-            void OnDetach();
-            void OnUpdate();
-            void OnEvent(events::Event& e);
+            void OnAttach() override;
+            void OnDetach() override;
+            void OnImGuiRender() override;
+
+            void Begin();
+            void End();
+
+            std::function<void(void*)> GetEventCallback();
 
         private:
-            bool OnMouseButtonPressed(events::MouseButtonPressedEvent& e);
-            bool OnMouseButtonReleased(events::MouseButtonReleasedEvent& e);
-            bool OnMouseScrolled(events::MouseScrolledEvent& e);
-            bool OnMouseMoved(events::MouseMovedEvent& e);
-            bool OnText(events::TextEvent& e);
-            bool OnKeyPressed(events::KeyPressedEvent& e);
-            bool OnKeyReleased(events::KeyReleasedEvent& e);
+            static void EventCallback(void* nativeEvent);
 
-        private:
             float m_time = 0.f;
     };
 }

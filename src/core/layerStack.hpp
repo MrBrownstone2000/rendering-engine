@@ -2,6 +2,7 @@
 #define __LAYERSTACK_HPP__
 
 #include <vector>
+#include "../util/types.hpp"
 
 namespace engine
 {
@@ -12,7 +13,7 @@ namespace engine
         public:
             using LayerStackIterator = std::vector<ILayer*>::iterator;
 
-            LayerStack();
+            LayerStack() {};
             ~LayerStack();
 
             void PushLayer(ILayer* layer);
@@ -25,7 +26,7 @@ namespace engine
             LayerStackIterator end() { return m_layers.end(); }
         private:
             std::vector<ILayer*> m_layers;
-            LayerStackIterator m_layersInsert;
+            u32 m_layerInsertIndex = 0;
     };
 }
 
