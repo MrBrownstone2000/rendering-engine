@@ -6,6 +6,7 @@
 #include "../events/windowEvent.hpp"
 #include "../events/keyEvent.hpp"
 #include "../gui/imguiLayer.hpp"
+#include "../renderer/shader.hpp"
 #include "../window/window.hpp"
 #include <memory>
 #include <GL/glew.h>
@@ -44,6 +45,7 @@ namespace engine
 
             static Application* s_instance;
 
+            renderer::Shader shader;
             GLuint vao, vbo, ebo;
     };
     void UserBoot();

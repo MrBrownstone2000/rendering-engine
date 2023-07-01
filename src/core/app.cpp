@@ -49,6 +49,8 @@ namespace engine
         glGenBuffers(1, &ebo);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+        shader = renderer::Shader("../shaders/vertex_basic.glsl", "../shaders/frag_basic.glsl");
     }
 
     Application::~Application()
@@ -82,6 +84,7 @@ namespace engine
             glClear(GL_COLOR_BUFFER_BIT);
 
             glBindVertexArray(vao);
+            shader.use();
 
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
