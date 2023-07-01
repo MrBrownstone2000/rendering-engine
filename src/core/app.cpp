@@ -22,10 +22,40 @@ namespace engine
 
         m_window->SetEventCallback(M_BIND_EVENT_FN(Application::OnEvent));
         m_window->SetImGuiCallback(m_imGuiLayer->GetEventCallback());
+
+        glGenVertexArrays(1, &vao);
+        glBindVertexArray(vao);
+        
+        float vertices[] = {
+            -0.5, -0.5, 0,
+            0.5, -0.5, 0,
+            -0.5, 0.5, 0,
+            0.5, 0.5, 0
+        };
+
+        glGenBuffers(1, &vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+        uint indices[] = {
+            0, 1, 2,
+            2, 3, 1
+        };
+
+        glGenBuffers(1, &ebo);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     }
 
     Application::~Application()
     {
+        glDeleteBuffers(1, &ebo);
+        glDeleteBuffers(1, &vbo);
+        glDeleteVertexArrays(1, &vao);
     }
 
     void Application::OnEvent(events::Event& e)
@@ -50,6 +80,10 @@ namespace engine
         {
             glClearColor(0, 0, 1, 1);
             glClear(GL_COLOR_BUFFER_BIT);
+
+            glBindVertexArray(vao);
+
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
             for (ILayer* layer : m_layerStack)
                 layer->OnUpdate();

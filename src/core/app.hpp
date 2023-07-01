@@ -8,6 +8,7 @@
 #include "../gui/imguiLayer.hpp"
 #include "../window/window.hpp"
 #include <memory>
+#include <GL/glew.h>
 
 namespace engine
 {
@@ -42,6 +43,8 @@ namespace engine
             LayerStack m_layerStack;
 
             static Application* s_instance;
+
+            GLuint vao, vbo, ebo;
     };
     void UserBoot();
     Application* CreateApplication();
