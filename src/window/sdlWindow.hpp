@@ -15,7 +15,7 @@ namespace engine::window
     class SDLWindow : public IWindow
     {
         public:
-            SDLWindow(uint width, uint height, std::string title);
+            SDLWindow(const IocParams& p);
             ~SDLWindow();
 
             virtual bool IsVSync() const override;
@@ -28,6 +28,8 @@ namespace engine::window
             void SwapBuffers() override;
             virtual void SetVSync(bool enabled) override;
             virtual void SetEventCallback(const EventCallback& cb) override;
+
+            static void Boot();
 
         private:
             void HandleEvents();

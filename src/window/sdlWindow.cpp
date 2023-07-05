@@ -13,7 +13,7 @@
 
 namespace engine::window
 {
-    void Boot()
+    void SDLWindow::Boot()
     {
         Check(SDL_Init(SDL_INIT_VIDEO) >= 0)
             .msg("Error: Could not initalize SDL...");
@@ -23,20 +23,19 @@ namespace engine::window
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
     }
 
-    std::unique_ptr<IWindow> Create(uint width, uint height, std::string title)
-    {
-        return std::make_unique<SDLWindow>(width, height, title);
-    }
-
-    SDLWindow::SDLWindow(uint width, uint height, std::string title)
+    SDLWindow::SDLWindow(const IocParams& p)
     {
         engineLog.info("Creating Window");
 
+        m_width = p.width;
+        m_height = p.height;
+        m_vsync = true;
+
         m_window = SDL_CreateWindow(
-                title.c_str(),
+                p.title.c_str(),
                 SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED,
-                width, height,
+                m_width, m_height,
                 SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN |
                 SDL_WINDOW_RESIZABLE    //  | SDL_WINDOW_FULLSCREEN
                 );
@@ -44,9 +43,6 @@ namespace engine::window
         Check(m_window).msg("Error: could not create window...");
 
         SDL_GL_SetSwapInterval(1);
-        m_width = width;
-        m_height = height;
-        m_vsync = true;
 
         m_context = std::make_unique<renderer::OpenGLContext>(m_window);
 

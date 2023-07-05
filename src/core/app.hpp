@@ -37,7 +37,7 @@ namespace engine
             bool OnKeyReleased(events::KeyReleasedEvent& e);
 
         private:
-            std::unique_ptr<window::IWindow> m_window;
+            std::shared_ptr<window::IWindow> m_window;
             gui::ImGuiLayer* m_imGuiLayer;
             bool m_running = true;
 

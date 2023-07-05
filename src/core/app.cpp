@@ -13,9 +13,10 @@ namespace engine
     Application* Application::s_instance = nullptr;
 
     Application::Application()
-        : m_window(window::Create(800, 600, "Hi!"))
     {
         s_instance = this;
+
+        m_window = ioc::Get().Resolve<window::IWindow>({.width = 800, .height = 600, .title = "Hi!"});
 
         m_imGuiLayer = new gui::ImGuiLayer;
         PushOverlay(m_imGuiLayer);

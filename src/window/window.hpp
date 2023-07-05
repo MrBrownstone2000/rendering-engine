@@ -15,6 +15,12 @@ namespace engine::window
     class IWindow
     {
         public:
+            struct IocParams {
+                uint width;
+                uint height;
+                std::string title;
+            };
+
             using EventCallback = std::function<void(events::Event&)>;
             virtual ~IWindow() = default;
 
@@ -33,8 +39,6 @@ namespace engine::window
         protected:
             std::function<void(void*)> m_imGuiEventCallback;
     };
-
-    std::unique_ptr<IWindow> Create(uint width, uint height, std::string title);
 }
 
 #endif
