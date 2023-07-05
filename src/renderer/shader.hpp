@@ -1,17 +1,17 @@
 #ifndef __SHADER_HPP__
 #define __SHADER_HPP__
 
-#include <string>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <string>
+#include <vector>
+#include <filesystem>
 
 namespace engine::renderer
 {
     class Shader
     {
         public:
-            GLuint id; // Program ID
-
             // Reads and builds the shader program
             Shader(const std::string &vertexShaderPath, const std::string &fragmentShaderPath);
             Shader();
@@ -35,7 +35,7 @@ namespace engine::renderer
             void setUniform(const std::string &name, const glm::vec3& value) const;
             void setUniform(const std::string &name, const glm::vec4& value) const;
 
-            static void setBaseDir(const std::string dir);
+            static void setIncludeDirs(const std::vector<std::filesystem::path>& dirs);
 
         private:
             std::string readFile(std::string fileName);
@@ -47,7 +47,9 @@ namespace engine::renderer
             std::string preprocessShader(const std::string& shader);
 
         private:
-            static std::string s_baseDir;
+            GLuint id; // Program ID
+
+            static std::vector<std::filesystem::path> s_includeDirs;
     };
 }
 

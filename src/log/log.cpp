@@ -11,7 +11,6 @@
 #include "log/level.hpp"
 #include "log/textFormatter.hpp"
 
-// toto
 namespace engine::log
 {
     IChannel* GetDefaultChannel()

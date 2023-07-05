@@ -50,7 +50,8 @@ namespace engine
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-        shader = renderer::Shader("../shaders/vertex_basic.glsl", "../shaders/frag_basic.glsl");
+        renderer::Shader::setIncludeDirs({ "../shaders" });
+        shader = renderer::Shader("vertex_basic.glsl", "frag_basic.glsl");
     }
 
     Application::~Application()

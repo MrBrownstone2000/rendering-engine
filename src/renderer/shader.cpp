@@ -5,20 +5,18 @@
 
 namespace engine::renderer
 {
-    std::string Shader::s_baseDir = "";
+    std::vector<std::filesystem::path> Shader::s_includeDirs;
 
-    void Shader::setBaseDir(const std::string dir)
+    void Shader::setIncludeDirs(const std::vector<std::filesystem::path>& dirs)
     {
-        s_baseDir = dir;
-        if (s_baseDir.at(s_baseDir.size() - 1) != '/')
-            s_baseDir += '/';
+        s_includeDirs = dirs;
     }
 
     // Reads and builds the shader program
     Shader::Shader(const std::string &vertexShaderPath, const std::string &fragmentShaderPath)
     {
-        GLuint vertexShader = loadShader(GL_VERTEX_SHADER, s_baseDir + vertexShaderPath);
-        GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, s_baseDir + fragmentShaderPath);
+        GLuint vertexShader = loadShader(GL_VERTEX_SHADER, vertexShaderPath);
+        GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, fragmentShaderPath);
 
         // Link shader program
         id = glCreateProgram();
@@ -111,20 +109,18 @@ namespace engine::renderer
     std::string Shader::readFile(std::string fileName)
     {
         std::ifstream file;
-        file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
         std::string content;
 
-        try
+        std::filesystem::path dir;
+        for (const auto& dir : s_includeDirs)
         {
-            file.open(fileName);
-            content = std::string((std::istreambuf_iterator<char>(file)),
-                    (std::istreambuf_iterator<char>()));
-        }
-        catch (const std::ifstream::failure &e)
-        {
-            std::cerr << "ERROR::SHADER::FILE_NOT_SUCESSFULLY_READ: " << fileName << std::endl;
-            exit(1);
-        }
+            file.open(dir / fileName);
+            if (file) break; 
+        } 
+
+        if (!file) engineLog.error("Cannot find shader " + fileName);
+
+        content = std::string(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
 
         return content;
     }
@@ -205,8 +201,7 @@ namespace engine::renderer
                 int start = line.find('"');
                 int end = line.find('"', start + 1);
                 std::string file = line.substr(start + 1, end - start - 1);
-                // std::cout << file << std::endl;
-                std::string include = readFile(s_baseDir + file);
+                std::string include = readFile(file);
                 include = preprocessShader(include);
                 out += include;
             }
