@@ -22,8 +22,8 @@ namespace engine::renderer
             Shader& operator=(Shader&& rhs);
             ~Shader();
 
-            // Activate / Use the program
-            void use() const;
+            void bind() const;
+            void unbind() const;
 
             // Uniform utility function
             void setUniform(const std::string &name, bool value) const;

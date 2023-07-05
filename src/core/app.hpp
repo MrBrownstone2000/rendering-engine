@@ -7,6 +7,8 @@
 #include "../events/keyEvent.hpp"
 #include "../gui/imguiLayer.hpp"
 #include "../renderer/shader.hpp"
+#include "../renderer/vertexBuffer.hpp"
+#include "../renderer/indexBuffer.hpp"
 #include "../window/window.hpp"
 #include "../ioc/singleton.hpp"
 #include <memory>
@@ -47,7 +49,9 @@ namespace engine
             LayerStack m_layerStack;
 
             renderer::Shader shader;
-            GLuint vao, vbo, ebo;
+            renderer::VertexBuffer vbo;
+            renderer::IndexBuffer ebo;
+            GLuint vao;
     };
 }
 

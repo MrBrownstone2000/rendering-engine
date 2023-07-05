@@ -51,10 +51,14 @@ namespace engine::renderer
         glDeleteProgram(id);
     }
 
-    // Activate / Use the program
-    void Shader::use() const
+    void Shader::bind() const
     {
         glUseProgram(id);
+    }
+
+    void Shader::unbind() const
+    {
+        glUseProgram(0);
     }
 
     // Uniform utility functions

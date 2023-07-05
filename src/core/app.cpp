@@ -33,10 +33,7 @@ namespace engine
             0.5, 0.5, 0
         };
 
-        glGenBuffers(1, &vbo);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        vbo = renderer::VertexBuffer(vertices, sizeof(vertices));
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -46,9 +43,7 @@ namespace engine
             2, 3, 1
         };
 
-        glGenBuffers(1, &ebo);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        ebo = renderer::IndexBuffer(indices, 6);
 
         renderer::Shader::setIncludeDirs({ "../shaders" });
         shader = renderer::Shader("vertex_basic.glsl", "frag_basic.glsl");
@@ -63,8 +58,6 @@ namespace engine
 
     Application::~Application()
     {
-        glDeleteBuffers(1, &ebo);
-        glDeleteBuffers(1, &vbo);
         glDeleteVertexArrays(1, &vao);
     }
 
@@ -92,9 +85,9 @@ namespace engine
             glClear(GL_COLOR_BUFFER_BIT);
 
             glBindVertexArray(vao);
-            shader.use();
+            shader.bind();
 
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_TRIANGLES, ebo.getCount(), GL_UNSIGNED_INT, nullptr);
 
             for (ILayer* layer : m_layerStack)
                 layer->OnUpdate();
