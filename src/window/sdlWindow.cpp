@@ -53,7 +53,7 @@ namespace engine::window
             {
                 std::stringstream oss;
                 oss << "GLEW Error: " << glewGetErrorString(err) << "\n";
-                Check(false).msg(oss.str());
+                engineLog.fatal(oss.str());
             }
             m_isGlewInit = true;
         }

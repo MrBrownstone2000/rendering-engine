@@ -10,19 +10,18 @@
 
 namespace engine
 {
-    Application* Application::s_instance = nullptr;
-
     Application::Application()
     {
-        s_instance = this;
+        static bool isInit = false;
+        if (isInit)
+        {
+            engineLog.fatal("There can only be one application !");
+            exit(1);
+        }
+        isInit = true;
 
         m_window = ioc::Get().Resolve<window::IWindow>({.width = 800, .height = 600, .title = "Hi!"});
-
-        m_imGuiLayer = new gui::ImGuiLayer;
-        PushOverlay(m_imGuiLayer);
-
         m_window->SetEventCallback(M_BIND_EVENT_FN(Application::OnEvent));
-        m_window->SetImGuiCallback(m_imGuiLayer->GetEventCallback());
 
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
@@ -53,6 +52,13 @@ namespace engine
 
         renderer::Shader::setIncludeDirs({ "../shaders" });
         shader = renderer::Shader("vertex_basic.glsl", "frag_basic.glsl");
+    }
+
+    void Application::Init()
+    {
+        m_imGuiLayer = new gui::ImGuiLayer;
+        PushOverlay(m_imGuiLayer);
+        m_window->SetImGuiCallback(m_imGuiLayer->GetEventCallback());
     }
 
     Application::~Application()

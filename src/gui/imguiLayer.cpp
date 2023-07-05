@@ -36,8 +36,8 @@ namespace engine::gui
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
+        io.ConfigViewportsNoTaskBarIcon = true;
         // io.ConfigViewportsNoAutoMerge = true;
-        // io.ConfigViewportsNoTaskBarIcon = true;
 
         ImGui::StyleColorsDark();
 

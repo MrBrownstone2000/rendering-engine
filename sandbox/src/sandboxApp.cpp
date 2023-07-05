@@ -52,10 +52,9 @@ namespace engine
         ioc::Get().Register<log::ISeverityLevelPolicy>([] {
             return std::make_shared<log::SeverityLevelPolicy>(log::Level::Debug);
         });
-    }
 
-    Application* CreateApplication()
-    {
-        return new Sandbox;
+        ioc::Sing().Register<Application>([] {
+            return std::make_shared<Sandbox>();
+        });
     }
 }

@@ -8,6 +8,7 @@
 #include "../gui/imguiLayer.hpp"
 #include "../renderer/shader.hpp"
 #include "../window/window.hpp"
+#include "../ioc/singleton.hpp"
 #include <memory>
 #include <GL/glew.h>
 
@@ -21,6 +22,8 @@ namespace engine
             Application();
             virtual ~Application();
 
+            // For initializations that need Application::Get()
+            void Init();
             void Run();
 
             void OnEvent(events::Event& e);
@@ -28,7 +31,7 @@ namespace engine
             void PushLayer(ILayer* layer);
             void PushOverlay(ILayer* overlay);
 
-            static Application& Get() { return *s_instance; }
+            inline static Application& Get() { return *ioc::Sing().Resolve<Application>(); }
             inline window::IWindow& GetWindow() { return *m_window; }
 
         private:
@@ -43,13 +46,9 @@ namespace engine
 
             LayerStack m_layerStack;
 
-            static Application* s_instance;
-
             renderer::Shader shader;
             GLuint vao, vbo, ebo;
     };
-    void UserBoot();
-    Application* CreateApplication();
 }
 
 #endif

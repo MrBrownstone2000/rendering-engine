@@ -4,6 +4,7 @@
 namespace engine
 {
     void Boot();
+    void UserBoot();
 }
 
 #endif
