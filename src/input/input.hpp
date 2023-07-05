@@ -7,21 +7,18 @@ namespace engine::input
 {
     void Boot();
 
-    class Input
+    bool IsKeyPressed(KeyCode key);
+    bool IsMouseButtonPressed(MouseButtonType button);
+    float GetMouseX();
+    float GetMouseY();
+
+    class IInput
     {
         public:
-            static bool IsKeyPressed(KeyCode key);
-            static bool IsMouseButtonPressed(MouseButtonType button);
-            static float GetMouseX();
-            static float GetMouseY();
-
-            static Input* GetDefault();
-
-        protected:
-            virtual bool IsKeyPressed_Impl(KeyCode key) = 0;
-            virtual bool IsMouseButtonPressed_Impl(MouseButtonType button) = 0;
-            virtual float GetMouseX_Impl() = 0;
-            virtual float GetMouseY_Impl() = 0;
+            virtual bool IsKeyPressed(KeyCode key) = 0;
+            virtual bool IsMouseButtonPressed(MouseButtonType button) = 0;
+            virtual float GetMouseX() = 0;
+            virtual float GetMouseY() = 0;
     };
 }
 

@@ -7,16 +7,16 @@
 
 namespace engine::input
 {
-    class SDLInput : public Input
+    class SDLInput : public IInput
     {
         public:
             SDLInput();
 
-        private:
-            bool IsKeyPressed_Impl(KeyCode key) override;
-            bool IsMouseButtonPressed_Impl(MouseButtonType button) override;
-            float GetMouseX_Impl() override;
-            float GetMouseY_Impl() override;
+        public:
+            bool IsKeyPressed(KeyCode key) override;
+            bool IsMouseButtonPressed(MouseButtonType button) override;
+            float GetMouseX() override;
+            float GetMouseY() override;
 
         private:
             const u8* m_keyStates;

@@ -8,34 +8,28 @@ namespace engine::input
 {
     void Boot()
     {
-        ioc::Sing().Register<Input>([]{
+        ioc::Sing().Register<IInput>([]{
             return std::make_shared<SDLInput>();
         });
     }
 
-    Input* Input::GetDefault()
-    {
-        static std::shared_ptr<Input> input = ioc::Sing().Resolve<Input>();
-        return input.get();
-    }
-
-    bool Input::IsKeyPressed(KeyCode key)
+    bool IsKeyPressed(KeyCode key)
     { 
-        return GetDefault()->IsKeyPressed_Impl(key);
+        return ioc::Sing().Resolve<IInput>()->IsKeyPressed(key);
     }
 
-    bool Input::IsMouseButtonPressed(MouseButtonType button)
+    bool IsMouseButtonPressed(MouseButtonType button)
     {
-        return GetDefault()->IsMouseButtonPressed_Impl(button);
+        return ioc::Sing().Resolve<IInput>()->IsMouseButtonPressed(button);
     }
 
-    float Input::GetMouseX()
+    float GetMouseX()
     {
-        return GetDefault()->GetMouseX_Impl();
+        return ioc::Sing().Resolve<IInput>()->GetMouseX();
     }
 
-    float Input::GetMouseY() 
+    float GetMouseY() 
     { 
-        return GetDefault()->GetMouseY_Impl(); 
+        return ioc::Sing().Resolve<IInput>()->GetMouseY(); 
     }
 }
