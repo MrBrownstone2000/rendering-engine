@@ -20,6 +20,7 @@ namespace engine::renderer
     {
         m_id = rhs.m_id;
         rhs.m_id = 0;
+        m_count = rhs.m_count;
     }
 
     IndexBuffer& IndexBuffer::operator=(IndexBuffer&& rhs)
@@ -27,6 +28,7 @@ namespace engine::renderer
         glDeleteBuffers(1, &m_id);
         m_id = rhs.m_id;
         rhs.m_id = 0;
+        m_count = rhs.m_count;
         return *this;
     }
 

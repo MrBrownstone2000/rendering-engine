@@ -2,6 +2,19 @@
 
 An attempt at building a well structured 3D rendering engine.
 
+# TODO
+
+- VAO class
+
+- glBindVertexBuffer / glBindVertexArrayVertexBuffer
+- snakeCase or SnakeCase for member functions (PICK!!)
+- unique / shared pointers ?
+
+# Design improvements ideas
+
+- SpdLog (multithreaded, more functionality ?) + callbacks to display stack trace
+- ECS
+
 # Structure
 
 3 stages:

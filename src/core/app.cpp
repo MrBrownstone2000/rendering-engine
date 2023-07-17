@@ -27,16 +27,27 @@ namespace engine
         glBindVertexArray(vao);
         
         float vertices[] = {
-            -0.5, -0.5, 0,
-            0.5, -0.5, 0,
-            -0.5, 0.5, 0,
-            0.5, 0.5, 0
+            -0.5, -0.5, 0, 1, 0, 0, 1,
+            0.5, -0.5, 0, 0, 1, 0, 1,
+            -0.5, 0.5, 0, 0, 0, 1, 1,
+            0.5, 0.5, 0, 1, 0, 1, 1,
         };
 
         vbo = renderer::VertexBuffer(vertices, sizeof(vertices));
 
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        vbo.setLayout({
+            { renderer::ShaderDataType::float3, "pos" },
+            { renderer::ShaderDataType::float4, "col" },
+        });
+
+        int i = 0;
+        const auto& layout = vbo.getLayout();
+        for (const auto& elt : layout)
+        {
+            glEnableVertexAttribArray(i);
+            glVertexAttribPointer(i, elt.getCount(), elt.getGLBaseType(), elt.isNormalized() ? GL_TRUE : GL_FALSE, layout.getStride(), reinterpret_cast<void*>(elt.m_offset));
+            ++i;
+        }
 
         uint indices[] = {
             0, 1, 2,

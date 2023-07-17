@@ -1,6 +1,7 @@
 #ifndef __VERTEXBUFFER_HPP__
 #define __VERTEXBUFFER_HPP__
 
+#include "bufferLayout.hpp"
 #include "../util/types.hpp"
 #include <GL/glew.h>
 
@@ -18,11 +19,15 @@ namespace engine::renderer
             VertexBuffer& operator=(const VertexBuffer& rhs) = delete;
             VertexBuffer& operator=(VertexBuffer&& rhs);
 
+            void setLayout(const BufferLayout& layout);
+            const BufferLayout& getLayout() const;
+
             void bind() const;
             void unbind() const;
 
         private:
             GLuint m_id;
+            BufferLayout m_layout;
     };
 };
 
