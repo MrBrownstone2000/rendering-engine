@@ -23,9 +23,6 @@ namespace engine
         m_window = ioc::Get().Resolve<window::IWindow>({.width = 800, .height = 600, .title = "Hi!"});
         m_window->SetEventCallback(M_BIND_EVENT_FN(Application::OnEvent));
 
-        glGenVertexArrays(1, &vao);
-        glBindVertexArray(vao);
-        
         float vertices[] = {
             -0.5, -0.5, 0, 1, 0, 0, 1,
             0.5, -0.5, 0, 0, 1, 0, 1,
@@ -33,28 +30,21 @@ namespace engine
             0.5, 0.5, 0, 1, 0, 1, 1,
         };
 
-        vbo = renderer::VertexBuffer(vertices, sizeof(vertices));
+        std::shared_ptr<renderer::VertexBuffer> vbo = std::make_shared<renderer::VertexBuffer>(vertices, sizeof(vertices));
 
-        vbo.setLayout({
+        vbo->setLayout({
             { renderer::ShaderDataType::float3, "pos" },
             { renderer::ShaderDataType::float4, "col" },
         });
-
-        int i = 0;
-        const auto& layout = vbo.getLayout();
-        for (const auto& elt : layout)
-        {
-            glEnableVertexAttribArray(i);
-            glVertexAttribPointer(i, elt.getCount(), elt.getGLBaseType(), elt.isNormalized() ? GL_TRUE : GL_FALSE, layout.getStride(), reinterpret_cast<void*>(elt.m_offset));
-            ++i;
-        }
 
         uint indices[] = {
             0, 1, 2,
             2, 3, 1
         };
 
-        ebo = renderer::IndexBuffer(indices, 6);
+        // vao = renderer::VertexArray(std::move(vbo), renderer::IndexBuffer(indices, 6));
+        vao.attachVertexBuffer(vbo);
+        vao.attachIndexBuffer(renderer::IndexBuffer(indices, 6));
 
         renderer::Shader::setIncludeDirs({ "../shaders" });
         shader = renderer::Shader("vertex_basic.glsl", "frag_basic.glsl");
@@ -69,7 +59,6 @@ namespace engine
 
     Application::~Application()
     {
-        glDeleteVertexArrays(1, &vao);
     }
 
     void Application::OnEvent(events::Event& e)
@@ -95,10 +84,10 @@ namespace engine
             glClearColor(0, 0, 1, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            glBindVertexArray(vao);
+            vao.bind();
             shader.bind();
 
-            glDrawElements(GL_TRIANGLES, ebo.getCount(), GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_TRIANGLES, vao.getCount(), GL_UNSIGNED_INT, nullptr);
 
             for (ILayer* layer : m_layerStack)
                 layer->OnUpdate();

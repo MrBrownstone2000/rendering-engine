@@ -1,18 +1,21 @@
 #include "pch.hpp"
 #include "indexBuffer.hpp"
 
+#include <GL/glew.h>
+
 namespace engine::renderer
 {
     IndexBuffer::IndexBuffer(uint* indices, uint count)
         : m_count(count)
     {
-        glGenBuffers(1, &m_id);
+        glCreateBuffers(1, &m_id);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint), indices, GL_STATIC_DRAW);
     }
 
     IndexBuffer::~IndexBuffer()
     {
+        std::cout << "delete ebo " << m_id << std::endl;
         glDeleteBuffers(1, &m_id);
     }
 

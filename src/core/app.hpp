@@ -7,12 +7,12 @@
 #include "../events/keyEvent.hpp"
 #include "../gui/imguiLayer.hpp"
 #include "../renderer/shader.hpp"
+#include "../renderer/vertexArray.hpp"
 #include "../renderer/vertexBuffer.hpp"
 #include "../renderer/indexBuffer.hpp"
 #include "../window/window.hpp"
 #include "../ioc/singleton.hpp"
 #include <memory>
-#include <GL/glew.h>
 
 namespace engine
 {
@@ -49,9 +49,9 @@ namespace engine
             LayerStack m_layerStack;
 
             renderer::Shader shader;
-            renderer::VertexBuffer vbo;
-            renderer::IndexBuffer ebo;
-            GLuint vao;
+            renderer::VertexArray vao;
+            // renderer::VertexBuffer vbo;
+            // renderer::IndexBuffer ebo;
     };
 }
 

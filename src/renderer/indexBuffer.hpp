@@ -2,7 +2,6 @@
 #define __INDEXBUFFER_HPP__
 
 #include "../util/types.hpp"
-#include <GL/glew.h>
 
 namespace engine::renderer
 {
@@ -23,7 +22,7 @@ namespace engine::renderer
             uint getCount() const;
 
         private:
-            GLuint m_id;
+            uint32_t m_id;
             uint m_count;
     };
 };

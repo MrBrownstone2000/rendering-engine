@@ -3,7 +3,6 @@
 
 #include "bufferLayout.hpp"
 #include "../util/types.hpp"
-#include <GL/glew.h>
 
 namespace engine::renderer
 {
@@ -26,7 +25,7 @@ namespace engine::renderer
             void unbind() const;
 
         private:
-            GLuint m_id;
+            uint32_t m_id;
             BufferLayout m_layout;
     };
 };

@@ -1,7 +1,6 @@
 #ifndef __SHADER_HPP__
 #define __SHADER_HPP__
 
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <string>
 #include <vector>
@@ -40,14 +39,14 @@ namespace engine::renderer
         private:
             std::string readFile(std::string fileName);
 
-            void compileShader(GLuint shaderType, GLuint shader);
-            GLuint loadShader(GLuint shaderType, std::string shaderPath);
-            void linkProgram(GLuint program, GLuint vertexShader, GLuint fragmentShader);
+            void compileShader(uint32_t shaderType, uint32_t shader);
+            uint32_t loadShader(uint32_t shaderType, std::string shaderPath);
+            void linkProgram(uint32_t program, uint32_t vertexShader, uint32_t fragmentShader);
 
             std::string preprocessShader(const std::string& shader);
 
         private:
-            GLuint id; // Program ID
+            uint32_t id;
 
             static std::vector<std::filesystem::path> s_includeDirs;
     };

@@ -1,6 +1,8 @@
 #include "pch.hpp"
 #include "vertexBuffer.hpp"
 
+#include <GL/glew.h>
+
 namespace engine::renderer
 {
     VertexBuffer::VertexBuffer(float* vertices, uint size)
@@ -12,6 +14,7 @@ namespace engine::renderer
 
     VertexBuffer::~VertexBuffer()
     {
+        std::cout << "delete vbo " << m_id << std::endl;
         glDeleteBuffers(1, &m_id);
     }
 

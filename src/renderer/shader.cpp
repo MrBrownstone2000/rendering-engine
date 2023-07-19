@@ -2,6 +2,7 @@
 #include "shader.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
+#include <GL/glew.h>
 
 namespace engine::renderer
 {
@@ -15,8 +16,8 @@ namespace engine::renderer
     // Reads and builds the shader program
     Shader::Shader(const std::string &vertexShaderPath, const std::string &fragmentShaderPath)
     {
-        GLuint vertexShader = loadShader(GL_VERTEX_SHADER, vertexShaderPath);
-        GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, fragmentShaderPath);
+        uint32_t vertexShader = loadShader(GL_VERTEX_SHADER, vertexShaderPath);
+        uint32_t fragmentShader = loadShader(GL_FRAGMENT_SHADER, fragmentShaderPath);
 
         // Link shader program
         id = glCreateProgram();
@@ -85,25 +86,25 @@ namespace engine::renderer
     }
     void Shader::setUniform(const std::string &name, const glm::mat4 &value) const
     {
-        GLuint location = glGetUniformLocation(id, name.c_str());
+        uint32_t location = glGetUniformLocation(id, name.c_str());
 
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
     }
     void Shader::setUniform(const std::string &name, const glm::mat3 &value) const
     {
-        GLuint location = glGetUniformLocation(id, name.c_str());
+        uint32_t location = glGetUniformLocation(id, name.c_str());
 
         glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(value));
     }
     void Shader::setUniform(const std::string &name, const glm::vec3 &value) const
     {
-        GLuint location = glGetUniformLocation(id, name.c_str());
+        uint32_t location = glGetUniformLocation(id, name.c_str());
 
         glUniform3f(location, value.x, value.y, value.z);
     }
     void Shader::setUniform(const std::string &name, const glm::vec4 &value) const
     {
-        GLuint location = glGetUniformLocation(id, name.c_str());
+        uint32_t location = glGetUniformLocation(id, name.c_str());
 
         glUniform4f(location, value.x, value.y, value.z, value.w);
     }
@@ -129,7 +130,7 @@ namespace engine::renderer
         return content;
     }
 
-    void Shader::compileShader(GLuint shaderType, GLuint shader)
+    void Shader::compileShader(uint32_t shaderType, uint32_t shader)
     {
         glCompileShader(shader);
 
@@ -155,7 +156,7 @@ namespace engine::renderer
         }
     }
 
-    GLuint Shader::loadShader(GLuint shaderType, std::string shaderPath)
+    uint32_t Shader::loadShader(uint32_t shaderType, std::string shaderPath)
     {
         std::string source = readFile(shaderPath);
 
@@ -163,14 +164,14 @@ namespace engine::renderer
 
         const char *vertexShaderSource = source.c_str();
 
-        GLuint shader;
+        uint32_t shader;
         shader = glCreateShader(shaderType);
         glShaderSource(shader, 1, &vertexShaderSource, nullptr);
         compileShader(shaderType, shader);
         return shader;
     }
 
-    void Shader::linkProgram(GLuint program, GLuint vertexShader, GLuint fragmentShader)
+    void Shader::linkProgram(uint32_t program, uint32_t vertexShader, uint32_t fragmentShader)
     {
         glAttachShader(program, vertexShader);
         glAttachShader(program, fragmentShader);
