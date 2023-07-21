@@ -48,10 +48,8 @@ namespace engine
 
             LayerStack m_layerStack;
 
-            renderer::Shader shader;
-            renderer::VertexArray vao;
-            // renderer::VertexBuffer vbo;
-            // renderer::IndexBuffer ebo;
+            std::shared_ptr<renderer::Shader> shader;
+            std::shared_ptr<renderer::VertexArray> vao;
     };
 }
 

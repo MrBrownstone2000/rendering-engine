@@ -14,7 +14,6 @@ namespace engine::renderer
 
     VertexBuffer::~VertexBuffer()
     {
-        std::cout << "delete vbo " << m_id << std::endl;
         glDeleteBuffers(1, &m_id);
     }
 

@@ -5,8 +5,8 @@
 #include "log/log.hpp"
 #include "log/severityLevelPolicy.hpp"
 #include "events/keyEvent.hpp"
-
-#include <GL/glew.h>
+#include "renderer/commands.hpp"
+#include "renderer/renderer.hpp"
 
 namespace engine
 {
@@ -42,12 +42,14 @@ namespace engine
             2, 3, 1
         };
 
-        // vao = renderer::VertexArray(std::move(vbo), renderer::IndexBuffer(indices, 6));
-        vao.attachVertexBuffer(vbo);
-        vao.attachIndexBuffer(renderer::IndexBuffer(indices, 6));
+        vao = std::make_shared<renderer::VertexArray>();
+        vao->attachVertexBuffer(vbo);
+        vao->attachIndexBuffer(renderer::IndexBuffer(indices, 6));
 
         renderer::Shader::setIncludeDirs({ "../shaders" });
-        shader = renderer::Shader("vertex_basic.glsl", "frag_basic.glsl");
+        shader = std::make_shared<renderer::Shader>("vertex_basic.glsl", "frag_basic.glsl");
+
+        renderer::setClearColor(0, 0, 1);
     }
 
     void Application::Init()
@@ -81,13 +83,9 @@ namespace engine
     {
         while(m_running)
         {
-            glClearColor(0, 0, 1, 1);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            vao.bind();
-            shader.bind();
-
-            glDrawElements(GL_TRIANGLES, vao.getCount(), GL_UNSIGNED_INT, nullptr);
+            renderer::Renderer::beginFrame();
+            renderer::Renderer::submit(shader, vao);
+            renderer::Renderer::endFrame();
 
             for (ILayer* layer : m_layerStack)
                 layer->OnUpdate();

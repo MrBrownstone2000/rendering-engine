@@ -93,7 +93,6 @@ namespace engine::renderer
 
     VertexArray::~VertexArray()
     {
-        std::cout << "delete vao " << m_id << std::endl;
         glDeleteVertexArrays(1, &m_id);
     }
 

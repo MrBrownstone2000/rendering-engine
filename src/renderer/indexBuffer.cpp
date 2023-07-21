@@ -15,7 +15,6 @@ namespace engine::renderer
 
     IndexBuffer::~IndexBuffer()
     {
-        std::cout << "delete ebo " << m_id << std::endl;
         glDeleteBuffers(1, &m_id);
     }
 

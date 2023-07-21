@@ -5,8 +5,8 @@
 #include "events/windowEvent.hpp"
 #include "input/sdlKeyCodes.hpp"
 
-#include "SDL.h"
-#include "GL/glew.h"
+#include <SDL.h>
+#include <GL/glew.h>
 #include <memory>
 
 #include "../renderer/openGLContext.hpp"
