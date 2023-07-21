@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "boot.hpp"
 
 #include "log/log.hpp"

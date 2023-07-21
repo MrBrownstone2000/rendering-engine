@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "app.hpp"
 #include "events/eventDispatcher.hpp"
 #include "ioc/singleton.hpp"

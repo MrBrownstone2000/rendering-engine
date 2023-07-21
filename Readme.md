@@ -4,18 +4,6 @@ An attempt at building a well structured 3D rendering engine.
 
 # Features TODO List
 
-- VAO class:
-    - bind / unbind
-    - store pointers to vbo and ebo => shared (much safer)
-        - in constructor
-        - in attachVertexBuffer / attachIndexBuffer
-            => shared ptr and move Buffer variants
-
-- Renderer:
-    - Begin frame
-    - Submit elements to render
-    - End frame
-
 - Camera
 - Mesh loading
 - Materials
@@ -24,6 +12,7 @@ An attempt at building a well structured 3D rendering engine.
 
 # Issues
 
+- less namespaces ! 
 - glBindVertexBuffer / glBindVertexArrayVertexBuffer
 - snakeCase or SnakeCase for member functions (PICK!!)
 - unique / shared pointers ?
