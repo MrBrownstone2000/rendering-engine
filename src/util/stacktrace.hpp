@@ -18,7 +18,7 @@ namespace engine::util
             StackTrace& operator=(const StackTrace& src);
             ~StackTrace();
 
-            std::string Print() const;
+            std::string print() const;
 
         private:
             std::unique_ptr<backward::StackTrace> m_trace;

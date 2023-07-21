@@ -24,17 +24,17 @@ namespace engine::window
             using EventCallback = std::function<void(events::Event&)>;
             virtual ~IWindow() = default;
 
-            virtual bool IsVSync() const = 0;
-            virtual uint GetWidth() const = 0;
-            virtual uint GetHeight() const = 0;
-            virtual void* GetNativeWindow() = 0;
-            virtual renderer::IContext* GetContext() = 0;
+            virtual bool isVSync() const = 0;
+            virtual uint getWidth() const = 0;
+            virtual uint getHeight() const = 0;
+            virtual void* getNativeWindow() = 0;
+            virtual renderer::IContext* getContext() = 0;
 
-            virtual void OnUpdate() = 0;
-            virtual void SwapBuffers() = 0;
-            virtual void SetVSync(bool enabled) = 0;
-            virtual void SetEventCallback(const EventCallback& cb) = 0;
-            void SetImGuiCallback(std::function<void(void*)> cb) { m_imGuiEventCallback = cb; }
+            virtual void onUpdate() = 0;
+            virtual void swapBuffers() = 0;
+            virtual void setVSync(bool enabled) = 0;
+            virtual void setEventCallback(const EventCallback& cb) = 0;
+            void setImGuiCallback(std::function<void(void*)> cb) { m_imGuiEventCallback = cb; }
 
         protected:
             std::function<void(void*)> m_imGuiEventCallback;

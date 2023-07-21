@@ -25,7 +25,7 @@ namespace engine::gui
         return EventCallback;
     }
 
-    void ImGuiLayer::OnAttach()
+    void ImGuiLayer::onAttach()
     {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
@@ -50,15 +50,15 @@ namespace engine::gui
         }
 
         Application& app = Application::Get();
-        SDL_Window* window = static_cast<SDL_Window*>(app.GetWindow().GetNativeWindow());
-        SDL_GLContext* gl_context = static_cast<SDL_GLContext*>(app.GetWindow().GetContext()->GetNativeContext());
+        SDL_Window* window = static_cast<SDL_Window*>(app.GetWindow().getNativeWindow());
+        SDL_GLContext* gl_context = static_cast<SDL_GLContext*>(app.GetWindow().getContext()->getNativeContext());
 
         // Setup Platform/Renderer backends
         ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
         ImGui_ImplOpenGL3_Init("#version 460");
     }
 
-    void ImGuiLayer::OnDetach()
+    void ImGuiLayer::onDetach()
     {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplSDL2_Shutdown();
@@ -70,18 +70,18 @@ namespace engine::gui
         ImGui_ImplSDL2_ProcessEvent((SDL_Event*) nativeEvent);
     }
 
-    void ImGuiLayer::Begin()
+    void ImGuiLayer::beginFrame()
     {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
     }
 
-    void ImGuiLayer::End()
+    void ImGuiLayer::endFrame()
     {
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::Get();
-        io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+        io.DisplaySize = ImVec2(app.GetWindow().getWidth(), app.GetWindow().getHeight());
 
         ImGui::Render();
         // glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
@@ -102,7 +102,7 @@ namespace engine::gui
         }
     }
 
-    void ImGuiLayer::OnImGuiRender()
+    void ImGuiLayer::onImGuiRender()
     {
         static bool show = true;
         ImGui::ShowDemoWindow(&show);

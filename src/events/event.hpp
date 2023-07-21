@@ -27,27 +27,27 @@ namespace engine::events
 
 #define EVENT_CLASS_TYPE(type) \
     static EventType GetStaticType() { return EventType::type; } \
-    virtual EventType GetType() const override { return GetStaticType(); } \
-    virtual const char* GetName() const override { return #type; }
+    virtual EventType getType() const override { return GetStaticType(); } \
+    virtual const char* getName() const override { return #type; }
 
 #define EVENT_CLASS_CATEGORY(category) \
-    virtual int GetCategories() const override { return category; }
+    virtual int getCategories() const override { return category; }
 
     class Event
     {
         friend class EventDispatcher;
         public:
-            virtual EventType GetType() const = 0;
-            virtual const char* GetName() const = 0;
-            virtual int GetCategories() const = 0;
-            virtual std::string ToString() const { return GetName(); }
+            virtual EventType getType() const = 0;
+            virtual const char* getName() const = 0;
+            virtual int getCategories() const = 0;
+            virtual std::string toString() const { return getName(); }
 
-            inline bool IsInCategory(EventCategory cat)
+            inline bool isInCategory(EventCategory cat)
             {
-                return GetCategories() & cat;
+                return getCategories() & cat;
             }
 
-            operator std::string() { return ToString(); }
+            operator std::string() { return toString(); }
             bool isHandled() const { return m_handled; }
 
         protected:
@@ -56,7 +56,7 @@ namespace engine::events
     
     inline std::ostream& operator<<(std::ostream& os, Event& event)
     {
-        return os << event.ToString();
+        return os << event.toString();
     }
 }
 

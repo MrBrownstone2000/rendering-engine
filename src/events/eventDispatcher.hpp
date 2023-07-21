@@ -19,7 +19,7 @@ namespace engine::events
             template <typename T>
             bool Dispatch(EventFn<T> function)
             {
-                if (m_event.GetType() == T::GetStaticType())
+                if (m_event.getType() == T::GetStaticType())
                 {
                     m_event.m_handled = function(*(T*)&m_event);
                     return true;

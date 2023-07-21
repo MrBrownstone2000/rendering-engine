@@ -11,25 +11,25 @@ namespace engine::input
         m_keyStates = SDL_GetKeyboardState(nullptr);
     }
 
-    bool SDLInput::IsKeyPressed(KeyCode key)
+    bool SDLInput::isKeyPressed(KeyCode key)
     {
         return m_keyStates[GetSDLScanCode(key)];
     }
 
-    bool SDLInput::IsMouseButtonPressed(MouseButtonType button)
+    bool SDLInput::isMouseButtonPressed(MouseButtonType button)
     {
         int sdl_buttons = SDL_GetMouseState(nullptr, nullptr);
         return sdl_buttons & SDL_BUTTON(GetSDLMouseButton(button));
     }
 
-    float SDLInput::GetMouseX()
+    float SDLInput::getMouseX()
     {
         int x;
         SDL_GetMouseState(&x, nullptr);
         return x;
     }
 
-    float SDLInput::GetMouseY()
+    float SDLInput::getMouseY()
     {
         int y;
         SDL_GetMouseState(nullptr, &y);

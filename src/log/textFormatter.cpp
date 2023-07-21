@@ -51,7 +51,7 @@ namespace engine::log
                 e.m_functionName,
                 e.m_sourceLine);
         if (e.m_trace)
-            oss << e.m_trace->Print() << std::endl;
+            oss << e.m_trace->print() << std::endl;
         return oss.str();
     }
 }

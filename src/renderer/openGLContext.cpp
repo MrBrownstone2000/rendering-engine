@@ -22,12 +22,12 @@ namespace engine::renderer
         SDL_GL_DeleteContext(m_context);
     }
 
-    void OpenGLContext::SwapBuffers()
+    void OpenGLContext::swapBuffers()
     {
         SDL_GL_SwapWindow(m_window);
     }
 
-    void* OpenGLContext::GetNativeContext()
+    void* OpenGLContext::getNativeContext()
     {
         return &m_context;
     }

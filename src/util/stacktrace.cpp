@@ -29,7 +29,7 @@ namespace engine::util
     {
     }
 
-    std::string StackTrace::Print() const
+    std::string StackTrace::print() const
     {
         std::ostringstream oss;
         backward::Printer printer;

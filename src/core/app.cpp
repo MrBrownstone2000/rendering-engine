@@ -22,7 +22,7 @@ namespace engine
         isInit = true;
 
         m_window = ioc::Get().Resolve<window::IWindow>({.width = 800, .height = 600, .title = "Hi!"});
-        m_window->SetEventCallback(M_BIND_EVENT_FN(Application::OnEvent));
+        m_window->setEventCallback(M_BIND_EVENT_FN(Application::onEvent));
 
         float vertices[] = {
             -0.5, -0.5, 0, 1, 0, 0, 1,
@@ -53,34 +53,34 @@ namespace engine
         renderer::setClearColor(0, 0, 1);
     }
 
-    void Application::Init()
+    void Application::init()
     {
         m_imGuiLayer = new gui::ImGuiLayer;
-        PushOverlay(m_imGuiLayer);
-        m_window->SetImGuiCallback(m_imGuiLayer->GetEventCallback());
+        pushOverlay(m_imGuiLayer);
+        m_window->setImGuiCallback(m_imGuiLayer->GetEventCallback());
     }
 
     Application::~Application()
     {
     }
 
-    void Application::OnEvent(events::Event& e)
+    void Application::onEvent(events::Event& e)
     {
         engineLog.verbose(e);
 
         events::EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<events::WindowCloseEvent>(M_BIND_EVENT_FN(Application::OnWindowClose));
-        dispatcher.Dispatch<events::KeyPressedEvent>(M_BIND_EVENT_FN(Application::OnKeyPressed));
+        dispatcher.Dispatch<events::WindowCloseEvent>(M_BIND_EVENT_FN(Application::onWindowClose));
+        dispatcher.Dispatch<events::KeyPressedEvent>(M_BIND_EVENT_FN(Application::onKeyPressed));
 
         for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
         {
-            (*--it)->OnEvent(e);
+            (*--it)->onEvent(e);
             if (e.isHandled())
                 break;
         }
     }
 
-    void Application::Run()
+    void Application::run()
     {
         while(m_running)
         {
@@ -89,45 +89,45 @@ namespace engine
             renderer::Renderer::endFrame();
 
             for (ILayer* layer : m_layerStack)
-                layer->OnUpdate();
+                layer->onUpdate();
 
-            m_imGuiLayer->Begin();
+            m_imGuiLayer->beginFrame();
             for (ILayer* layer : m_layerStack)
-                layer->OnImGuiRender();
-            m_imGuiLayer->End();
+                layer->onImGuiRender();
+            m_imGuiLayer->endFrame();
 
-            m_window->OnUpdate();
-            m_window->SwapBuffers();
+            m_window->onUpdate();
+            m_window->swapBuffers();
         }
     }
 
-    void Application::PushLayer(ILayer* layer)
+    void Application::pushLayer(ILayer* layer)
     {
-        m_layerStack.PushLayer(layer);
-        layer->OnAttach();
+        m_layerStack.pushLayer(layer);
+        layer->onAttach();
     }
 
-    void Application::PushOverlay(ILayer* overlay)
+    void Application::pushOverlay(ILayer* overlay)
     {
-        m_layerStack.PushOverlay(overlay);
-        overlay->OnAttach();
+        m_layerStack.pushOverlay(overlay);
+        overlay->onAttach();
     }
 
 
-    bool Application::OnWindowClose(events::WindowCloseEvent&)
+    bool Application::onWindowClose(events::WindowCloseEvent&)
     {
         m_running = false;
         return true;
     }
 
-    bool Application::OnKeyPressed(events::KeyPressedEvent& e)
+    bool Application::onKeyPressed(events::KeyPressedEvent& e)
     {
-        if (e.GetKeyCode() == input::KeyCode::Escape)
+        if (e.getKeyCode() == input::KeyCode::Escape)
             m_running = false;
         return true;
     }
 
-    bool Application::OnKeyReleased(events::KeyReleasedEvent&)
+    bool Application::onKeyReleased(events::KeyReleasedEvent&)
     {
         return true;
     }

@@ -16,11 +16,11 @@ namespace engine
             LayerStack() {};
             ~LayerStack();
 
-            void PushLayer(ILayer* layer);
-            void PopLayer(ILayer* layer);
+            void pushLayer(ILayer* layer);
+            void popLayer(ILayer* layer);
 
-            void PushOverlay(ILayer* overlay);
-            void PopOverlay(ILayer* overlay);
+            void pushOverlay(ILayer* overlay);
+            void popOverlay(ILayer* overlay);
 
             LayerStackIterator begin() { return m_layers.begin(); }
             LayerStackIterator end() { return m_layers.end(); }

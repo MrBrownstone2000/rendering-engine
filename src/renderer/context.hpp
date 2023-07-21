@@ -7,8 +7,8 @@ namespace engine::renderer
     {
         public:
             virtual ~IContext() = default;
-            virtual void SwapBuffers() = 0;
-            virtual void* GetNativeContext() = 0;
+            virtual void swapBuffers() = 0;
+            virtual void* getNativeContext() = 0;
     };
 }
 

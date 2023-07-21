@@ -16,12 +16,12 @@ namespace engine::gui
             ImGuiLayer();
             ~ImGuiLayer();
 
-            void OnAttach() override;
-            void OnDetach() override;
-            void OnImGuiRender() override;
+            void onAttach() override;
+            void onDetach() override;
+            void onImGuiRender() override;
 
-            void Begin();
-            void End();
+            void beginFrame();
+            void endFrame();
 
             std::function<void(void*)> GetEventCallback();
 

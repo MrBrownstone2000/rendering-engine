@@ -11,13 +11,13 @@ namespace engine
             ILayer(const std::string& name = "Layer") : m_name(name) {}
             virtual ~ILayer() = 0;
 
-            virtual void OnAttach() {}
-            virtual void OnDetach() {}
-            virtual void OnUpdate() {}
-            virtual void OnImGuiRender() {}
-            virtual void OnEvent(events::Event&) {}
+            virtual void onAttach() {}
+            virtual void onDetach() {}
+            virtual void onUpdate() {}
+            virtual void onImGuiRender() {}
+            virtual void onEvent(events::Event&) {}
 
-            std::string GetName() const { return m_name; }
+            std::string getName() const { return m_name; }
 
         protected:
             std::string m_name;

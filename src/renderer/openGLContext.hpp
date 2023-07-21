@@ -12,8 +12,8 @@ namespace engine::renderer
             OpenGLContext(SDL_Window* window);
             ~OpenGLContext();
 
-            void SwapBuffers() override;
-            void* GetNativeContext() override;
+            void swapBuffers() override;
+            void* getNativeContext() override;
 
         private:
             SDL_Window* m_window;

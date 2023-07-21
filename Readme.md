@@ -14,7 +14,6 @@ An attempt at building a well structured 3D rendering engine.
 
 - less namespaces ! 
 - glBindVertexBuffer / glBindVertexArrayVertexBuffer
-- snakeCase or SnakeCase for member functions (PICK!!)
 - unique / shared pointers ?
 - Test framework: 
     - build test core files to shared lib

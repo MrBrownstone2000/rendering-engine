@@ -18,7 +18,7 @@ namespace engine
     class ExampleLayer : public ILayer
     {
         public:
-            void OnUpdate() override
+            void onUpdate() override
             {
                 if (input::IsKeyPressed(input::KeyCode::Key_s))
                     engineLog.debug("Pressing key");
@@ -28,7 +28,7 @@ namespace engine
                     std::cout << input::GetMouseX() << ", " << input::GetMouseY() << std::endl;
             }
 
-            void OnEvent(events::Event&) override
+            void onEvent(events::Event&) override
             {
             //    engineLog.debug(e);
             }
@@ -39,7 +39,7 @@ namespace engine
         public:
             Sandbox()
             {
-                PushLayer(new ExampleLayer());
+                pushLayer(new ExampleLayer());
             }
 
             ~Sandbox()

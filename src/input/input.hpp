@@ -15,10 +15,10 @@ namespace engine::input
     class IInput
     {
         public:
-            virtual bool IsKeyPressed(KeyCode key) = 0;
-            virtual bool IsMouseButtonPressed(MouseButtonType button) = 0;
-            virtual float GetMouseX() = 0;
-            virtual float GetMouseY() = 0;
+            virtual bool isKeyPressed(KeyCode key) = 0;
+            virtual bool isMouseButtonPressed(MouseButtonType button) = 0;
+            virtual float getMouseX() = 0;
+            virtual float getMouseY() = 0;
     };
 }
 

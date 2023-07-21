@@ -15,21 +15,21 @@ namespace engine::input
 
     bool IsKeyPressed(KeyCode key)
     { 
-        return ioc::Sing().Resolve<IInput>()->IsKeyPressed(key);
+        return ioc::Sing().Resolve<IInput>()->isKeyPressed(key);
     }
 
     bool IsMouseButtonPressed(MouseButtonType button)
     {
-        return ioc::Sing().Resolve<IInput>()->IsMouseButtonPressed(button);
+        return ioc::Sing().Resolve<IInput>()->isMouseButtonPressed(button);
     }
 
     float GetMouseX()
     {
-        return ioc::Sing().Resolve<IInput>()->GetMouseX();
+        return ioc::Sing().Resolve<IInput>()->getMouseX();
     }
 
     float GetMouseY() 
     { 
-        return ioc::Sing().Resolve<IInput>()->GetMouseY(); 
+        return ioc::Sing().Resolve<IInput>()->getMouseY(); 
     }
 }

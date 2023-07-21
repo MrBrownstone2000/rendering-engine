@@ -18,16 +18,16 @@ namespace engine::window
             SDLWindow(const IocParams& p);
             ~SDLWindow();
 
-            virtual bool IsVSync() const override;
-            virtual uint GetWidth() const override;
-            virtual uint GetHeight() const override;
-            virtual void* GetNativeWindow() override;
-            virtual renderer::IContext* GetContext() override;
+            bool isVSync() const override;
+            uint getWidth() const override;
+            uint getHeight() const override;
+            void* getNativeWindow() override;
+            renderer::IContext* getContext() override;
 
-            void OnUpdate() override;
-            void SwapBuffers() override;
-            virtual void SetVSync(bool enabled) override;
-            virtual void SetEventCallback(const EventCallback& cb) override;
+            void onUpdate() override;
+            void swapBuffers() override;
+            void setVSync(bool enabled) override;
+            void setEventCallback(const EventCallback& cb) override;
 
             static void Boot();
 

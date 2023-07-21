@@ -11,8 +11,8 @@ namespace engine::events
     class KeyEvent : public Event
     {
         public:
-            inline input::KeyCode GetKeyCode() const { return m_keyCode; }
-            inline u8 GetKeyMods() const { return m_mods; }
+            inline input::KeyCode getKeyCode() const { return m_keyCode; }
+            inline u8 getKeyMods() const { return m_mods; }
 
             EVENT_CLASS_CATEGORY(Keyboard | Input)
 
@@ -30,8 +30,8 @@ namespace engine::events
                 : KeyEvent(keycode, mods), m_repeated(repeated)
             {}
 
-            inline bool IsRepeated() const { return m_repeated; }
-            std::string ToString() const override
+            inline bool isRepeated() const { return m_repeated; }
+            std::string toString() const override
             {
                 std::stringstream ss;
                 ss << "KeyPressedEvent: " << int(m_keyCode);
@@ -53,7 +53,7 @@ namespace engine::events
                 : KeyEvent(keycode, mods)
             {}
 
-            std::string ToString() const override
+            std::string toString() const override
             {
                 std::stringstream ss;
                 ss << "KeyReleasedEvent: " << int(m_keyCode);
@@ -67,7 +67,7 @@ namespace engine::events
     {
         public:
             TextEvent(const char* str) : m_str(str) {}
-            inline const char* GetText() const { return m_str; }
+            inline const char* getText() const { return m_str; }
 
             EVENT_CLASS_CATEGORY(Keyboard | Input)
             EVENT_CLASS_TYPE(Text)

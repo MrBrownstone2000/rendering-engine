@@ -18,7 +18,7 @@ namespace engine::events
             inline uint getWidth() const { return m_width; }
             inline uint getHeight() const { return m_height; }
 
-            std::string ToString() const override
+            std::string toString() const override
             {
                 std::stringstream ss;
                 ss << "WindowResizeEvent: " << m_width << ", " << m_height;
@@ -42,7 +42,7 @@ namespace engine::events
             inline int getX() const { return m_x; }
             inline int getY() const { return m_y; }
 
-            std::string ToString() const override
+            std::string toString() const override
             {
                 std::stringstream ss;
                 ss << "WindowMovedEvent: " << m_x << ", " << m_y;

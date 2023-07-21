@@ -25,21 +25,21 @@ namespace engine
             virtual ~Application();
 
             // For initializations that need Application::Get()
-            void Init();
-            void Run();
+            void init();
+            void run();
 
-            void OnEvent(events::Event& e);
+            void onEvent(events::Event& e);
 
-            void PushLayer(ILayer* layer);
-            void PushOverlay(ILayer* overlay);
+            void pushLayer(ILayer* layer);
+            void pushOverlay(ILayer* overlay);
 
             inline static Application& Get() { return *ioc::Sing().Resolve<Application>(); }
             inline window::IWindow& GetWindow() { return *m_window; }
 
         private:
-            bool OnWindowClose(events::WindowCloseEvent& e);
-            bool OnKeyPressed(events::KeyPressedEvent& e);
-            bool OnKeyReleased(events::KeyReleasedEvent& e);
+            bool onWindowClose(events::WindowCloseEvent& e);
+            bool onKeyPressed(events::KeyPressedEvent& e);
+            bool onKeyReleased(events::KeyReleasedEvent& e);
 
         private:
             std::shared_ptr<window::IWindow> m_window;

@@ -58,33 +58,33 @@ namespace engine::window
             m_isGlewInit = true;
         }
     }
-    uint SDLWindow::GetWidth() const
+    uint SDLWindow::getWidth() const
     {
         return m_width;
     }
 
-    uint SDLWindow::GetHeight() const
+    uint SDLWindow::getHeight() const
     {
         return m_height;
     }
 
-    void* SDLWindow::GetNativeWindow() 
+    void* SDLWindow::getNativeWindow() 
     {
         return m_window;
     }
 
-    renderer::IContext* SDLWindow::GetContext()
+    renderer::IContext* SDLWindow::getContext()
     {
         return m_context.get();
     }
 
-    void SDLWindow::SetVSync(bool enabled)
+    void SDLWindow::setVSync(bool enabled)
     {
         m_vsync = enabled;
         SDL_GL_SetSwapInterval(enabled);
     }
 
-    bool SDLWindow::IsVSync() const
+    bool SDLWindow::isVSync() const
     {
         return m_vsync;
     }
@@ -94,7 +94,7 @@ namespace engine::window
         SDL_DestroyWindow(m_window);
     }
 
-    void SDLWindow::SetEventCallback(const EventCallback& cb)
+    void SDLWindow::setEventCallback(const EventCallback& cb)
     {
         m_eventCallback = cb;
     }
@@ -229,13 +229,13 @@ namespace engine::window
         }
     }
 
-    void SDLWindow::OnUpdate()
+    void SDLWindow::onUpdate()
     {
         HandleEvents();
     }
 
-    void SDLWindow::SwapBuffers()
+    void SDLWindow::swapBuffers()
     {
-        m_context->SwapBuffers();
+        m_context->swapBuffers();
     }
 }
