@@ -12,6 +12,10 @@ namespace engine::input
     float GetMouseX();
     float GetMouseY();
 
+    void SetMouseOffset(int x, int y);
+    int GetMouseOffsetX();
+    int GetMouseOffsetY();
+
     class IInput
     {
         public:

@@ -4,6 +4,7 @@
 #include "sdlWindow.hpp"
 #include "events/windowEvent.hpp"
 #include "input/sdlKeyCodes.hpp"
+#include "input/input.hpp"
 
 #include <SDL.h>
 #include <GL/glew.h>
@@ -226,6 +227,10 @@ namespace engine::window
                 TextEvent e(event.text.text);
                 m_eventCallback(e);
             }
+
+            int x, y;
+            SDL_GetRelativeMouseState(&x, &y);
+            input::SetMouseOffset(x, y);
         }
     }
 

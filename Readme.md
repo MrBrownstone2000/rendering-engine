@@ -4,7 +4,6 @@ An attempt at building a well structured 3D rendering engine.
 
 # Features TODO List
 
-- Camera
 - Mesh loading
 - Materials
 
@@ -13,8 +12,7 @@ An attempt at building a well structured 3D rendering engine.
 # Issues
 
 - less namespaces ! 
-- glBindVertexBuffer / glBindVertexArrayVertexBuffer
-- unique / shared pointers ?
+- Use mordern opengl: https://github.com/fendevel/Guide-to-Modern-OpenGL-Functions
 - Test framework: 
     - build test core files to shared lib
     - Test framework as submodule

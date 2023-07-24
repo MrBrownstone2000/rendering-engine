@@ -8,6 +8,9 @@
 #include "engine/ioc/singleton.hpp"
 #include "engine/log/severityLevelPolicy.hpp"
 
+#include "engine/renderer/camera.hpp"
+#include "engine/events/eventDispatcher.hpp"
+
 
 namespace engine
 {
@@ -35,37 +38,44 @@ namespace engine
                     2, 3, 1
                 };
 
-                vao = std::make_shared<renderer::VertexArray>();
-                vao->attachVertexBuffer(vbo);
-                vao->attachIndexBuffer(renderer::IndexBuffer(indices, 6));
+                m_vao = std::make_shared<renderer::VertexArray>();
+                m_vao->attachVertexBuffer(vbo);
+                m_vao->attachIndexBuffer(renderer::IndexBuffer(indices, 6));
 
                 renderer::Shader::setIncludeDirs({ "../shaders" });
-                shader = std::make_shared<renderer::Shader>("vertex_basic.glsl", "frag_basic.glsl");
+                m_shader = std::make_shared<renderer::Shader>("vertex_basic.glsl", "frag_basic.glsl");
 
                 renderer::setClearColor(0, 0, 1);
+
+                m_camera.setPosition({1, 1, 1});
             }
 
             void onUpdate() override
             {
-                renderer::Renderer::beginFrame();
-                renderer::Renderer::submit(shader, vao);
-                renderer::Renderer::endFrame();
+                m_camera.update(1.);
 
-                // if (input::IsKeyPressed(input::KeyCode::Key_s))
-                //     engineLog.debug("Pressing key");
-                // if (input::IsMouseButtonPressed(input::MouseButtonType::Left))
-                //     engineLog.debug("Pressing mouse");
-                // if (input::IsKeyPressed(input::KeyCode::Space))
-                //     std::cout << input::GetMouseX() << ", " << input::GetMouseY() << std::endl;
+                renderer::Renderer::beginFrame();
+                renderer::Renderer::submit(m_shader, m_vao);
+                renderer::Renderer::endFrame();
             }
 
-            void onEvent(events::Event&) override
+            bool onWindowResize(const events::WindowResizeEvent& event)
             {
+                m_camera.setWindowSize(event.getWidth(), event.getHeight());
+                return false;
+            }
+
+            void onEvent(events::Event& event) override
+            {
+                events::EventDispatcher d(event);
+                d.dispatch<events::WindowResizeEvent>(M_BIND_EVENT_FN(ExampleLayer::onWindowResize));
             }
 
         private:
-            std::shared_ptr<renderer::Shader> shader;
-            std::shared_ptr<renderer::VertexArray> vao;
+            std::shared_ptr<renderer::Shader> m_shader;
+            std::shared_ptr<renderer::VertexArray> m_vao;
+
+            renderer::Camera m_camera;
     };
 
     class Sandbox : public Application

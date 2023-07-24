@@ -41,8 +41,8 @@ namespace engine
         engineLog.verbose(e);
 
         events::EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<events::WindowCloseEvent>(M_BIND_EVENT_FN(Application::onWindowClose));
-        dispatcher.Dispatch<events::KeyPressedEvent>(M_BIND_EVENT_FN(Application::onKeyPressed));
+        dispatcher.dispatch<events::WindowCloseEvent>(M_BIND_EVENT_FN(Application::onWindowClose));
+        dispatcher.dispatch<events::KeyPressedEvent>(M_BIND_EVENT_FN(Application::onKeyPressed));
 
         for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
         {

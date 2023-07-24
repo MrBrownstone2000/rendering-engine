@@ -6,6 +6,12 @@
 
 namespace engine::input
 {
+    namespace
+    {
+        int m_mouseOffsetX;
+        int m_mouseOffsetY;
+    }
+
     void Boot()
     {
         ioc::Sing().Register<IInput>([]{
@@ -31,5 +37,21 @@ namespace engine::input
     float GetMouseY() 
     { 
         return ioc::Sing().Resolve<IInput>()->getMouseY(); 
+    }
+
+    void SetMouseOffset(int x, int y)
+    {
+        m_mouseOffsetX = x;
+        m_mouseOffsetY = y;
+    }
+
+    int GetMouseOffsetX()
+    {
+        return m_mouseOffsetX;
+    }
+
+    int GetMouseOffsetY()
+    {
+        return m_mouseOffsetY;
     }
 }
