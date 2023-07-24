@@ -54,9 +54,9 @@ namespace engine
             {
                 m_camera.update(1.);
 
-                renderer::Renderer::beginFrame();
-                renderer::Renderer::submit(m_shader, m_vao);
-                renderer::Renderer::endFrame();
+                renderer::beginFrame(m_camera);
+                renderer::submit(m_shader, m_vao);
+                renderer::endFrame();
             }
 
             bool onWindowResize(const events::WindowResizeEvent& event)

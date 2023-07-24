@@ -34,8 +34,8 @@ namespace engine::renderer
 
         glm::mat4 view() const;
         glm::mat4 projection() const;
-        glm::vec3 position();
-        glm::vec3 direction();
+        glm::vec3 position() const;
+        glm::vec3 direction() const;
 
     private:
         void changeOrientation(float offsetYaw, float offsetPitch);

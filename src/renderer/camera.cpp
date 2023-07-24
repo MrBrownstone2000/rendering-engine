@@ -96,12 +96,12 @@ namespace engine::renderer
         return glm::perspective(glm::radians(m_fov), float(m_windowWidth) / float(m_windowHeight), 0.1f, 200.f);
     }
 
-    glm::vec3 Camera::position()
+    glm::vec3 Camera::position() const
     {
         return m_cameraPos;
     }
 
-    glm::vec3 Camera::direction()
+    glm::vec3 Camera::direction() const
     {
         return m_cameraDirection;
     }
