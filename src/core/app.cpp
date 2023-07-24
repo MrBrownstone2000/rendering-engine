@@ -23,34 +23,6 @@ namespace engine
 
         m_window = ioc::Get().Resolve<window::IWindow>({.width = 800, .height = 600, .title = "Hi!"});
         m_window->setEventCallback(M_BIND_EVENT_FN(Application::onEvent));
-
-        float vertices[] = {
-            -0.5, -0.5, 0, 1, 0, 0, 1,
-            0.5, -0.5, 0, 0, 1, 0, 1,
-            -0.5, 0.5, 0, 0, 0, 1, 1,
-            0.5, 0.5, 0, 1, 0, 1, 1,
-        };
-
-        std::shared_ptr<renderer::VertexBuffer> vbo = std::make_shared<renderer::VertexBuffer>(vertices, sizeof(vertices));
-
-        vbo->setLayout({
-            { renderer::ShaderDataType::float3, "pos" },
-            { renderer::ShaderDataType::float4, "col" },
-        });
-
-        uint indices[] = {
-            0, 1, 2,
-            2, 3, 1
-        };
-
-        vao = std::make_shared<renderer::VertexArray>();
-        vao->attachVertexBuffer(vbo);
-        vao->attachIndexBuffer(renderer::IndexBuffer(indices, 6));
-
-        renderer::Shader::setIncludeDirs({ "../shaders" });
-        shader = std::make_shared<renderer::Shader>("vertex_basic.glsl", "frag_basic.glsl");
-
-        renderer::setClearColor(0, 0, 1);
     }
 
     void Application::init()
@@ -84,10 +56,6 @@ namespace engine
     {
         while(m_running)
         {
-            renderer::Renderer::beginFrame();
-            renderer::Renderer::submit(shader, vao);
-            renderer::Renderer::endFrame();
-
             for (ILayer* layer : m_layerStack)
                 layer->onUpdate();
 

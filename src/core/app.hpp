@@ -47,9 +47,6 @@ namespace engine
             bool m_running = true;
 
             LayerStack m_layerStack;
-
-            std::shared_ptr<renderer::Shader> shader;
-            std::shared_ptr<renderer::VertexArray> vao;
     };
 }
 
