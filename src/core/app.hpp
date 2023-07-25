@@ -12,6 +12,7 @@
 #include "../renderer/indexBuffer.hpp"
 #include "../window/window.hpp"
 #include "../ioc/singleton.hpp"
+#include "frameTimer.hpp"
 #include <memory>
 
 namespace engine
@@ -47,6 +48,7 @@ namespace engine
             bool m_running = true;
 
             LayerStack m_layerStack;
+            FrameTimer m_timer;
     };
 }
 

@@ -13,7 +13,7 @@ namespace engine
 
             virtual void onAttach() {}
             virtual void onDetach() {}
-            virtual void onUpdate() {}
+            virtual void onUpdate([[maybe_unused]] float dt) {}
             virtual void onImGuiRender() {}
             virtual void onEvent(events::Event&) {}
 

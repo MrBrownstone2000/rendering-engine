@@ -56,8 +56,11 @@ namespace engine
     {
         while(m_running)
         {
+            m_timer.tick();
+            float dt = m_timer.dt();
+
             for (ILayer* layer : m_layerStack)
-                layer->onUpdate();
+                layer->onUpdate(dt);
 
             m_imGuiLayer->beginFrame();
             for (ILayer* layer : m_layerStack)

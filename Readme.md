@@ -4,7 +4,9 @@ An attempt at building a well structured 3D rendering engine.
 
 # Features TODO List
 
+- Mesh
 - Mesh loading
+- Test mesh + camera
 - Materials
 
 - Framebuffers 

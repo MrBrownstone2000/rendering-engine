@@ -50,9 +50,9 @@ namespace engine
                 m_camera.setPosition({1, 1, 1});
             }
 
-            void onUpdate() override
+            void onUpdate(float dt) override
             {
-                m_camera.update(1.);
+                m_camera.update(dt);
 
                 renderer::beginFrame(m_camera);
                 renderer::submit(m_shader, m_vao);
