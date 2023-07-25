@@ -2,7 +2,7 @@
 #define __SDLWINDOW_HPP__
 
 #include "window.hpp"
-#include "../renderer/context.hpp"
+#include "../gfx/context.hpp"
 
 #include <memory>
 #include <string>

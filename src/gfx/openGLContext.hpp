@@ -2,7 +2,7 @@
 #define __OPENGLCONTEXT_HPP__
 
 #include "SDL_video.h"
-#include "renderer/context.hpp"
+#include "context.hpp"
 
 namespace engine::renderer
 {

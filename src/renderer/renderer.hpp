@@ -1,8 +1,8 @@
 #ifndef __RENDERER_HPP__
 #define __RENDERER_HPP__
 
-#include "vertexArray.hpp"
-#include "shader.hpp"
+#include "../gfx/vertexArray.hpp"
+#include "../gfx/shader.hpp"
 #include "camera.hpp"
 
 #include <memory>

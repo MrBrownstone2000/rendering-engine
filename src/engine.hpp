@@ -12,7 +12,7 @@
 
 #include "log/log.hpp"
 
-#include "renderer/commands.hpp"
+#include "gfx/commands.hpp"
 #include "renderer/renderer.hpp"
 
 #include "util/assert.hpp"

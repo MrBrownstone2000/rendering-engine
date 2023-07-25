@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "renderer.hpp"
 
-#include "commands.hpp"
+#include "../gfx/commands.hpp"
 
 namespace engine::renderer
 {

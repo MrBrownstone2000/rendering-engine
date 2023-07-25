@@ -1,16 +1,16 @@
 #include "pch.hpp"
 #include "events/keyEvent.hpp"
 #include "events/mouseEvent.hpp"
-#include "sdlWindow.hpp"
 #include "events/windowEvent.hpp"
-#include "input/sdlKeyCodes.hpp"
+#include "gfx/openGLContext.hpp"
 #include "input/input.hpp"
+#include "input/sdlKeyCodes.hpp"
+#include "sdlWindow.hpp"
 
 #include <SDL.h>
 #include <GL/glew.h>
 #include <memory>
 
-#include "../renderer/openGLContext.hpp"
 
 namespace engine::window
 {

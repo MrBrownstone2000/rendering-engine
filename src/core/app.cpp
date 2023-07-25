@@ -6,7 +6,7 @@
 #include "log/log.hpp"
 #include "log/severityLevelPolicy.hpp"
 #include "events/keyEvent.hpp"
-#include "renderer/commands.hpp"
+#include "gfx/commands.hpp"
 #include "renderer/renderer.hpp"
 
 namespace engine

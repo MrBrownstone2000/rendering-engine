@@ -6,7 +6,7 @@
 #include <string>
 #include "../util/types.hpp"
 #include "../events/event.hpp"
-#include "../renderer/context.hpp"
+#include "../gfx/context.hpp"
 
 namespace engine::window
 {
