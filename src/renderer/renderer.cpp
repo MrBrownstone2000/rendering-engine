@@ -9,7 +9,7 @@ namespace engine::renderer
     {
         struct RenderItem
         {
-            std::shared_ptr<Shader> shader;
+            std::shared_ptr<const Shader> shader;
             std::shared_ptr<const VertexArray> vao;
         };
 
@@ -51,12 +51,12 @@ namespace engine::renderer
         m_items.clear();
     }
 
-    void submit(const std::shared_ptr<Shader>& shader, const Mesh& mesh)
+    void submit(const std::shared_ptr<const Shader>& shader, const Mesh& mesh)
     {
         m_items.push_back({shader, mesh.getVAO()});
     }
 
-    void submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<const VertexArray>& vao)
+    void submit(const std::shared_ptr<const Shader>& shader, const std::shared_ptr<const VertexArray>& vao)
     {
         m_items.push_back({shader, vao});
     }

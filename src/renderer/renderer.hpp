@@ -13,8 +13,8 @@ namespace engine::renderer
 {
     void beginFrame(const Camera& camera);
     void endFrame();
-    void submit(const std::shared_ptr<Shader>& shader, const Mesh& mesh);
-    void submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<const VertexArray>& vao);
+    void submit(const std::shared_ptr<const Shader>& shader, const Mesh& mesh);
+    void submit(const std::shared_ptr<const Shader>& shader, const std::shared_ptr<const VertexArray>& vao);
 }
 
 #endif

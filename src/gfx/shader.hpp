@@ -46,7 +46,7 @@ namespace engine::renderer
             std::string preprocessShader(const std::string& shader);
 
         private:
-            uint32_t id;
+            uint32_t m_id;
 
             static std::vector<std::filesystem::path> s_includeDirs;
     };
