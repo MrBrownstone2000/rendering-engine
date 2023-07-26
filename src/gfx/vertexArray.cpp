@@ -81,12 +81,22 @@ namespace engine::renderer
 
     void VertexArray::attachIndexBuffer(IndexBuffer&& ebo)
     {
+        if (!m_id)
+        {
+            glCreateVertexArrays(1, &m_id);
+            glBindVertexArray(m_id);
+        }
         m_ebo = std::make_shared<IndexBuffer>(std::move(ebo));
         m_ebo->bind();
     }
 
     void VertexArray::attachIndexBuffer(const std::shared_ptr<IndexBuffer>& ebo)
     {
+        if (!m_id)
+        {
+            glCreateVertexArrays(1, &m_id);
+            glBindVertexArray(m_id);
+        }
         m_ebo = ebo;
         m_ebo->bind();
     }

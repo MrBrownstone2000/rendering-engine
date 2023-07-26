@@ -10,6 +10,7 @@
 
 #include "engine/renderer/camera.hpp"
 #include "engine/events/eventDispatcher.hpp"
+#include "engine/renderer/mesh.hpp"
 
 
 namespace engine
@@ -19,28 +20,19 @@ namespace engine
         public:
             ExampleLayer()
             {
-                float vertices[] = {
-                    -0.5, -0.5, 0, 1, 0, 0, 1,
-                    0.5, -0.5, 0, 0, 1, 0, 1,
-                    -0.5, 0.5, 0, 0, 0, 1, 1,
-                    0.5, 0.5, 0, 1, 0, 1, 1,
+                std::vector<renderer::Vertex> vertices = {
+                    {{ -0.5, -0.5, 0 }, {1, 0, 1}, {0, 0}},
+                    {{ 0.5, -0.5, 0 }, {1, 0, 1}, {1, 0}},
+                    {{ -0.5, 0.5, 0 }, {1, 0, 1}, {0, 1}},
+                    {{ 0.5, 0.5, 0 }, {1, 0, 1}, {1, 1}}
                 };
 
-                std::shared_ptr<renderer::VertexBuffer> vbo = std::make_shared<renderer::VertexBuffer>(vertices, sizeof(vertices));
-
-                vbo->setLayout({
-                        { renderer::ShaderDataType::float3, "pos" },
-                        { renderer::ShaderDataType::float4, "col" },
-                        });
-
-                uint indices[] = {
+                std::vector<uint32_t> indices = {
                     0, 1, 2,
                     2, 3, 1
                 };
 
-                m_vao = std::make_shared<renderer::VertexArray>();
-                m_vao->attachVertexBuffer(vbo);
-                m_vao->attachIndexBuffer(renderer::IndexBuffer(indices, 6));
+                m_mesh = renderer::Mesh(std::move(vertices), std::move(indices));
 
                 renderer::Shader::setIncludeDirs({ "../shaders" });
                 m_shader = std::make_shared<renderer::Shader>("vertex_basic.glsl", "frag_basic.glsl");
@@ -54,8 +46,9 @@ namespace engine
             {
                 m_camera.update(dt);
 
+                m_shader->bind();
                 renderer::beginFrame(m_camera);
-                renderer::submit(m_shader, m_vao);
+                renderer::submit(m_shader, m_mesh);
                 renderer::endFrame();
             }
 
@@ -73,7 +66,7 @@ namespace engine
 
         private:
             std::shared_ptr<renderer::Shader> m_shader;
-            std::shared_ptr<renderer::VertexArray> m_vao;
+            renderer::Mesh m_mesh;
 
             renderer::Camera m_camera;
     };

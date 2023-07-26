@@ -10,7 +10,7 @@ namespace engine::renderer
     {
         public:
             VertexBuffer() : m_id(0) {}
-            VertexBuffer(float* vertices, uint size);
+            VertexBuffer(void* vertices, uint size);
             ~VertexBuffer();
 
             VertexBuffer(const VertexBuffer& rhs) = delete;

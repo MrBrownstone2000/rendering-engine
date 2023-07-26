@@ -5,7 +5,7 @@
 
 namespace engine::renderer
 {
-    VertexBuffer::VertexBuffer(float* vertices, uint size)
+    VertexBuffer::VertexBuffer(void* vertices, uint size)
     {
         glCreateBuffers(1, &m_id);
         glBindBuffer(GL_ARRAY_BUFFER, m_id);

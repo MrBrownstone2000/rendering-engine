@@ -15,7 +15,7 @@ namespace engine::renderer
         glClearColor(r, g, b, a);
     }
 
-    void drawIndexed(const std::shared_ptr<VertexArray>& vao)
+    void drawIndexed(const std::shared_ptr<const VertexArray>& vao)
     {
         glDrawElements(GL_TRIANGLES, vao->getCount(), GL_UNSIGNED_INT, nullptr);
     }
