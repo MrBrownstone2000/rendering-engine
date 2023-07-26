@@ -14,7 +14,7 @@ namespace engine::renderer
     }
 
     // Reads and builds the shader program
-    Shader::Shader(const std::string &vertexShaderPath, const std::string &fragmentShaderPath)
+    Shader::Shader(const std::filesystem::path &vertexShaderPath, const std::filesystem::path &fragmentShaderPath)
     {
         uint32_t vertexShader = loadShader(GL_VERTEX_SHADER, vertexShaderPath);
         uint32_t fragmentShader = loadShader(GL_FRAGMENT_SHADER, fragmentShaderPath);
@@ -111,7 +111,7 @@ namespace engine::renderer
 
     // ============================= Utility functions =============================
 
-    std::string Shader::readFile(std::string fileName)
+    std::string Shader::readFile(std::filesystem::path fileName)
     {
         std::ifstream file;
         std::string content;
@@ -123,7 +123,7 @@ namespace engine::renderer
             if (file) break; 
         } 
 
-        if (!file) engineLog.error("Cannot find shader " + fileName);
+        if (!file) engineLog.error("Cannot find shader " + fileName.string());
 
         content = std::string(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
 
@@ -156,7 +156,7 @@ namespace engine::renderer
         }
     }
 
-    uint32_t Shader::loadShader(uint32_t shaderType, std::string shaderPath)
+    uint32_t Shader::loadShader(uint32_t shaderType, std::filesystem::path shaderPath)
     {
         std::string source = readFile(shaderPath);
 

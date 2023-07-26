@@ -12,7 +12,7 @@ namespace engine::renderer
     {
         public:
             // Reads and builds the shader program
-            Shader(const std::string &vertexShaderPath, const std::string &fragmentShaderPath);
+            Shader(const std::filesystem::path &vertexShaderPath, const std::filesystem::path &fragmentShaderPath);
             Shader();
 
             Shader(const Shader& rhs) = delete;
@@ -37,10 +37,10 @@ namespace engine::renderer
             static void setIncludeDirs(const std::vector<std::filesystem::path>& dirs);
 
         private:
-            std::string readFile(std::string fileName);
+            std::string readFile(std::filesystem::path fileName);
 
             void compileShader(uint32_t shaderType, uint32_t shader);
-            uint32_t loadShader(uint32_t shaderType, std::string shaderPath);
+            uint32_t loadShader(uint32_t shaderType, std::filesystem::path shaderPath);
             void linkProgram(uint32_t program, uint32_t vertexShader, uint32_t fragmentShader);
 
             std::string preprocessShader(const std::string& shader);
