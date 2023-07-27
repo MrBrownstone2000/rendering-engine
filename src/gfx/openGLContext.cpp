@@ -15,6 +15,8 @@ namespace engine::renderer
         ss << "    Renderer: " << glGetString(GL_RENDERER) << std::endl;
         ss << "    Version: " << glGetString(GL_VERSION) << std::endl;
         engineLog.info(ss.str());
+
+        SDL_GL_MakeCurrent(m_window, m_context);
     }
 
     OpenGLContext::~OpenGLContext()

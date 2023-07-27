@@ -22,6 +22,10 @@ namespace engine::window
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+
+        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+        SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+        SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
     }
 
     SDLWindow::SDLWindow(const IocParams& p)
@@ -43,9 +47,10 @@ namespace engine::window
 
         Check(m_window).msg("Error: could not create window...");
 
-        SDL_GL_SetSwapInterval(1);
-
         m_context = std::make_unique<renderer::OpenGLContext>(m_window);
+
+        SDL_SetRelativeMouseMode(SDL_TRUE);
+        SDL_GL_SetSwapInterval(1);
 
         if (!m_isGlewInit)
         {
@@ -227,11 +232,10 @@ namespace engine::window
                 TextEvent e(event.text.text);
                 m_eventCallback(e);
             }
-
-            int x, y;
-            SDL_GetRelativeMouseState(&x, &y);
-            input::SetMouseOffset(x, y);
         }
+        int x, y;
+        SDL_GetRelativeMouseState(&x, &y);
+        input::SetMouseOffset(x, y);
     }
 
     void SDLWindow::onUpdate()
