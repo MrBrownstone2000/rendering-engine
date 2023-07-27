@@ -21,7 +21,7 @@ EXEC = $(OUTPUT_DIR)/$(EXEC_NAME)
 
 LIB_DIR = ../$(OBJ)/output/lib
 LIB = Engine
-CFLAGS += -I../$(OBJ)/output/include
+CFLAGS += -I../$(OBJ)/output/include -I../contrib
 
 # ====== Setup ======
 SRC_LIST = $(shell find $(SRC) -type f -name *.cpp)

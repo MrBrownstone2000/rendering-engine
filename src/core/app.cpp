@@ -32,6 +32,11 @@ namespace engine
         m_window->setImGuiCallback(m_imGuiLayer->GetEventCallback());
     }
 
+    void Application::close()
+    {
+        m_running = false;
+    }
+
     Application::~Application()
     {
     }

@@ -34,6 +34,8 @@ namespace engine
             void pushLayer(ILayer* layer);
             void pushOverlay(ILayer* overlay);
 
+            void close();
+
             inline static Application& Get() { return *ioc::Sing().Resolve<Application>(); }
             inline window::IWindow& GetWindow() { return *m_window; }
 

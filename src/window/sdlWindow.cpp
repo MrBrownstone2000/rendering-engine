@@ -49,7 +49,7 @@ namespace engine::window
 
         m_context = std::make_unique<renderer::OpenGLContext>(m_window);
 
-        SDL_SetRelativeMouseMode(SDL_TRUE);
+        // SDL_SetRelativeMouseMode(SDL_TRUE);
         SDL_GL_SetSwapInterval(1);
 
         if (!m_isGlewInit)
@@ -113,6 +113,7 @@ namespace engine::window
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
+            // TODO: do not call when enabling "focus" (relative mouse mode)
             m_imGuiEventCallback(&event);
             // ========== Window Events ==========
             if (event.type == SDL_QUIT)
