@@ -88,18 +88,18 @@ namespace engine
     bool Application::onWindowClose(events::WindowCloseEvent&)
     {
         m_running = false;
-        return true;
+        return false;
     }
 
     bool Application::onKeyPressed(events::KeyPressedEvent& e)
     {
         if (e.getKeyCode() == input::KeyCode::Escape)
             m_running = false;
-        return true;
+        return false;
     }
 
     bool Application::onKeyReleased(events::KeyReleasedEvent&)
     {
-        return true;
+        return false;
     }
 }

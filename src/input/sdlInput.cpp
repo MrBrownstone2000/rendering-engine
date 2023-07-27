@@ -13,7 +13,7 @@ namespace engine::input
 
     bool SDLInput::isKeyPressed(KeyCode key)
     {
-        return m_keyStates[GetSDLScanCode(key)];
+        return m_keyStates[SDL_GetScancodeFromKey(GetSDLKeyCode(key))];
     }
 
     bool SDLInput::isMouseButtonPressed(MouseButtonType button)
