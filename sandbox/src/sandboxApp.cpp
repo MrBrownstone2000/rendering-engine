@@ -39,7 +39,7 @@ namespace engine
 
                 renderer::setClearColor(0, 0, 1);
 
-                m_camera.setPosition({1, 1, 1});
+                m_camera.setPosition({0, 0, -1});
             }
 
             void onUpdate(float dt) override
