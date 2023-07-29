@@ -4,7 +4,7 @@
 
 #include <SDL.h>
 
-namespace engine::input
+namespace engine
 {
     SDLInput::SDLInput()
     {

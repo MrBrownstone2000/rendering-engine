@@ -5,7 +5,7 @@
 #include "../input/keyCodes.hpp"
 
 #include <sstream>
-namespace engine::events
+namespace engine
 {
     class MouseMovedEvent : public Event
     {
@@ -62,19 +62,19 @@ namespace engine::events
     class MouseButtonEvent : public Event
     {
         public:
-            inline input::MouseButtonType getMouseButton() const { return m_button; }
+            inline MouseButtonType getMouseButton() const { return m_button; }
 
             EVENT_CLASS_CATEGORY(Mouse | Input | MouseButton)
 
         protected:
-            MouseButtonEvent(input::MouseButtonType button) : m_button(button) {}
-            input::MouseButtonType m_button;
+            MouseButtonEvent(MouseButtonType button) : m_button(button) {}
+            MouseButtonType m_button;
     };
 
     class MouseButtonPressedEvent : public MouseButtonEvent
     {
         public:
-            MouseButtonPressedEvent(input::MouseButtonType button)
+            MouseButtonPressedEvent(MouseButtonType button)
                 : MouseButtonEvent(button)
             {}
 
@@ -91,7 +91,7 @@ namespace engine::events
     class MouseButtonReleasedEvent : public MouseButtonEvent
     {
         public:
-            MouseButtonReleasedEvent(input::MouseButtonType button)
+            MouseButtonReleasedEvent(MouseButtonType button)
                 : MouseButtonEvent(button)
             {}
 

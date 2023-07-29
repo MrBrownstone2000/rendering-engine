@@ -3,7 +3,7 @@
 
 #include <GL/glew.h>
 
-namespace engine::renderer
+namespace engine
 {
     VertexBuffer::VertexBuffer(void* vertices, uint size)
     {

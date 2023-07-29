@@ -21,13 +21,13 @@ namespace engine
         }
         isInit = true;
 
-        m_window = ioc::Get().Resolve<window::IWindow>({.width = 800, .height = 600, .title = "Hi!"});
+        m_window = ioc::Get().Resolve<IWindow>({.width = 800, .height = 600, .title = "Hi!"});
         m_window->setEventCallback(M_BIND_EVENT_FN(Application::onEvent));
     }
 
     void Application::init()
     {
-        m_imGuiLayer = new gui::ImGuiLayer;
+        m_imGuiLayer = new ImGuiLayer;
         pushOverlay(m_imGuiLayer);
         m_window->setImGuiCallback(m_imGuiLayer->GetEventCallback());
     }
@@ -41,13 +41,13 @@ namespace engine
     {
     }
 
-    void Application::onEvent(events::Event& e)
+    void Application::onEvent(Event& e)
     {
         engineLog.verbose(e);
 
-        events::EventDispatcher dispatcher(e);
-        dispatcher.dispatch<events::WindowCloseEvent>(M_BIND_EVENT_FN(Application::onWindowClose));
-        dispatcher.dispatch<events::KeyPressedEvent>(M_BIND_EVENT_FN(Application::onKeyPressed));
+        EventDispatcher dispatcher(e);
+        dispatcher.dispatch<WindowCloseEvent>(M_BIND_EVENT_FN(Application::onWindowClose));
+        dispatcher.dispatch<KeyPressedEvent>(M_BIND_EVENT_FN(Application::onKeyPressed));
 
         for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
         {
@@ -90,20 +90,20 @@ namespace engine
     }
 
 
-    bool Application::onWindowClose(events::WindowCloseEvent&)
+    bool Application::onWindowClose(WindowCloseEvent&)
     {
         m_running = false;
         return false;
     }
 
-    bool Application::onKeyPressed(events::KeyPressedEvent& e)
+    bool Application::onKeyPressed(KeyPressedEvent& e)
     {
-        if (e.getKeyCode() == input::KeyCode::Escape)
+        if (e.getKeyCode() == KeyCode::Escape)
             m_running = false;
         return false;
     }
 
-    bool Application::onKeyReleased(events::KeyReleasedEvent&)
+    bool Application::onKeyReleased(KeyReleasedEvent&)
     {
         return false;
     }

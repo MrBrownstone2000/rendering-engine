@@ -5,7 +5,7 @@
 #include "../events/keyEvent.hpp"
 #include "../util/types.hpp"
 
-namespace engine::input
+namespace engine
 {
     // SDL to Engine KeyCodes
     MouseButtonType GetMouseButtonType(u8 sdlButton);

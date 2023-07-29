@@ -5,7 +5,7 @@
 #include "keyCodes.hpp"
 #include "../util/types.hpp"
 
-namespace engine::input
+namespace engine
 {
     class SDLInput : public IInput
     {

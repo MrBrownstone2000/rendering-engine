@@ -4,7 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GL/glew.h>
 
-namespace engine::renderer
+namespace engine
 {
     std::vector<std::filesystem::path> Shader::s_includeDirs;
 

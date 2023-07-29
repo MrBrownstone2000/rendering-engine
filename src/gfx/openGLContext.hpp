@@ -4,9 +4,9 @@
 #include "SDL_video.h"
 #include "context.hpp"
 
-namespace engine::renderer
+namespace engine
 {
-    class OpenGLContext : public IContext
+    class OpenGLContext : public IRenderingContext
     {
         public:
             OpenGLContext(SDL_Window* window);

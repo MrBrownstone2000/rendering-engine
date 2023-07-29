@@ -7,7 +7,7 @@
 #include <sstream>
 #include <string>
 
-namespace engine::util
+namespace engine
 {
     M_DEF_EXCEPTION(FailedAssertion);
 
@@ -52,9 +52,9 @@ namespace engine::util
     #endif
 #endif
 
-#define Assert(expr) (!M_USE_ASSERT || bool(expr))? void(0) : (void)engine::util::Assertion(M_STR(expr), __FILE__, __FUNCTION__, __LINE__)
-#define Check(expr) (bool(expr))? void(0) : (void)engine::util::Assertion(M_STR(expr), __FILE__, __FUNCTION__, __LINE__, \
-        (M_USE_ASSERT ? engine::util::Assertion::Consequence::Terminate : \
-         engine::util::Assertion::Consequence::Log))
+#define Assert(expr) (!M_USE_ASSERT || bool(expr))? void(0) : (void)engine::Assertion(M_STR(expr), __FILE__, __FUNCTION__, __LINE__)
+#define Check(expr) (bool(expr))? void(0) : (void)engine::Assertion(M_STR(expr), __FILE__, __FUNCTION__, __LINE__, \
+        (M_USE_ASSERT ? engine::Assertion::Consequence::Terminate : \
+         engine::Assertion::Consequence::Log))
 
 #endif

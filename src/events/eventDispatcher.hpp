@@ -4,7 +4,7 @@
 #include "event.hpp"
 #include <functional>
 
-namespace engine::events
+namespace engine
 {
     class EventDispatcher
     {

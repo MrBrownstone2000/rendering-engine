@@ -3,7 +3,7 @@
 
 #include "../util/types.hpp"
 
-namespace engine::renderer
+namespace engine
 {
     class IndexBuffer
     {

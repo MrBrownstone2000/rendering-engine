@@ -6,7 +6,7 @@
 #include <vector>
 #include <filesystem>
 
-namespace engine::renderer
+namespace engine
 {
     class Shader
     {

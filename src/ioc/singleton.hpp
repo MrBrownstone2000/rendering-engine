@@ -42,14 +42,14 @@ namespace engine::ioc
                     } catch (const std::bad_cast&) {
                         Check(false).msg(
                             std::format("Could not resolve Singleton mapped type\nfrom: [{}]\nto: [{}]\n",
-                                util::Demangle(entry.type().name()),
-                                util::Demangle(typeid(Generator<T>).name())
+                                Demangle(entry.type().name()),
+                                Demangle(typeid(Generator<T>).name())
                         )).ex();
                     }
                 }
                 else
                     throw ServiceNotFound{ std::format("Could not find generator for type [{}] in Singleton container",
-                            util::Demangle(typeid(T).name())) };
+                            Demangle(typeid(T).name())) };
             }
 
         private:

@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace engine::util
+namespace engine
 {
     std::string Demangle(const char* name);
 }

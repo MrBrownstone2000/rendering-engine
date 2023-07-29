@@ -7,7 +7,7 @@
 
 #include <memory>
 
-namespace engine::renderer
+namespace engine
 {
     class VertexArray
     {

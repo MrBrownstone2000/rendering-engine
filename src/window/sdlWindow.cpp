@@ -12,7 +12,7 @@
 #include <memory>
 
 
-namespace engine::window
+namespace engine
 {
     void SDLWindow::Boot()
     {
@@ -47,7 +47,7 @@ namespace engine::window
 
         Check(m_window).msg("Error: could not create window...");
 
-        m_context = std::make_unique<renderer::OpenGLContext>(m_window);
+        m_context = std::make_unique<OpenGLContext>(m_window);
 
         // SDL_SetRelativeMouseMode(SDL_TRUE);
         SDL_GL_SetSwapInterval(1);
@@ -79,7 +79,7 @@ namespace engine::window
         return m_window;
     }
 
-    renderer::IContext* SDLWindow::getContext()
+    IRenderingContext* SDLWindow::getContext()
     {
         return m_context.get();
     }
@@ -107,7 +107,6 @@ namespace engine::window
 
     void SDLWindow::HandleEvents()
     {
-        using namespace events;
         Check(m_imGuiEventCallback);
 
         SDL_Event event;
@@ -164,8 +163,8 @@ namespace engine::window
             // ========== Mouse Events ==========
             if (event.type == SDL_MOUSEBUTTONDOWN)
             {
-                input::MouseButtonType b = input::GetMouseButtonType(event.button.button);
-                if (b != input::MouseButtonType::Unknown)
+                MouseButtonType b = GetMouseButtonType(event.button.button);
+                if (b != MouseButtonType::Unknown)
                 {
                     MouseButtonPressedEvent e(b);
                     m_eventCallback(e);
@@ -173,8 +172,8 @@ namespace engine::window
             }
             if (event.type == SDL_MOUSEBUTTONUP)
             {
-                input::MouseButtonType b = input::GetMouseButtonType(event.button.button);
-                if (b != input::MouseButtonType::Unknown)
+                MouseButtonType b = GetMouseButtonType(event.button.button);
+                if (b != MouseButtonType::Unknown)
                 {
                     MouseButtonReleasedEvent e(b);
                     m_eventCallback(e);
@@ -194,36 +193,36 @@ namespace engine::window
             // ========== Keyboard Events ==========
             if (event.type == SDL_KEYDOWN)
             {
-                input::KeyCode k = input::GetKeyCode(event.key.keysym.sym);
-                if (k != input::KeyCode::Unknown)
+                KeyCode k = GetKeyCode(event.key.keysym.sym);
+                if (k != KeyCode::Unknown)
                 {
                     u8 mods = 0;
                     if (event.key.keysym.mod & KMOD_SHIFT)
-                        mods |= input::KeyModifier::Shift;
+                        mods |= KeyModifier::Shift;
                     if (event.key.keysym.mod & KMOD_ALT)
-                        mods |= input::KeyModifier::Alt;
+                        mods |= KeyModifier::Alt;
                     if (event.key.keysym.mod & KMOD_CTRL)
-                        mods |= input::KeyModifier::Ctrl;
+                        mods |= KeyModifier::Ctrl;
                     if (event.key.keysym.mod & KMOD_GUI)
-                        mods |= input::KeyModifier::Super;
+                        mods |= KeyModifier::Super;
                     KeyPressedEvent e(k, mods, event.key.repeat);
                     m_eventCallback(e);
                 }
             }
             if (event.type == SDL_KEYUP)
             {
-                input::KeyCode k = input::GetKeyCode(event.key.keysym.sym);
-                if (k != input::KeyCode::Unknown)
+                KeyCode k = GetKeyCode(event.key.keysym.sym);
+                if (k != KeyCode::Unknown)
                 {
                     u8 mods = 0;
                     if (event.key.keysym.mod & KMOD_SHIFT)
-                        mods |= input::KeyModifier::Shift;
+                        mods |= KeyModifier::Shift;
                     if (event.key.keysym.mod & KMOD_ALT)
-                        mods |= input::KeyModifier::Alt;
+                        mods |= KeyModifier::Alt;
                     if (event.key.keysym.mod & KMOD_CTRL)
-                        mods |= input::KeyModifier::Ctrl;
+                        mods |= KeyModifier::Ctrl;
                     if (event.key.keysym.mod & KMOD_GUI)
-                        mods |= input::KeyModifier::Super;
+                        mods |= KeyModifier::Super;
                     KeyReleasedEvent e(k, mods);
                     m_eventCallback(e);
                 }

@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "mesh.hpp"
 
-namespace engine::renderer
+namespace engine
 {
     Mesh::Mesh()
         : m_vao(std::make_shared<VertexArray>())
@@ -15,9 +15,9 @@ namespace engine::renderer
         std::shared_ptr<VertexBuffer> vbo = 
             std::make_shared<VertexBuffer>(m_vertices.data(), m_vertices.size() * sizeof(Vertex));
         vbo->setLayout({
-            { ShaderDataType::float3, "position" },
-            { ShaderDataType::float3, "normal" },
-            { ShaderDataType::float2, "texCoords" },
+            { BufferLayout::float3, "position" },
+            { BufferLayout::float3, "normal" },
+            { BufferLayout::float2, "texCoords" },
         });
         m_vao->attachVertexBuffer(vbo);
 
@@ -30,9 +30,9 @@ namespace engine::renderer
         std::shared_ptr<VertexBuffer> vbo = 
             std::make_shared<VertexBuffer>(vertices, sv);
         vbo->setLayout({
-            { ShaderDataType::float3, "position" },
-            { ShaderDataType::float3, "normal" },
-            { ShaderDataType::float2, "texCoords" },
+            { BufferLayout::float3, "position" },
+            { BufferLayout::float3, "normal" },
+            { BufferLayout::float2, "texCoords" },
         });
         m_vao->attachVertexBuffer(vbo);
 

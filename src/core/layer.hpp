@@ -15,7 +15,7 @@ namespace engine
             virtual void onDetach() {}
             virtual void onUpdate([[maybe_unused]] float dt) {}
             virtual void onImGuiRender() {}
-            virtual void onEvent(events::Event&) {}
+            virtual void onEvent(Event&) {}
 
             std::string getName() const { return m_name; }
 

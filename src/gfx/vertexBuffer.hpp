@@ -4,7 +4,7 @@
 #include "bufferLayout.hpp"
 #include "../util/types.hpp"
 
-namespace engine::renderer
+namespace engine
 {
     class VertexBuffer
     {

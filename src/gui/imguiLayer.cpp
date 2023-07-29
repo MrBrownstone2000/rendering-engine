@@ -9,7 +9,7 @@
 
 #include <SDL.h>
 
-namespace engine::gui
+namespace engine
 {
     ImGuiLayer::ImGuiLayer()
         : ILayer("ImGuiLayer")

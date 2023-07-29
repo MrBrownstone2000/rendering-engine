@@ -8,7 +8,7 @@ namespace backward {
     class StackTrace;
 }
 
-namespace engine::util
+namespace engine
 {
     class StackTrace
     {

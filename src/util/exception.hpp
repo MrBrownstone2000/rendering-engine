@@ -4,7 +4,7 @@
 #include <exception>
 #include <string>
 
-namespace engine::util
+namespace engine
 {
     class IException : public std::exception {};
 
@@ -22,6 +22,6 @@ namespace engine::util
 }
 
 #define M_DEF_EXCEPTION_FROM(NewType, BaseType) class NewType : public BaseType { using Base = BaseType; public: using Base::Base; }
-#define M_DEF_EXCEPTION(NewType) M_DEF_EXCEPTION_FROM(NewType, engine::util::BufferedException)
+#define M_DEF_EXCEPTION(NewType) M_DEF_EXCEPTION_FROM(NewType, engine::BufferedException)
 
 #endif

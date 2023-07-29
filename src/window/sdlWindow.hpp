@@ -10,7 +10,7 @@
 
 class SDL_Window;
 
-namespace engine::window
+namespace engine
 {
     class SDLWindow : public IWindow
     {
@@ -22,7 +22,7 @@ namespace engine::window
             uint getWidth() const override;
             uint getHeight() const override;
             void* getNativeWindow() override;
-            renderer::IContext* getContext() override;
+            IRenderingContext* getContext() override;
 
             void onUpdate() override;
             void swapBuffers() override;
@@ -36,7 +36,7 @@ namespace engine::window
 
         private:
             SDL_Window* m_window;
-            std::unique_ptr<renderer::IContext> m_context;
+            std::unique_ptr<IRenderingContext> m_context;
             uint m_width, m_height;
             bool m_vsync;
 

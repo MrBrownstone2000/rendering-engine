@@ -3,18 +3,22 @@
 
 #include "keyCodes.hpp"
 
-namespace engine::input
+namespace engine
 {
-    void Boot();
+    namespace input
+    {
+        void Boot();
 
-    bool IsKeyPressed(KeyCode key);
-    bool IsMouseButtonPressed(MouseButtonType button);
-    float GetMouseX();
-    float GetMouseY();
+        bool IsKeyPressed(KeyCode key);
+        bool IsMouseButtonPressed(MouseButtonType button);
+        float GetMouseX();
+        float GetMouseY();
 
-    void SetMouseOffset(int x, int y);
-    int GetMouseOffsetX();
-    int GetMouseOffsetY();
+        void SetMouseOffset(int x, int y);
+        int GetMouseOffsetX();
+        int GetMouseOffsetY();
+    }
+
 
     class IInput
     {

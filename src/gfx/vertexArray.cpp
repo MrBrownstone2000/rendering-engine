@@ -3,7 +3,7 @@
 
 #include <GL/glew.h>
 
-namespace engine::renderer
+namespace engine
 {
     VertexArray::VertexArray()
     {

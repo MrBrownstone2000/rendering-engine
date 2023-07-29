@@ -8,9 +8,12 @@
 #include "../events/event.hpp"
 #include "../gfx/context.hpp"
 
-namespace engine::window
+namespace engine
 {
-    void Boot();
+    namespace window
+    {
+        void Boot();
+    }
 
     class IWindow
     {
@@ -21,14 +24,14 @@ namespace engine::window
                 std::string title;
             };
 
-            using EventCallback = std::function<void(events::Event&)>;
+            using EventCallback = std::function<void(Event&)>;
             virtual ~IWindow() = default;
 
             virtual bool isVSync() const = 0;
             virtual uint getWidth() const = 0;
             virtual uint getHeight() const = 0;
             virtual void* getNativeWindow() = 0;
-            virtual renderer::IContext* getContext() = 0;
+            virtual IRenderingContext* getContext() = 0;
 
             virtual void onUpdate() = 0;
             virtual void swapBuffers() = 0;

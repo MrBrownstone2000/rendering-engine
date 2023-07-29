@@ -3,7 +3,7 @@
 
 #include "debug.hpp"
 
-namespace engine::util
+namespace engine
 {
     BufferedException::BufferedException(std::string msg)
         : m_msg(std::move(msg))

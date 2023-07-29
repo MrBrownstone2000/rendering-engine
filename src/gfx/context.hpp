@@ -1,12 +1,12 @@
 #ifndef __CONTEXT_HPP__
 #define __CONTEXT_HPP__
 
-namespace engine::renderer
+namespace engine
 {
-    class IContext
+    class IRenderingContext
     {
         public:
-            virtual ~IContext() = default;
+            virtual ~IRenderingContext() = default;
             virtual void swapBuffers() = 0;
             virtual void* getNativeContext() = 0;
     };

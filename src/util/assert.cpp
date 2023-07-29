@@ -4,7 +4,7 @@
 #include "log/log.hpp"
 #include "log/channel.hpp"
 
-namespace engine::util
+namespace engine
 {
     namespace
     {

@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 
-namespace engine::input
+namespace engine
 {
     MouseButtonType GetMouseButtonType(u8 sdlButton)
     {

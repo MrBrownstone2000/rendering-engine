@@ -21,7 +21,7 @@ namespace engine
         public:
             ExampleLayer()
             {
-                std::vector<renderer::Vertex> vertices = {
+                std::vector<Vertex> vertices = {
                     {{ -0.5, -0.5, 0 }, {1, 0, 1}, {0, 0}},
                     {{ 0.5, -0.5, 0 }, {1, 0, 1}, {1, 0}},
                     {{ -0.5, 0.5, 0 }, {1, 0, 1}, {0, 1}},
@@ -33,10 +33,10 @@ namespace engine
                     2, 3, 1
                 };
 
-                m_mesh = renderer::Mesh(std::move(vertices), std::move(indices));
+                m_mesh = Mesh(std::move(vertices), std::move(indices));
 
-                renderer::Shader::setIncludeDirs({ "../shaders" });
-                m_shader = std::make_shared<renderer::Shader>("vertex_basic.glsl", "frag_basic.glsl");
+                Shader::setIncludeDirs({ "../shaders" });
+                m_shader = std::make_shared<Shader>("vertex_basic.glsl", "frag_basic.glsl");
 
                 renderer::setClearColor(0, 0, 1);
 
@@ -53,16 +53,16 @@ namespace engine
                 renderer::endFrame();
             }
 
-            bool onWindowResize(const events::WindowResizeEvent& event)
+            bool onWindowResize(const WindowResizeEvent& event)
             {
                 m_camera.setWindowSize(event.getWidth(), event.getHeight());
                 return false;
             }
 
-            void onEvent(events::Event& event) override
+            void onEvent(Event& event) override
             {
-                events::EventDispatcher d(event);
-                d.dispatch<events::WindowResizeEvent>(M_BIND_EVENT_FN(ExampleLayer::onWindowResize));
+                EventDispatcher d(event);
+                d.dispatch<WindowResizeEvent>(M_BIND_EVENT_FN(ExampleLayer::onWindowResize));
             }
 
             void onImGuiRender() override
@@ -147,10 +147,10 @@ namespace engine
             }
 
         private:
-            std::shared_ptr<renderer::Shader> m_shader;
-            renderer::Mesh m_mesh;
+            std::shared_ptr<Shader> m_shader;
+            Mesh m_mesh;
 
-            renderer::Camera m_camera;
+            Camera m_camera;
     };
 
     class Sandbox : public Application

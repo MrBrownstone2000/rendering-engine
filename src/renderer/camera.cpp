@@ -5,7 +5,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace engine::renderer
+namespace engine
 {
     Camera::Camera(unsigned int width, unsigned int height, float mouseSensitivity, float cameraSpeed)
         : m_mouseSensitivity(mouseSensitivity),
@@ -135,17 +135,17 @@ namespace engine::renderer
     {
         changeOrientation(input::GetMouseOffsetX(), input::GetMouseOffsetY());
 
-        if (input::IsKeyPressed(input::KeyCode::Key_z))
+        if (input::IsKeyPressed(KeyCode::Key_z))
             updatePosition(Direction::Front, dt);
-        if (input::IsKeyPressed(input::KeyCode::Key_q))
+        if (input::IsKeyPressed(KeyCode::Key_q))
             updatePosition(Direction::Left, dt);
-        if (input::IsKeyPressed(input::KeyCode::Key_s))
+        if (input::IsKeyPressed(KeyCode::Key_s))
             updatePosition(Direction::Back, dt);
-        if (input::IsKeyPressed(input::KeyCode::Key_d))
+        if (input::IsKeyPressed(KeyCode::Key_d))
             updatePosition(Direction::Right, dt);
-        if (input::IsKeyPressed(input::KeyCode::Space))
+        if (input::IsKeyPressed(KeyCode::Space))
             updatePosition(Direction::Up, dt);
-        if (input::IsKeyPressed(input::KeyCode::LShift))
+        if (input::IsKeyPressed(KeyCode::LShift))
             updatePosition(Direction::Down, dt);
     }
 

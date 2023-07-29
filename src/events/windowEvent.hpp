@@ -6,7 +6,7 @@
 
 #include <sstream>
 
-namespace engine::events
+namespace engine
 {
     class WindowResizeEvent : public Event
     {

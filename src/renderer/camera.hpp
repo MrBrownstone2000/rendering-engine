@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <SDL2/SDL.h>
 
-namespace engine::renderer
+namespace engine
 {
     enum class Direction
     {

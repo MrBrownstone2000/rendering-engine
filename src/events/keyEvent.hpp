@@ -6,27 +6,27 @@
 #include "../util/types.hpp"
 #include <sstream>
 
-namespace engine::events
+namespace engine
 {
     class KeyEvent : public Event
     {
         public:
-            inline input::KeyCode getKeyCode() const { return m_keyCode; }
+            inline KeyCode getKeyCode() const { return m_keyCode; }
             inline u8 getKeyMods() const { return m_mods; }
 
             EVENT_CLASS_CATEGORY(Keyboard | Input)
 
         protected:
-            KeyEvent(input::KeyCode keycode, u8 mods) : m_keyCode(keycode), m_mods(mods) {}
+            KeyEvent(KeyCode keycode, u8 mods) : m_keyCode(keycode), m_mods(mods) {}
 
-            input::KeyCode m_keyCode;
+            KeyCode m_keyCode;
             u8 m_mods;
     };
 
     class KeyPressedEvent : public KeyEvent
     {
         public:
-            KeyPressedEvent(input::KeyCode keycode, u8 mods, bool repeated)
+            KeyPressedEvent(KeyCode keycode, u8 mods, bool repeated)
                 : KeyEvent(keycode, mods), m_repeated(repeated)
             {}
 
@@ -49,7 +49,7 @@ namespace engine::events
     class KeyReleasedEvent : public KeyEvent
     {
         public:
-            KeyReleasedEvent(input::KeyCode keycode, u8 mods)
+            KeyReleasedEvent(KeyCode keycode, u8 mods)
                 : KeyEvent(keycode, mods)
             {}
 

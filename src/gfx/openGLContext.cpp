@@ -2,7 +2,7 @@
 #include "openGLContext.hpp"
 #include "GL/glew.h"
 
-namespace engine::renderer
+namespace engine
 {
     OpenGLContext::OpenGLContext(SDL_Window* window)
         : m_window(window)

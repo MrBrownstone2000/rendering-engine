@@ -5,7 +5,7 @@
 #define BACKWARD_HAS_LIBUNWIND 1
 #include "backward/backward.hpp"
 
-namespace engine::util
+namespace engine
 {
     StackTrace::StackTrace(int traceSkipDepth)
     {

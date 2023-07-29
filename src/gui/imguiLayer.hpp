@@ -8,7 +8,7 @@
 
 #include <functional>
 
-namespace engine::gui
+namespace engine
 {
     class ImGuiLayer : public ILayer
     {

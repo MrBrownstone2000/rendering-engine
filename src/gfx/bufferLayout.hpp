@@ -7,33 +7,13 @@
 #include "../log/log.hpp"
 #include "../util/types.hpp"
 
-namespace engine::renderer
+namespace engine
 {
-    enum class ShaderDataType
-    {
-        float2,
-        float3,
-        float4,
-    };
-
-    struct BufferElement
-    {
-        ShaderDataType m_type;
-        std::string m_name;
-        uint32_t m_size;
-        uint32_t m_offset;
-        bool m_normalized;
-
-        BufferElement(ShaderDataType type, const std::string& name, bool normalized = false);
-
-        uint32_t getCount() const;
-        uint32_t getGLBaseType() const;
-        inline bool isNormalized() const { return m_normalized; };
-    };
-
     class BufferLayout
     {
         public:
+            struct BufferElement;
+
             BufferLayout() = default;
             BufferLayout(const std::initializer_list<BufferElement>& elts);
 
@@ -44,6 +24,29 @@ namespace engine::renderer
             inline std::vector<BufferElement>::iterator end() { return m_elements.end(); }
             inline std::vector<BufferElement>::const_iterator begin() const { return m_elements.begin(); }
             inline std::vector<BufferElement>::const_iterator end() const { return m_elements.end(); }
+
+        public:
+            enum ShaderDataType
+            {
+                float2,
+                float3,
+                float4,
+            };
+
+            struct BufferElement
+            {
+                ShaderDataType m_type;
+                std::string m_name;
+                uint32_t m_size;
+                uint32_t m_offset;
+                bool m_normalized;
+
+                BufferElement(ShaderDataType type, const std::string& name, bool normalized = false);
+
+                uint32_t getCount() const;
+                uint32_t getGLBaseType() const;
+                inline bool isNormalized() const { return m_normalized; };
+            };
 
         private:
             std::vector<BufferElement> m_elements;

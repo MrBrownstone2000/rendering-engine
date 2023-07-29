@@ -29,7 +29,7 @@ namespace engine
             void init();
             void run();
 
-            void onEvent(events::Event& e);
+            void onEvent(Event& e);
 
             void pushLayer(ILayer* layer);
             void pushOverlay(ILayer* overlay);
@@ -37,16 +37,16 @@ namespace engine
             void close();
 
             inline static Application& Get() { return *ioc::Sing().Resolve<Application>(); }
-            inline window::IWindow& GetWindow() { return *m_window; }
+            inline IWindow& GetWindow() { return *m_window; }
 
         private:
-            bool onWindowClose(events::WindowCloseEvent& e);
-            bool onKeyPressed(events::KeyPressedEvent& e);
-            bool onKeyReleased(events::KeyReleasedEvent& e);
+            bool onWindowClose(WindowCloseEvent& e);
+            bool onKeyPressed(KeyPressedEvent& e);
+            bool onKeyReleased(KeyReleasedEvent& e);
 
         private:
-            std::shared_ptr<window::IWindow> m_window;
-            gui::ImGuiLayer* m_imGuiLayer;
+            std::shared_ptr<IWindow> m_window;
+            ImGuiLayer* m_imGuiLayer;
             bool m_running = true;
 
             LayerStack m_layerStack;

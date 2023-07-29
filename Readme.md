@@ -4,17 +4,45 @@ An attempt at building a well structured 3D rendering engine.
 
 # Features TODO List
 
-- Mesh
-- Mesh loading
-- Test mesh + camera
-- Materials
+- Textures
+- Framebuffers
+- Imgui dockspace + viewport
 
-- Framebuffers 
+- Materials
+    - Has shader, and can set SOME shader uniforms (the ones material-related)
+- Material instance
+    - Has material instance
+    - Has uniforms set to a certain value
+
+=> easier sorting
+
+
+- Basic gui layout
+
+- Mesh loading
+
+- Get locations of all uniforms at shader compile time 
+
+- Assets storing: Virtual File System
+    - minimum: mapping from os (actual path) to internal, abstract path
+        - models: store internal representation in file (quicker to load) = baking
+
+    - more advanced: 
+        - need (fast) compression (LZ4 ?)
+        - ressource compilation:
+            - vertices / index in internal representation
+            - images: stored in easily decompressed formats (DDS? DXT? TGA? PNG?)
+                - wikipedia => texture compression
+        - combine multiple assets in one file: 
+            - read only (for read write, research actual file systems !!)
+            - groups for assets loaded together ?
+            - headers of group loaded first, then assets on read
+
 
 # Issues
 
-- less namespaces ! 
-- Use mordern opengl: https://github.com/fendevel/Guide-to-Modern-OpenGL-Functions
+- imgui headers copied for release ?
+- Use modern opengl: https://github.com/fendevel/Guide-to-Modern-OpenGL-Functions
 - Test framework: 
     - build test core files to shared lib
     - Test framework as submodule
