@@ -2,13 +2,20 @@
 #include "renderer.hpp"
 
 #include "../gfx/commands.hpp"
+#include <GL/glew.h>
 
 namespace engine::renderer
 {
+    void Boot()
+    {
+        glEnable(GL_DEPTH_TEST);
+    }
+
     namespace
     {
         struct RenderItem
         {
+            glm::mat4 model;
             std::shared_ptr<const Shader> shader;
             std::shared_ptr<const VertexArray> vao;
         };
@@ -40,8 +47,8 @@ namespace engine::renderer
         for (RenderItem i : m_items)
         {
             i.shader->bind();
-            i.shader->setUniform("view", m_sceneData.view);
-            i.shader->setUniform("projection", m_sceneData.projection);
+            i.shader->setUniform("model", i.model);
+            i.shader->setUniform("vp", m_sceneData.projection * m_sceneData.view);
             i.shader->setUniform("cameraPos", m_sceneData.position);
             i.shader->setUniform("cameraDir", m_sceneData.direction);
 
@@ -51,13 +58,13 @@ namespace engine::renderer
         m_items.clear();
     }
 
-    void submit(const std::shared_ptr<const Shader>& shader, const Mesh& mesh)
+    void submit(const glm::mat4& model, const std::shared_ptr<const Shader>& shader, const Mesh& mesh)
     {
-        m_items.push_back({shader, mesh.getVAO()});
+        m_items.push_back({model, shader, mesh.getVAO()});
     }
 
-    void submit(const std::shared_ptr<const Shader>& shader, const std::shared_ptr<const VertexArray>& vao)
+    void submit(const glm::mat4& model, const std::shared_ptr<const Shader>& shader, const std::shared_ptr<const VertexArray>& vao)
     {
-        m_items.push_back({shader, vao});
+        m_items.push_back({model, shader, vao});
     }
 }

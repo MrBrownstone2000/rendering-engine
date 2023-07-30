@@ -15,6 +15,8 @@
 
 #include "../contrib/imgui/imgui.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace engine
 {
     class ExampleLayer : public ILayer
@@ -42,8 +44,10 @@ namespace engine
                 renderer::setClearColor(0, 0, 1);
 
                 m_camera.setPosition({0, 0, -1});
-
                 m_texture = std::make_shared<Texture>("../data/smiley.png");
+
+                m_model1 = glm::mat4(1);
+                m_model2 = glm::translate(glm::mat4(1), glm::vec3(1, 0, 1));
             }
 
             void onUpdate(float dt) override
@@ -55,7 +59,8 @@ namespace engine
 
                 m_shader->bindTexture(m_texture, 0);
 
-                renderer::submit(m_shader, m_mesh);
+                renderer::submit(m_model1, m_shader, m_mesh);
+                renderer::submit(m_model2, m_shader, m_mesh);
                 renderer::endFrame();
             }
 
@@ -156,6 +161,7 @@ namespace engine
             std::shared_ptr<Shader> m_shader;
             std::shared_ptr<Texture> m_texture;
             Mesh m_mesh;
+            glm::mat4 m_model1, m_model2;
 
             Camera m_camera;
     };

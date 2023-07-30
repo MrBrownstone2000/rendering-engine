@@ -16,7 +16,7 @@ namespace engine
         m_cameraPos = glm::vec3(0.f, 0.f, 3.f);
         m_worldUp = glm::vec3(0.f, 1.f, 0.f);
 
-        m_fov = 45.f;
+        m_fov = 70.f;
         m_yaw = 0.f;
         m_pitch = 0;
 

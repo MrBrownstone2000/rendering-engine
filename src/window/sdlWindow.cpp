@@ -6,6 +6,7 @@
 #include "input/input.hpp"
 #include "input/sdlKeyCodes.hpp"
 #include "sdlWindow.hpp"
+#include "renderer/renderer.hpp"
 
 #include <SDL.h>
 #include <GL/glew.h>
@@ -62,6 +63,7 @@ namespace engine
                 engineLog.fatal(oss.str());
             }
             m_isGlewInit = true;
+            renderer::Boot();
         }
     }
     uint SDLWindow::getWidth() const

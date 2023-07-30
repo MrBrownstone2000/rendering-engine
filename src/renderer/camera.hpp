@@ -20,7 +20,7 @@ namespace engine
     class Camera
     {
     public:
-        Camera(unsigned int width = 800, unsigned int height = 600, float mouseSensitivity = 0.2f, float cameraSpeed = 0.01f);
+        Camera(unsigned int width = 800, unsigned int height = 600, float mouseSensitivity = 0.2f, float cameraSpeed = 0.1f);
 
         void update(float dt);
 
