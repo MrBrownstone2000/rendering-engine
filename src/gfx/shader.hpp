@@ -6,6 +6,8 @@
 #include <vector>
 #include <filesystem>
 
+#include "../gfx/texture.hpp"
+
 namespace engine
 {
     class Shader
@@ -23,6 +25,8 @@ namespace engine
 
             void bind() const;
             void unbind() const;
+            
+            void bindTexture(const std::shared_ptr<Texture>& texture, int slot);
 
             // Uniform utility function
             void setUniform(const std::string &name, bool value) const;

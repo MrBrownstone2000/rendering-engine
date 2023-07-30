@@ -62,6 +62,11 @@ namespace engine
         glUseProgram(0);
     }
 
+    void Shader::bindTexture(const std::shared_ptr<Texture>& texture, int slot)
+    {
+        glBindTextureUnit(slot, texture->getId());
+    }
+
     // Uniform utility functions
     void Shader::setUniform(const std::string &name, bool value) const
     {

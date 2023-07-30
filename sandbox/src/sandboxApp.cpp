@@ -11,6 +11,7 @@
 #include "engine/renderer/camera.hpp"
 #include "engine/events/eventDispatcher.hpp"
 #include "engine/renderer/mesh.hpp"
+#include "engine/gfx/texture.hpp"
 
 #include "../contrib/imgui/imgui.h"
 
@@ -41,6 +42,8 @@ namespace engine
                 renderer::setClearColor(0, 0, 1);
 
                 m_camera.setPosition({0, 0, -1});
+
+                m_texture = std::make_shared<Texture>("../data/smiley.png");
             }
 
             void onUpdate(float dt) override
@@ -49,6 +52,9 @@ namespace engine
 
                 m_shader->bind();
                 renderer::beginFrame(m_camera);
+
+                m_shader->bindTexture(m_texture, 0);
+
                 renderer::submit(m_shader, m_mesh);
                 renderer::endFrame();
             }
@@ -148,6 +154,7 @@ namespace engine
 
         private:
             std::shared_ptr<Shader> m_shader;
+            std::shared_ptr<Texture> m_texture;
             Mesh m_mesh;
 
             Camera m_camera;
