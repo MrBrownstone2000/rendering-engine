@@ -9,6 +9,9 @@ namespace engine::renderer
     void Boot()
     {
         glEnable(GL_DEPTH_TEST);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     namespace
@@ -18,6 +21,7 @@ namespace engine::renderer
             glm::mat4 model;
             std::shared_ptr<const Shader> shader;
             std::shared_ptr<const VertexArray> vao;
+            std::shared_ptr<const Texture> texture;
         };
 
         struct SceneData
@@ -52,19 +56,25 @@ namespace engine::renderer
             i.shader->setUniform("cameraPos", m_sceneData.position);
             i.shader->setUniform("cameraDir", m_sceneData.direction);
 
+            i.shader->bindTexture(i.texture, 0);
             i.vao->bind();
             drawIndexed(i.vao);
         }
         m_items.clear();
     }
 
-    void submit(const glm::mat4& model, const std::shared_ptr<const Shader>& shader, const Mesh& mesh)
+    void submit(const std::shared_ptr<const Shader>& shader,
+                const std::shared_ptr<const Texture>& texture,
+                const glm::mat4& model, const Mesh& mesh)
     {
-        m_items.push_back({model, shader, mesh.getVAO()});
+        m_items.push_back({model, shader, mesh.getVAO(), texture});
     }
 
-    void submit(const glm::mat4& model, const std::shared_ptr<const Shader>& shader, const std::shared_ptr<const VertexArray>& vao)
+    void submit(const std::shared_ptr<const Shader>& shader,
+                const std::shared_ptr<const Texture>& texture,
+                const glm::mat4& model, 
+                const std::shared_ptr<const VertexArray>& vao)
     {
-        m_items.push_back({model, shader, vao});
+        m_items.push_back({model, shader, vao, texture});
     }
 }

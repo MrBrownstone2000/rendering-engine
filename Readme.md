@@ -4,7 +4,6 @@ An attempt at building a well structured 3D rendering engine.
 
 # Features TODO List
 
-- Textures
 - Framebuffers
 - Imgui dockspace + viewport
 

@@ -41,10 +41,11 @@ namespace engine
                 Shader::setIncludeDirs({ "../shaders" });
                 m_shader = std::make_shared<Shader>("vertex_basic.glsl", "frag_basic.glsl");
 
-                renderer::setClearColor(0, 0, 1);
+                renderer::setClearColor(0.2, 0.2, 0.2);
 
                 m_camera.setPosition({0, 0, -1});
-                m_texture = std::make_shared<Texture>("../data/smiley.png");
+                m_texture_smiley = std::make_shared<Texture>("../data/smiley.png");
+                m_texture_window = std::make_shared<Texture>("../data/window.png");
 
                 m_model1 = glm::mat4(1);
                 m_model2 = glm::translate(glm::mat4(1), glm::vec3(1, 0, 1));
@@ -57,10 +58,10 @@ namespace engine
                 m_shader->bind();
                 renderer::beginFrame(m_camera);
 
-                m_shader->bindTexture(m_texture, 0);
+                renderer::submit(m_shader, m_texture_smiley, m_model2, m_mesh);
 
-                renderer::submit(m_model1, m_shader, m_mesh);
-                renderer::submit(m_model2, m_shader, m_mesh);
+                renderer::submit(m_shader, m_texture_window, m_model1, m_mesh);
+
                 renderer::endFrame();
             }
 
@@ -159,7 +160,8 @@ namespace engine
 
         private:
             std::shared_ptr<Shader> m_shader;
-            std::shared_ptr<Texture> m_texture;
+            std::shared_ptr<Texture> m_texture_smiley;
+            std::shared_ptr<Texture> m_texture_window;
             Mesh m_mesh;
             glm::mat4 m_model1, m_model2;
 

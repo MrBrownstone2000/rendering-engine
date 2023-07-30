@@ -26,7 +26,7 @@ namespace engine
             void bind() const;
             void unbind() const;
             
-            void bindTexture(const std::shared_ptr<Texture>& texture, int slot);
+            void bindTexture(const std::shared_ptr<const Texture>& texture, int slot) const;
 
             // Uniform utility function
             void setUniform(const std::string &name, bool value) const;

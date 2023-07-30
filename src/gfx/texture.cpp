@@ -12,6 +12,8 @@ namespace engine
 
         glTextureParameteri(m_id, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTextureParameteri(m_id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTextureParameteri(m_id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTextureParameteri(m_id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
         uint32_t width, height, channels;
         auto pixels = loadImage(path, width, height, channels);
