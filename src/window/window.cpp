@@ -9,8 +9,10 @@ namespace engine::window
     void Boot()
     {
         SDLWindow::Boot();
-        ioc::Get().Register<IWindow>([] (const IWindow::IocParams& p) {
-            return std::make_shared<SDLWindow>(std::move(p));
-        });
+    }
+
+    std::shared_ptr<Window> Create(const WindowParams& params)
+    {
+        return std::make_shared<SDLWindow>(params);
     }
 }

@@ -21,7 +21,7 @@ namespace engine
         }
         isInit = true;
 
-        m_window = ioc::Get().Resolve<IWindow>({.width = 800, .height = 600, .title = "Hi!"});
+        m_window = window::Create({.width = 800, .height = 600, .title = "Hi!"});
         m_window->setEventCallback(M_BIND_EVENT_FN(Application::onEvent));
     }
 

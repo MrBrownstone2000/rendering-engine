@@ -17,12 +17,12 @@ namespace engine
 
     enum EventCategory
     {
-        None        = 0,
-        Input       = M_BIT(0),
-        Keyboard    = M_BIT(1),
-        Mouse       = M_BIT(2),
-        MouseButton = M_BIT(3),
-        Window      = M_BIT(4),
+        EventCategory_None        = 0,
+        EventCategory_Input       = M_BIT(0),
+        EventCategory_Keyboard    = M_BIT(1),
+        EventCategory_Mouse       = M_BIT(2),
+        EventCategory_MouseButton = M_BIT(3),
+        EventCategory_Window      = M_BIT(4),
     };
 
 #define EVENT_CLASS_TYPE(type) \

@@ -26,7 +26,7 @@ namespace engine
             }
 
             EVENT_CLASS_TYPE(WindowResize)
-            EVENT_CLASS_CATEGORY(Window)
+            EVENT_CLASS_CATEGORY(EventCategory_Window)
 
         private:
             uint m_width, m_height;
@@ -50,7 +50,7 @@ namespace engine
             }
 
             EVENT_CLASS_TYPE(WindowMoved)
-            EVENT_CLASS_CATEGORY(Window)
+            EVENT_CLASS_CATEGORY(EventCategory_Window)
 
         private:
             int m_x, m_y;
@@ -59,21 +59,21 @@ namespace engine
     class WindowCloseEvent : public Event
     {
         public:
-            EVENT_CLASS_CATEGORY(Window)
+            EVENT_CLASS_CATEGORY(EventCategory_Window)
             EVENT_CLASS_TYPE(WindowClose)
     };
 
     class WindowFocusEvent : public Event
     {
         public:
-            EVENT_CLASS_CATEGORY(Window)
+            EVENT_CLASS_CATEGORY(EventCategory_Window)
             EVENT_CLASS_TYPE(WindowFocus)
     };
 
     class WindowLostFocusEvent : public Event
     {
         public:
-            EVENT_CLASS_CATEGORY(Window)
+            EVENT_CLASS_CATEGORY(EventCategory_Window)
             EVENT_CLASS_TYPE(WindowLostFocus)
     };
 }

@@ -14,7 +14,7 @@ namespace engine
             inline KeyCode getKeyCode() const { return m_keyCode; }
             inline u8 getKeyMods() const { return m_mods; }
 
-            EVENT_CLASS_CATEGORY(Keyboard | Input)
+            EVENT_CLASS_CATEGORY(EventCategory_Keyboard | EventCategory_Input)
 
         protected:
             KeyEvent(KeyCode keycode, u8 mods) : m_keyCode(keycode), m_mods(mods) {}
@@ -69,7 +69,7 @@ namespace engine
             TextEvent(const char* str) : m_str(str) {}
             inline const char* getText() const { return m_str; }
 
-            EVENT_CLASS_CATEGORY(Keyboard | Input)
+            EVENT_CLASS_CATEGORY(EventCategory_Keyboard | EventCategory_Input)
             EVENT_CLASS_TYPE(Text)
 
         private:

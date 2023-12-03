@@ -10,22 +10,27 @@
 
 namespace engine
 {
+    class Window;
+
     namespace window
     {
+        struct WindowParams 
+        {
+            uint width;
+            uint height;
+            std::string title;
+        };
+
         void Boot();
+        std::shared_ptr<Window> Create(const WindowParams& params);
     }
 
-    class IWindow
+
+    class Window
     {
         public:
-            struct IocParams {
-                uint width;
-                uint height;
-                std::string title;
-            };
-
             using EventCallback = std::function<void(Event&)>;
-            virtual ~IWindow() = default;
+            virtual ~Window() = default;
 
             virtual bool isVSync() const = 0;
             virtual uint getWidth() const = 0;

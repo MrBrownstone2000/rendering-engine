@@ -37,7 +37,7 @@ namespace engine
             void close();
 
             inline static Application& Get() { return *ioc::Sing().Resolve<Application>(); }
-            inline IWindow& GetWindow() { return *m_window; }
+            inline Window& GetWindow() { return *m_window; }
 
         private:
             bool onWindowClose(WindowCloseEvent& e);
@@ -45,7 +45,7 @@ namespace engine
             bool onKeyReleased(KeyReleasedEvent& e);
 
         private:
-            std::shared_ptr<IWindow> m_window;
+            std::shared_ptr<Window> m_window;
             ImGuiLayer* m_imGuiLayer;
             bool m_running = true;
 

@@ -12,10 +12,10 @@ class SDL_Window;
 
 namespace engine
 {
-    class SDLWindow : public IWindow
+    class SDLWindow : public Window
     {
         public:
-            SDLWindow(const IocParams& p);
+            SDLWindow(const window::WindowParams& p);
             ~SDLWindow();
 
             bool isVSync() const override;

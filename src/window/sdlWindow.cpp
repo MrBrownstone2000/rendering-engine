@@ -29,7 +29,7 @@ namespace engine
         SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
     }
 
-    SDLWindow::SDLWindow(const IocParams& p)
+    SDLWindow::SDLWindow(const window::WindowParams& p)
     {
         engineLog.info("Creating Window");
 

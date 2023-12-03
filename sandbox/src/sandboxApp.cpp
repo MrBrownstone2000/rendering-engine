@@ -61,7 +61,7 @@ namespace engine
 
             void onUpdate(float dt) override
             {
-                // m_camera.update(dt);
+                m_camera.update(dt);
 
                 m_shader->bind();
                 renderer::beginFrame(m_fb, m_camera);
@@ -102,7 +102,6 @@ namespace engine
                     glViewport(0, 0, size.x, size.y);
                     m_camera.setWindowSize(size.x, size.y);
                 }
-                // https://www.youtube.com/watch?v=ETIhjdVBH-8&list=PLlrATfBNZ98dC-V-N3m0Go4deliWHPFwT&index=74
 
                 ImGui::Image((void*) m_fb->getTextureId(), size);
 
