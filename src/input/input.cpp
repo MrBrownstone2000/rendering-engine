@@ -1,8 +1,8 @@
 #include "pch.hpp"
 #include "input.hpp"
-#include "sdlInput.hpp"
+#include "sdlKeyCodes.hpp"
 
-#include "ioc/singleton.hpp"
+#include <SDL.h>
 
 namespace engine::input
 {
@@ -10,33 +10,38 @@ namespace engine::input
     {
         int m_mouseOffsetX;
         int m_mouseOffsetY;
+
+        const u8* m_keyStates;
     }
 
     void Boot()
     {
-        ioc::Sing().Register<IInput>([]{
-            return std::make_shared<SDLInput>();
-        });
+        m_keyStates = SDL_GetKeyboardState(nullptr);
     }
 
     bool IsKeyPressed(KeyCode key)
     { 
-        return ioc::Sing().Resolve<IInput>()->isKeyPressed(key);
+        return m_keyStates[SDL_GetScancodeFromKey(GetSDLKeyCode(key))];
     }
 
     bool IsMouseButtonPressed(MouseButtonType button)
     {
-        return ioc::Sing().Resolve<IInput>()->isMouseButtonPressed(button);
+        int sdl_buttons = SDL_GetMouseState(nullptr, nullptr);
+        return sdl_buttons & SDL_BUTTON(GetSDLMouseButton(button));
     }
 
     float GetMouseX()
     {
-        return ioc::Sing().Resolve<IInput>()->getMouseX();
+        int x;
+        SDL_GetMouseState(&x, nullptr);
+        return x;
     }
 
     float GetMouseY() 
     { 
-        return ioc::Sing().Resolve<IInput>()->getMouseY(); 
+        int y;
+        SDL_GetMouseState(nullptr, &y);
+        return y;
     }
 
     void SetMouseOffset(int x, int y)

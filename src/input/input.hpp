@@ -18,16 +18,6 @@ namespace engine
         int GetMouseOffsetX();
         int GetMouseOffsetY();
     }
-
-
-    class IInput
-    {
-        public:
-            virtual bool isKeyPressed(KeyCode key) = 0;
-            virtual bool isMouseButtonPressed(MouseButtonType button) = 0;
-            virtual float getMouseX() = 0;
-            virtual float getMouseY() = 0;
-    };
 }
 
 #endif

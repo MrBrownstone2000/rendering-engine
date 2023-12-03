@@ -45,6 +45,7 @@ namespace engine
                 renderer::setClearColor(0.2, 0.2, 0.2);
 
                 m_camera.setPosition({0, 0, -1});
+                m_camera.setYaw(90);
                 m_texture_smiley = std::make_shared<Texture>("../data/smiley.png");
                 m_texture_window = std::make_shared<Texture>("../data/window.png");
 
@@ -88,9 +89,9 @@ namespace engine
             {
                 testDockspace();
 
-                
                 ImGuiWindowFlags window_flags = 0; // ImGuiWindowFlags_NoCollapse;
 
+                ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
                 ImGui::Begin("Scene", nullptr, window_flags);
 
                 ImVec2 size  = ImGui::GetContentRegionAvail();
@@ -99,15 +100,14 @@ namespace engine
                     m_size = size;
                     m_fb->resize(size.x, size.y);
                     glViewport(0, 0, size.x, size.y);
+                    m_camera.setWindowSize(size.x, size.y);
                 }
-                //     recreate Framebuffer
-                //     glViewport
-                //     recompute projection matrix ?
                 // https://www.youtube.com/watch?v=ETIhjdVBH-8&list=PLlrATfBNZ98dC-V-N3m0Go4deliWHPFwT&index=74
 
                 ImGui::Image((void*) m_fb->getTextureId(), size);
 
                 ImGui::End();
+                ImGui::PopStyleVar();
 
             }
 

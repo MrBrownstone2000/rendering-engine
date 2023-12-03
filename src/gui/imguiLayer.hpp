@@ -1,7 +1,7 @@
 #ifndef __IMGUILAYER_HPP__
 #define __IMGUILAYER_HPP__
 
-#include "../core/layer.hpp"
+#include "layer.hpp"
 #include "../events/mouseEvent.hpp"
 #include "../events/keyEvent.hpp"
 #include "../events/windowEvent.hpp"

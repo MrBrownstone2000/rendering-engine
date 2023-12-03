@@ -17,7 +17,7 @@ namespace engine
         m_worldUp = glm::vec3(0.f, 1.f, 0.f);
 
         m_fov = 70.f;
-        m_yaw = 0.f;
+        m_yaw = 0;
         m_pitch = 0;
 
         updateVectors();
@@ -25,22 +25,25 @@ namespace engine
 
     void Camera::setFOV(float fov)
     {
-        m_fov = fov;
-        if (m_fov < 1.f)
-            m_fov = 1.f;
-        else if (m_fov > 90.f)
-            m_fov = 90.f;
+        m_fov = glm::clamp(fov, 1.f, 90.f);
+    }
+
+    void Camera::setPitch(float pitch)
+    {
+        m_pitch = pitch;
+        updateVectors();
+    }
+
+    void Camera::setYaw(float yaw)
+    {
+        m_yaw = yaw;
+        updateVectors();
     }
 
     void Camera::changeOrientation(float offsetYaw, float offsetPitch)
     {
         m_yaw += offsetYaw * m_mouseSensitivity;
         m_pitch -= offsetPitch * m_mouseSensitivity;
-
-        if (m_pitch > 89.0f)
-            m_pitch = 89.0f;
-        if (m_pitch < -89.0f)
-            m_pitch = -89.0f;
 
         updateVectors();
     }
@@ -76,6 +79,9 @@ namespace engine
 
     void Camera::updateVectors()
     {
+        m_pitch = glm::clamp(m_pitch, -89.f, 89.f);
+        m_yaw = glm::mod(m_yaw, 360.f);
+
         glm::vec3 dir;
         dir.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
         dir.y = sin(glm::radians(m_pitch));

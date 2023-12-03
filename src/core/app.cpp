@@ -2,7 +2,7 @@
 #include "app.hpp"
 #include "events/eventDispatcher.hpp"
 #include "ioc/singleton.hpp"
-#include "layer.hpp"
+#include "gui/layer.hpp"
 #include "log/log.hpp"
 #include "log/severityLevelPolicy.hpp"
 #include "events/keyEvent.hpp"

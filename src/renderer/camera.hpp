@@ -26,6 +26,8 @@ namespace engine
 
         void setWindowSize(unsigned int width, unsigned int height);
         void setFOV(float fov);
+        void setPitch(float pitch);
+        void setYaw(float yaw);
         void setPosition(const glm::vec3& pos);
 
         float getFOV() const;

@@ -1,11 +1,11 @@
 #ifndef __APP_HPP__
 #define __APP_HPP__
 
-#include "layerStack.hpp"
 #include "../events/event.hpp"
 #include "../events/windowEvent.hpp"
 #include "../events/keyEvent.hpp"
 #include "../gui/imguiLayer.hpp"
+#include "../gui/layerStack.hpp"
 #include "../gfx/shader.hpp"
 #include "../gfx/vertexArray.hpp"
 #include "../gfx/vertexBuffer.hpp"

@@ -3,7 +3,6 @@
 
 #include "core/boot.hpp"
 #include "core/app.hpp"
-#include "core/layer.hpp"
 
 #include "input/input.hpp"
 
@@ -11,6 +10,8 @@
 #include "ioc/singleton.hpp"
 
 #include "log/log.hpp"
+
+#include "gui/layer.hpp"
 
 #include "gfx/commands.hpp"
 #include "renderer/renderer.hpp"
