@@ -30,6 +30,8 @@ namespace engine
         void setYaw(float yaw);
         void setPosition(const glm::vec3& pos);
 
+        void changeFOV(float offsetFOV);
+
         float getFOV() const;
         float& getYaw();
         float& getPitch();

@@ -67,6 +67,21 @@ namespace engine
         ImGui::DestroyContext();
     }
 
+    void ImGuiLayer::onEvent(Event& e)
+    {
+        if (m_blockEvents)
+        {
+            ImGuiIO& io = ImGui::GetIO();
+            e.m_handled |= e.isInCategory(EventCategory_Mouse) && io.WantCaptureMouse;
+            e.m_handled |= e.isInCategory(EventCategory_Keyboard) && io.WantCaptureKeyboard;
+        }
+    }
+
+    void ImGuiLayer::BlockEvents(bool block)
+    {
+        m_blockEvents = block;
+    }
+
     void ImGuiLayer::EventCallback(void* nativeEvent)
     {
         ImGui_ImplSDL2_ProcessEvent((SDL_Event*) nativeEvent);

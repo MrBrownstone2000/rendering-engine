@@ -19,14 +19,18 @@ namespace engine
             void onAttach() override;
             void onDetach() override;
             void onImGuiRender() override;
+            void onEvent(Event& e) override;
 
             void beginFrame();
             void endFrame();
+
+            void BlockEvents(bool block);
 
             std::function<void(void*)> GetEventCallback();
 
         private:
             static void EventCallback(void* nativeEvent);
+            bool m_blockEvents;
     };
 }
 

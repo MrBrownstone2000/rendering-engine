@@ -61,7 +61,8 @@ namespace engine
 
             void onUpdate(float dt) override
             {
-                m_camera.update(dt);
+                if (m_isViewportFocused)
+                    m_camera.update(dt);
 
                 m_shader->bind();
                 renderer::beginFrame(m_fb, m_camera);
@@ -79,10 +80,17 @@ namespace engine
                 return false;
             }
 
+            bool onMouseScroll(const MouseScrolledEvent& event)
+            {
+                m_camera.changeFOV(event.getY());
+                return false;
+            }
+
             void onEvent(Event& event) override
             {
                 EventDispatcher d(event);
                 d.dispatch<WindowResizeEvent>(M_BIND_EVENT_FN(ExampleLayer::onWindowResize));
+                d.dispatch<MouseScrolledEvent>(M_BIND_EVENT_FN(ExampleLayer::onMouseScroll));
             }
 
             void onImGuiRender() override
@@ -93,6 +101,10 @@ namespace engine
 
                 ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
                 ImGui::Begin("Scene", nullptr, window_flags);
+                
+                m_isViewportFocused = ImGui::IsWindowFocused();
+                m_isViewportHovered = ImGui::IsWindowHovered();
+                Application::Get().GetImGuiLayer().BlockEvents(!m_isViewportFocused || !m_isViewportHovered);
 
                 ImVec2 size  = ImGui::GetContentRegionAvail();
                 if (size.x != m_size.x || size.y != m_size.y)
@@ -191,6 +203,8 @@ namespace engine
             std::shared_ptr<Texture> m_texture_smiley;
             std::shared_ptr<Texture> m_texture_window;
             std::shared_ptr<Framebuffer> m_fb;
+            bool m_isViewportFocused = false;
+            bool m_isViewportHovered = false;
             Mesh m_mesh;
             glm::mat4 m_model1, m_model2;
 

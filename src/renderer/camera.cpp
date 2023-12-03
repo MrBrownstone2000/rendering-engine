@@ -40,6 +40,11 @@ namespace engine
         updateVectors();
     }
 
+    void Camera::changeFOV(float offsetFOV)
+    {
+        m_fov = glm::clamp(m_fov + offsetFOV, 1.f, 90.f);
+    }
+
     void Camera::changeOrientation(float offsetYaw, float offsetPitch)
     {
         m_yaw += offsetYaw * m_mouseSensitivity;

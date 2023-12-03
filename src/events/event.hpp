@@ -35,7 +35,6 @@ namespace engine
 
     class Event
     {
-        friend class EventDispatcher;
         public:
             virtual EventType getType() const = 0;
             virtual const char* getName() const = 0;
@@ -50,7 +49,6 @@ namespace engine
             operator std::string() { return toString(); }
             bool isHandled() const { return m_handled; }
 
-        protected:
             bool m_handled = false;
     };
     

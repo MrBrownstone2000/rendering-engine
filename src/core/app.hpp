@@ -38,6 +38,7 @@ namespace engine
 
             inline static Application& Get() { return *ioc::Sing().Resolve<Application>(); }
             inline Window& GetWindow() { return *m_window; }
+            inline ImGuiLayer& GetImGuiLayer() { return *m_imGuiLayer; }
 
         private:
             bool onWindowClose(WindowCloseEvent& e);
