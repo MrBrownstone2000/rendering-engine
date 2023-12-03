@@ -13,9 +13,10 @@
 #include "engine/renderer/mesh.hpp"
 #include "engine/gfx/texture.hpp"
 
-#include "../contrib/imgui/imgui.h"
+#include "imgui/imgui.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <GL/glew.h>
 
 namespace engine
 {
@@ -49,14 +50,20 @@ namespace engine
 
                 m_model1 = glm::mat4(1);
                 m_model2 = glm::translate(glm::mat4(1), glm::vec3(1, 0, 1));
+
+                FrameBufferParams params;
+                params.width = 1280;
+                params.height = 720;
+                m_size = ImVec2(1280, 720);
+                m_fb = std::make_shared<Framebuffer>(params);
             }
 
             void onUpdate(float dt) override
             {
-                m_camera.update(dt);
+                // m_camera.update(dt);
 
                 m_shader->bind();
-                renderer::beginFrame(m_camera);
+                renderer::beginFrame(m_fb, m_camera);
 
                 renderer::submit(m_shader, m_texture_smiley, m_model2, m_mesh);
 
@@ -79,7 +86,29 @@ namespace engine
 
             void onImGuiRender() override
             {
-                // testDockspace();
+                testDockspace();
+
+                
+                ImGuiWindowFlags window_flags = 0; // ImGuiWindowFlags_NoCollapse;
+
+                ImGui::Begin("Scene", nullptr, window_flags);
+
+                ImVec2 size  = ImGui::GetContentRegionAvail();
+                if (size.x != m_size.x || size.y != m_size.y)
+                {
+                    m_size = size;
+                    m_fb->resize(size.x, size.y);
+                    glViewport(0, 0, size.x, size.y);
+                }
+                //     recreate Framebuffer
+                //     glViewport
+                //     recompute projection matrix ?
+                // https://www.youtube.com/watch?v=ETIhjdVBH-8&list=PLlrATfBNZ98dC-V-N3m0Go4deliWHPFwT&index=74
+
+                ImGui::Image((void*) m_fb->getTextureId(), size);
+
+                ImGui::End();
+
             }
 
             void testDockspace()
@@ -162,10 +191,12 @@ namespace engine
             std::shared_ptr<Shader> m_shader;
             std::shared_ptr<Texture> m_texture_smiley;
             std::shared_ptr<Texture> m_texture_window;
+            std::shared_ptr<Framebuffer> m_fb;
             Mesh m_mesh;
             glm::mat4 m_model1, m_model2;
 
             Camera m_camera;
+            ImVec2 m_size;
     };
 
     class Sandbox : public Application

@@ -6,14 +6,6 @@
 
 namespace engine::renderer
 {
-    void Boot()
-    {
-        glEnable(GL_DEPTH_TEST);
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    }
-
     namespace
     {
         struct RenderItem
@@ -34,16 +26,36 @@ namespace engine::renderer
 
         std::vector<RenderItem> m_items;
         SceneData m_sceneData;
+
+        std::shared_ptr<Framebuffer> m_default_framebuffer;
+        std::shared_ptr<Framebuffer> m_current_framebuffer;
     }
 
-
-    void beginFrame(const Camera& camera)
+    void Boot()
     {
+        glEnable(GL_DEPTH_TEST);
+
+        glEnable(GL_BLEND);
+
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        
+        m_default_framebuffer = std::make_shared<Framebuffer>();
+    }
+
+    void beginFrame(std::shared_ptr<Framebuffer> framebuffer, const Camera& camera)
+    {
+        framebuffer->bind();
         clear();
+        m_current_framebuffer = framebuffer;
         m_sceneData.view = camera.view();
         m_sceneData.projection = camera.projection();
         m_sceneData.position = camera.position();
         m_sceneData.direction = camera.direction();
+    }
+
+    void beginFrame(const Camera& camera)
+    {
+        beginFrame(m_default_framebuffer, camera);
     }
 
     void endFrame()
@@ -61,6 +73,7 @@ namespace engine::renderer
             drawIndexed(i.vao);
         }
         m_items.clear();
+        m_current_framebuffer->unbind();
     }
 
     void submit(const std::shared_ptr<const Shader>& shader,
