@@ -102,11 +102,6 @@ namespace engine
         SDL_DestroyWindow(m_window);
     }
 
-    void SDLWindow::setEventCallback(const EventCallback& cb)
-    {
-        m_eventCallback = cb;
-    }
-
     void SDLWindow::HandleEvents()
     {
         Check(m_imGuiEventCallback);
@@ -151,7 +146,6 @@ namespace engine
 
                         WindowResizeEvent e(m_width, m_height);
                         m_eventCallback(e);
-                        glViewport(0, 0, m_width, m_height);
                         break;
                     }
                     case SDL_WINDOWEVENT_MOVED:

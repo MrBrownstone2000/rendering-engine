@@ -13,6 +13,7 @@ namespace engine
         WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
         KeyPressed, KeyReleased, Text,
         MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
+        ViewportResize,
     };
 
     enum EventCategory
@@ -23,6 +24,7 @@ namespace engine
         EventCategory_Mouse       = M_BIT(2),
         EventCategory_MouseButton = M_BIT(3),
         EventCategory_Window      = M_BIT(4),
+        EventCategory_Viewport    = M_BIT(5),
     };
 
 #define EVENT_CLASS_TYPE(type) \

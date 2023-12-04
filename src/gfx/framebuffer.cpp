@@ -95,4 +95,15 @@ namespace engine
     {
         return m_colorAttachment;
     }
+
+    uint32_t Framebuffer::getWidth() const
+    {
+        return m_params.width;
+    }
+
+    uint32_t Framebuffer::getHeight() const
+    {
+        return m_params.height;
+    }
+
 }

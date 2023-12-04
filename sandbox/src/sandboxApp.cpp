@@ -10,8 +10,11 @@
 
 #include "engine/renderer/camera.hpp"
 #include "engine/events/eventDispatcher.hpp"
+#include "engine/events/viewportEvent.hpp"
 #include "engine/renderer/mesh.hpp"
 #include "engine/gfx/texture.hpp"
+#include "engine/util/observer.hpp"
+#include "engine/gui/imGuiViewport.hpp"
 
 #include "imgui/imgui.h"
 
@@ -20,7 +23,7 @@
 
 namespace engine
 {
-    class ExampleLayer : public ILayer
+    class ExampleLayer : public ILayer, public util::IObserver
     {
         public:
             ExampleLayer()
@@ -55,20 +58,30 @@ namespace engine
                 FrameBufferParams params;
                 params.width = 1280;
                 params.height = 720;
-                m_size = ImVec2(1280, 720);
                 m_fb = std::make_shared<Framebuffer>(params);
+
+                m_viewport = std::make_shared<ImGuiViewport>(m_fb);
+                m_viewport->subscribe(this);
+                Application::Get().addViewport(m_viewport);
             }
 
             void onUpdate(float dt) override
             {
-                if (m_isViewportFocused)
+                if (m_viewport->isFocused())
                     m_camera.update(dt);
+            }
 
+            void onNotify() override
+            {
+                render();
+            }
+
+            void render()
+            {
                 m_shader->bind();
                 renderer::beginFrame(m_fb, m_camera);
 
                 renderer::submit(m_shader, m_texture_smiley, m_model2, m_mesh);
-
                 renderer::submit(m_shader, m_texture_window, m_model1, m_mesh);
 
                 renderer::endFrame();
@@ -86,36 +99,23 @@ namespace engine
                 return false;
             }
 
+            bool onViewportResize(const ViewportResizeEvent& event)
+            {
+                if (event.getViewport() == m_viewport.get())
+                    m_camera.setWindowSize(event.getWidth(), event.getHeight());
+                return false;
+            }
+
             void onEvent(Event& event) override
             {
                 EventDispatcher d(event);
                 d.dispatch<WindowResizeEvent>(M_BIND_EVENT_FN(ExampleLayer::onWindowResize));
                 d.dispatch<MouseScrolledEvent>(M_BIND_EVENT_FN(ExampleLayer::onMouseScroll));
+                d.dispatch<ViewportResizeEvent>(M_BIND_EVENT_FN(ExampleLayer::onViewportResize));
             }
 
             void onImGuiRender() override
             {
-                ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-                ImGui::Begin("Scene");
-                
-                m_isViewportFocused = ImGui::IsWindowFocused();
-                m_isViewportHovered = ImGui::IsWindowHovered();
-                Application::Get().blockImGuiEvents(!m_isViewportFocused || !m_isViewportHovered);
-
-                ImVec2 size  = ImGui::GetContentRegionAvail();
-                if (size.x != m_size.x || size.y != m_size.y)
-                {
-                    m_size = size;
-                    m_fb->resize(size.x, size.y);
-                    glViewport(0, 0, size.x, size.y);
-                    m_camera.setWindowSize(size.x, size.y);
-                }
-
-                ImGui::Image((void*) m_fb->getTextureId(), size);
-
-                ImGui::End();
-                ImGui::PopStyleVar();
-
             }
 
         private:
@@ -123,13 +123,11 @@ namespace engine
             std::shared_ptr<Texture> m_texture_smiley;
             std::shared_ptr<Texture> m_texture_window;
             std::shared_ptr<Framebuffer> m_fb;
-            bool m_isViewportFocused = false;
-            bool m_isViewportHovered = false;
             Mesh m_mesh;
             glm::mat4 m_model1, m_model2;
-
             Camera m_camera;
-            ImVec2 m_size;
+
+            std::shared_ptr<ImGuiViewport> m_viewport;
     };
 
     class Sandbox : public Application
@@ -137,8 +135,12 @@ namespace engine
         public:
             Sandbox()
             {
-                pushLayer(new ExampleLayer());
+            }
 
+            void init() override
+            {
+                Application::init();
+                pushLayer(new ExampleLayer());
             }
 
             ~Sandbox()

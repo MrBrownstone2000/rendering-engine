@@ -41,11 +41,13 @@ namespace engine
             virtual void onUpdate() = 0;
             virtual void swapBuffers() = 0;
             virtual void setVSync(bool enabled) = 0;
-            virtual void setEventCallback(const EventCallback& cb) = 0;
-            void setImGuiCallback(std::function<void(void*)> cb) { m_imGuiEventCallback = cb; }
+            void setEventCallback(const EventCallback& cb);
+            void setImGuiCallback(std::function<void(void*)> cb);
 
         protected:
             std::function<void(void*)> m_imGuiEventCallback;
+            EventCallback m_eventCallback;
+
     };
 }
 

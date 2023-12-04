@@ -6,6 +6,7 @@
 #include "../events/keyEvent.hpp"
 #include "../gui/imGuiManager.hpp"
 #include "../gui/layerStack.hpp"
+#include "../gui/imGuiViewport.hpp"
 #include "../gfx/shader.hpp"
 #include "../gfx/vertexArray.hpp"
 #include "../gfx/vertexBuffer.hpp"
@@ -26,12 +27,13 @@ namespace engine
             virtual ~Application();
 
             // For initializations that need Application::Get()
-            void init();
+            virtual void init();
             void run();
             void close();
 
             void pushLayer(ILayer* layer);
             void pushOverlay(ILayer* overlay);
+            void addViewport(std::shared_ptr<ImGuiViewport> viewport);
 
             void onEvent(Event& e);
             void blockImGuiEvents(bool block) { return GetImGuiManager().blockEvents(block); }
@@ -50,6 +52,7 @@ namespace engine
             ImGuiManager m_imGuiManager;
             bool m_running = true;
 
+            std::vector<std::shared_ptr<ImGuiViewport>> m_viewports;
             LayerStack m_layerStack;
             FrameTimer m_timer;
     };

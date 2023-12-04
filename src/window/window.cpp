@@ -4,15 +4,28 @@
 #include "ioc/container.hpp"
 
 
-namespace engine::window
+namespace engine
 {
-    void Boot()
+    namespace window
     {
-        SDLWindow::Boot();
+        void Boot()
+        {
+            SDLWindow::Boot();
+        }
+
+        std::shared_ptr<Window> Create(const WindowParams& params)
+        {
+            return std::make_shared<SDLWindow>(params);
+        }
     }
 
-    std::shared_ptr<Window> Create(const WindowParams& params)
+    void Window::setEventCallback(const EventCallback& cb)
     {
-        return std::make_shared<SDLWindow>(params);
+        m_eventCallback = cb;
+    }
+
+    void Window::setImGuiCallback(std::function<void(void*)> cb)
+    { 
+        m_imGuiEventCallback = cb;
     }
 }

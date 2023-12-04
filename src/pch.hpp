@@ -2,6 +2,7 @@
 #define __PCH_HPP__
 
 #include <any>
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <filesystem>

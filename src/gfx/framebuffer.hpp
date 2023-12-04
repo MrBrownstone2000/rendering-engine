@@ -27,7 +27,10 @@ namespace engine
             void unbind() const;
 
             void resize(uint32_t width, uint32_t height);
+
             uint32_t getTextureId() const;
+            uint32_t getWidth() const;
+            uint32_t getHeight() const;
 
         private:
             void resize();

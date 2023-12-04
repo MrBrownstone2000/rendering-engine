@@ -74,6 +74,9 @@ namespace engine
 
             m_imGuiManager.beginFrame();
 
+            for (auto v : m_viewports)
+                v->onImGuiRender();
+
             for (ILayer* layer : m_layerStack)
                 layer->onImGuiRender();
 
@@ -99,6 +102,11 @@ namespace engine
         overlay->onAttach();
     }
 
+    void Application::addViewport(std::shared_ptr<ImGuiViewport> viewport)
+    {
+        viewport->setEventCallback(M_BIND_EVENT_FN(Application::onEvent));
+        m_viewports.push_back(viewport);
+    }
 
     bool Application::onWindowClose(WindowCloseEvent&)
     {

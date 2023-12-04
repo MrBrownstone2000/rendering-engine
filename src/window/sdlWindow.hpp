@@ -27,7 +27,6 @@ namespace engine
             void onUpdate() override;
             void swapBuffers() override;
             void setVSync(bool enabled) override;
-            void setEventCallback(const EventCallback& cb) override;
 
             static void Boot();
 
@@ -39,8 +38,6 @@ namespace engine
             std::unique_ptr<IRenderingContext> m_context;
             uint m_width, m_height;
             bool m_vsync;
-
-            EventCallback m_eventCallback;
 
             static inline bool m_isGlewInit = false;
     };
