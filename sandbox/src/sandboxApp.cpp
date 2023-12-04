@@ -104,7 +104,7 @@ namespace engine
                 
                 m_isViewportFocused = ImGui::IsWindowFocused();
                 m_isViewportHovered = ImGui::IsWindowHovered();
-                Application::Get().GetImGuiLayer().BlockEvents(!m_isViewportFocused || !m_isViewportHovered);
+                Application::Get().blockImGuiEvents(!m_isViewportFocused || !m_isViewportHovered);
 
                 ImVec2 size  = ImGui::GetContentRegionAvail();
                 if (size.x != m_size.x || size.y != m_size.y)

@@ -4,7 +4,7 @@
 #include "../events/event.hpp"
 #include "../events/windowEvent.hpp"
 #include "../events/keyEvent.hpp"
-#include "../gui/imguiLayer.hpp"
+#include "../gui/imGuiManager.hpp"
 #include "../gui/layerStack.hpp"
 #include "../gfx/shader.hpp"
 #include "../gfx/vertexArray.hpp"
@@ -28,17 +28,17 @@ namespace engine
             // For initializations that need Application::Get()
             void init();
             void run();
-
-            void onEvent(Event& e);
+            void close();
 
             void pushLayer(ILayer* layer);
             void pushOverlay(ILayer* overlay);
 
-            void close();
+            void onEvent(Event& e);
+            void blockImGuiEvents(bool block) { return GetImGuiManager().blockEvents(block); }
 
             inline static Application& Get() { return *ioc::Sing().Resolve<Application>(); }
             inline Window& GetWindow() { return *m_window; }
-            inline ImGuiLayer& GetImGuiLayer() { return *m_imGuiLayer; }
+            inline ImGuiManager& GetImGuiManager() { return m_imGuiManager; }
 
         private:
             bool onWindowClose(WindowCloseEvent& e);
@@ -47,7 +47,7 @@ namespace engine
 
         private:
             std::shared_ptr<Window> m_window;
-            ImGuiLayer* m_imGuiLayer;
+            ImGuiManager m_imGuiManager;
             bool m_running = true;
 
             LayerStack m_layerStack;

@@ -1,7 +1,6 @@
 #ifndef __IMGUILAYER_HPP__
 #define __IMGUILAYER_HPP__
 
-#include "layer.hpp"
 #include "../events/mouseEvent.hpp"
 #include "../events/keyEvent.hpp"
 #include "../events/windowEvent.hpp"
@@ -10,26 +9,27 @@
 
 namespace engine
 {
-    class ImGuiLayer : public ILayer
+    class ImGuiManager
     {
         public:
-            ImGuiLayer();
-            ~ImGuiLayer();
+            ImGuiManager();
+            ~ImGuiManager();
 
-            void onAttach() override;
-            void onDetach() override;
-            void onImGuiRender() override;
-            void onEvent(Event& e) override;
+            void init();
+
+            void onEvent(Event& e);
 
             void beginFrame();
             void endFrame();
 
-            void BlockEvents(bool block);
+            void blockEvents(bool block);
 
             std::function<void(void*)> GetEventCallback();
 
         private:
             static void EventCallback(void* nativeEvent);
+
+        private:
             bool m_blockEvents;
     };
 }

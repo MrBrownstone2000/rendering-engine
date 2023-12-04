@@ -1,6 +1,6 @@
 #include "pch.hpp"
 #include "events/eventDispatcher.hpp"
-#include "imguiLayer.hpp"
+#include "imGuiManager.hpp"
 #include "../core/app.hpp"
 
 #include "imgui/imgui.h"
@@ -12,21 +12,11 @@
 
 namespace engine
 {
-    ImGuiLayer::ImGuiLayer()
-        : ILayer("ImGuiLayer")
+    ImGuiManager::ImGuiManager()
     {
     }
 
-    ImGuiLayer::~ImGuiLayer()
-    {
-    }
-
-    std::function<void(void*)> ImGuiLayer::GetEventCallback()
-    {
-        return EventCallback;
-    }
-
-    void ImGuiLayer::onAttach()
+    void ImGuiManager::init()
     {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
@@ -60,14 +50,19 @@ namespace engine
         ImGui_ImplOpenGL3_Init("#version 460");
     }
 
-    void ImGuiLayer::onDetach()
+    ImGuiManager::~ImGuiManager()
     {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplSDL2_Shutdown();
         ImGui::DestroyContext();
     }
 
-    void ImGuiLayer::onEvent(Event& e)
+    std::function<void(void*)> ImGuiManager::GetEventCallback()
+    {
+        return EventCallback;
+    }
+
+    void ImGuiManager::onEvent(Event& e)
     {
         if (m_blockEvents)
         {
@@ -77,24 +72,24 @@ namespace engine
         }
     }
 
-    void ImGuiLayer::BlockEvents(bool block)
+    void ImGuiManager::blockEvents(bool block)
     {
         m_blockEvents = block;
     }
 
-    void ImGuiLayer::EventCallback(void* nativeEvent)
+    void ImGuiManager::EventCallback(void* nativeEvent)
     {
         ImGui_ImplSDL2_ProcessEvent((SDL_Event*) nativeEvent);
     }
 
-    void ImGuiLayer::beginFrame()
+    void ImGuiManager::beginFrame()
     {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
     }
 
-    void ImGuiLayer::endFrame()
+    void ImGuiManager::endFrame()
     {
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::Get();
@@ -114,11 +109,5 @@ namespace engine
             ImGui::RenderPlatformWindowsDefault();
             SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
         }
-    }
-
-    void ImGuiLayer::onImGuiRender()
-    {
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
     }
 }

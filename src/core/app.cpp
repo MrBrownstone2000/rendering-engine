@@ -9,6 +9,8 @@
 #include "gfx/commands.hpp"
 #include "renderer/renderer.hpp"
 
+#include "imgui/imgui.h"
+
 namespace engine
 {
     Application::Application()
@@ -27,9 +29,8 @@ namespace engine
 
     void Application::init()
     {
-        m_imGuiLayer = new ImGuiLayer;
-        pushOverlay(m_imGuiLayer);
-        m_window->setImGuiCallback(m_imGuiLayer->GetEventCallback());
+        m_imGuiManager.init();
+        m_window->setImGuiCallback(m_imGuiManager.GetEventCallback());
     }
 
     void Application::close()
@@ -49,6 +50,10 @@ namespace engine
         dispatcher.dispatch<WindowCloseEvent>(M_BIND_EVENT_FN(Application::onWindowClose));
         dispatcher.dispatch<KeyPressedEvent>(M_BIND_EVENT_FN(Application::onKeyPressed));
 
+        m_imGuiManager.onEvent(e);
+        if (e.isHandled())
+            return;
+
         for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
         {
             (*--it)->onEvent(e);
@@ -67,10 +72,14 @@ namespace engine
             for (ILayer* layer : m_layerStack)
                 layer->onUpdate(dt);
 
-            m_imGuiLayer->beginFrame();
+            m_imGuiManager.beginFrame();
             for (ILayer* layer : m_layerStack)
                 layer->onImGuiRender();
-            m_imGuiLayer->endFrame();
+
+            static bool show = true;
+            ImGui::ShowDemoWindow(&show);
+
+            m_imGuiManager.endFrame();
 
             m_window->onUpdate();
             m_window->swapBuffers();

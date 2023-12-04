@@ -6,7 +6,7 @@
 namespace engine
 {
     Framebuffer::Framebuffer()
-        : m_id(0), m_colorAttachment(0)
+        : m_id(0), m_colorAttachment(0), m_depthAttachment(0)
     {
     }
 
@@ -18,9 +18,12 @@ namespace engine
 
     void Framebuffer::resize()
     {
-        glDeleteTextures(1, &m_colorAttachment);
-        glDeleteRenderbuffers(1, &m_depthAttachment);
-        glDeleteFramebuffers(1, &m_id);
+        if (m_id)
+        {
+            glDeleteTextures(1, &m_colorAttachment);
+            glDeleteRenderbuffers(1, &m_depthAttachment);
+            glDeleteFramebuffers(1, &m_id);
+        }
         
         glCreateFramebuffers(1, &m_id);
 
@@ -40,9 +43,12 @@ namespace engine
 
     Framebuffer::~Framebuffer()
     {
-        glDeleteRenderbuffers(1, &m_depthAttachment);
-        glDeleteTextures(1, &m_colorAttachment);
-        glDeleteFramebuffers(1, &m_id);
+        if (m_id)
+        {
+            glDeleteTextures(1, &m_colorAttachment);
+            glDeleteRenderbuffers(1, &m_depthAttachment);
+            glDeleteFramebuffers(1, &m_id);
+        }
     }
 
     Framebuffer::Framebuffer(Framebuffer&& rhs)
