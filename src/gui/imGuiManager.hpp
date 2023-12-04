@@ -27,6 +27,8 @@ namespace engine
             std::function<void(void*)> GetEventCallback();
 
         private:
+            void makeDockSpace();
+
             static void EventCallback(void* nativeEvent);
 
         private:

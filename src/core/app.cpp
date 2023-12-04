@@ -73,6 +73,7 @@ namespace engine
                 layer->onUpdate(dt);
 
             m_imGuiManager.beginFrame();
+
             for (ILayer* layer : m_layerStack)
                 layer->onImGuiRender();
 
