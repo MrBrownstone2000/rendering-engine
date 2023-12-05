@@ -15,8 +15,8 @@ namespace engine::renderer
 {
     void Boot();
 
-    void beginFrame(std::shared_ptr<Framebuffer> framebuffer, const Camera& camera);
-    void beginFrame(const Camera& camera);
+    void beginFrame(std::shared_ptr<Framebuffer> framebuffer, std::shared_ptr<Camera> camera);
+    void beginFrame(std::shared_ptr<Camera> camera);
     void endFrame();
 
     void submit(const std::shared_ptr<const Shader>& shader,

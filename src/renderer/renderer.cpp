@@ -18,10 +18,7 @@ namespace engine::renderer
 
         struct SceneData
         {
-            glm::mat4 view;
-            glm::mat4 projection;
-            glm::vec3 position;
-            glm::vec3 direction;
+            std::shared_ptr<Camera> camera;
         };
 
         std::vector<RenderItem> m_items;
@@ -42,18 +39,15 @@ namespace engine::renderer
         m_default_framebuffer = std::make_shared<Framebuffer>();
     }
 
-    void beginFrame(std::shared_ptr<Framebuffer> framebuffer, const Camera& camera)
+    void beginFrame(std::shared_ptr<Framebuffer> framebuffer, std::shared_ptr<Camera> camera)
     {
         framebuffer->bind();
         clear();
         m_current_framebuffer = framebuffer;
-        m_sceneData.view = camera.view();
-        m_sceneData.projection = camera.projection();
-        m_sceneData.position = camera.position();
-        m_sceneData.direction = camera.direction();
+        m_sceneData.camera = camera;
     }
 
-    void beginFrame(const Camera& camera)
+    void beginFrame(std::shared_ptr<Camera> camera)
     {
         beginFrame(m_default_framebuffer, camera);
     }
@@ -64,9 +58,9 @@ namespace engine::renderer
         {
             i.shader->bind();
             i.shader->setUniform("model", i.model);
-            i.shader->setUniform("vp", m_sceneData.projection * m_sceneData.view);
-            i.shader->setUniform("cameraPos", m_sceneData.position);
-            i.shader->setUniform("cameraDir", m_sceneData.direction);
+            i.shader->setUniform("vp", m_sceneData.camera->getViewProjection());
+            i.shader->setUniform("cameraPos", m_sceneData.camera->getPosition());
+            i.shader->setUniform("cameraDir", m_sceneData.camera->getDirection());
 
             i.shader->bindTexture(i.texture, 0);
             i.vao->bind();

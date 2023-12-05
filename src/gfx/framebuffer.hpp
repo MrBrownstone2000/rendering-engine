@@ -7,7 +7,8 @@ namespace engine
 {
     struct FrameBufferParams
     {
-        uint32_t width, height;
+        uint32_t width = 1; 
+        uint32_t height = 1;
         uint32_t samples = 1;
     };
     class Framebuffer

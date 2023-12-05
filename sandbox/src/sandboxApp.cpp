@@ -12,6 +12,7 @@
 #include "engine/events/eventDispatcher.hpp"
 #include "engine/events/viewportEvent.hpp"
 #include "engine/renderer/mesh.hpp"
+#include "engine/renderer/cameraController.hpp"
 #include "engine/gfx/texture.hpp"
 #include "engine/util/observer.hpp"
 #include "engine/gui/imGuiViewport.hpp"
@@ -47,8 +48,11 @@ namespace engine
 
                 renderer::setClearColor(0.2, 0.2, 0.2);
 
-                m_camera.setPosition({0, 0, -1});
+                auto cameraModel = std::make_shared<PerspectiveCamera>();
+                cameraModel->setPosition({0, 0, -1});
+                m_camera = PerspectiveCameraController(cameraModel);
                 m_camera.setYaw(90);
+
                 m_texture_smiley = std::make_shared<Texture>("../data/smiley.png");
                 m_texture_window = std::make_shared<Texture>("../data/window.png");
 
@@ -56,13 +60,12 @@ namespace engine
                 m_model2 = glm::translate(glm::mat4(1), glm::vec3(1, 0, 1));
 
                 FrameBufferParams params;
-                params.width = 1280;
-                params.height = 720;
                 m_fb = std::make_shared<Framebuffer>(params);
 
                 m_viewport = std::make_shared<ImGuiViewport>(m_fb);
                 m_viewport->subscribe(this);
                 Application::Get().addViewport(m_viewport);
+                m_camera.setViewport(m_viewport);
             }
 
             void onUpdate(float dt) override
@@ -79,7 +82,7 @@ namespace engine
             void render()
             {
                 m_shader->bind();
-                renderer::beginFrame(m_fb, m_camera);
+                renderer::beginFrame(m_fb, m_camera.getCamera());
 
                 renderer::submit(m_shader, m_texture_smiley, m_model2, m_mesh);
                 renderer::submit(m_shader, m_texture_window, m_model1, m_mesh);
@@ -87,31 +90,9 @@ namespace engine
                 renderer::endFrame();
             }
 
-            bool onWindowResize(const WindowResizeEvent& event)
-            {
-                m_camera.setWindowSize(event.getWidth(), event.getHeight());
-                return false;
-            }
-
-            bool onMouseScroll(const MouseScrolledEvent& event)
-            {
-                m_camera.changeFOV(event.getY());
-                return false;
-            }
-
-            bool onViewportResize(const ViewportResizeEvent& event)
-            {
-                if (event.getViewport() == m_viewport.get())
-                    m_camera.setWindowSize(event.getWidth(), event.getHeight());
-                return false;
-            }
-
             void onEvent(Event& event) override
             {
-                EventDispatcher d(event);
-                d.dispatch<WindowResizeEvent>(M_BIND_EVENT_FN(ExampleLayer::onWindowResize));
-                d.dispatch<MouseScrolledEvent>(M_BIND_EVENT_FN(ExampleLayer::onMouseScroll));
-                d.dispatch<ViewportResizeEvent>(M_BIND_EVENT_FN(ExampleLayer::onViewportResize));
+                m_camera.onEvent(event);
             }
 
             void onImGuiRender() override
@@ -125,7 +106,8 @@ namespace engine
             std::shared_ptr<Framebuffer> m_fb;
             Mesh m_mesh;
             glm::mat4 m_model1, m_model2;
-            Camera m_camera;
+
+            PerspectiveCameraController m_camera;
 
             std::shared_ptr<ImGuiViewport> m_viewport;
     };

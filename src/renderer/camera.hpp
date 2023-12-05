@@ -2,6 +2,7 @@
 #define __CAMERA_HPP__
 
 #include <glm/glm.hpp>
+#include "../util/types.hpp"
 #include <SDL2/SDL.h>
 
 namespace engine
@@ -16,54 +17,63 @@ namespace engine
         Down
     };
 
-    // Perspective camera
     class Camera
     {
+        public:
+            Camera(uint32_t width, uint32_t height);
+            virtual ~Camera() = default;
+
+            glm::mat4 getView() const { return m_view; }
+            glm::mat4 getProjection() const { return m_projection; }
+            glm::mat4 getViewProjection() const { return m_viewProjection; }
+
+            const glm::vec3& getPosition() const { return m_position; }
+            const glm::vec3& getDirection() const { return m_direction; }
+            const glm::vec3& getRight() const { return m_right; }
+            const glm::vec3& getUp() const { return m_up; }
+            const glm::vec3& getWorldUp() const { return m_worldUp; }
+
+            void setWindowSize(unsigned int width, unsigned int height);
+            void setPosition(const glm::vec3& position);
+            void setDirection(const glm::vec3& direction);
+            void setRight(const glm::vec3& right);
+            void setUp(const glm::vec3& up);
+
+            void recomputeViewProjection();
+
+        private:
+            virtual void recomputeProjection() = 0;
+            void recomputeView();
+
+        protected:
+            glm::mat4 m_projection = glm::mat4(1);
+            glm::mat4 m_view = glm::mat4(1);
+            glm::mat4 m_viewProjection = glm::mat4(1);
+
+            glm::vec3 m_position = glm::vec3(0);
+            glm::vec3 m_direction = glm::vec3(0);
+
+            const glm::vec3 m_worldUp;
+            glm::vec3 m_up;
+            glm::vec3 m_right;
+
+            uint32_t m_windowWidth;
+            uint32_t m_windowHeight;
+    };
+
+    class PerspectiveCamera : public Camera
+    {
     public:
-        Camera(unsigned int width = 800, unsigned int height = 600, float mouseSensitivity = 0.2f, float cameraSpeed = 0.1f);
+        PerspectiveCamera(uint32_t width = 1280, uint32_t height = 720);
 
-        void update(float dt);
-
-        void setWindowSize(unsigned int width, unsigned int height);
         void setFOV(float fov);
-        void setPitch(float pitch);
-        void setYaw(float yaw);
-        void setPosition(const glm::vec3& pos);
-
+        float getFOV() const;
         void changeFOV(float offsetFOV);
 
-        float getFOV() const;
-        float& getYaw();
-        float& getPitch();
-
-        glm::mat4 view() const;
-        glm::mat4 projection() const;
-        glm::vec3 position() const;
-        glm::vec3 direction() const;
+        void recomputeProjection() override;
 
     private:
-        void changeOrientation(float offsetYaw, float offsetPitch);
-        void updatePosition(Direction dir, float dt);
-
-        void updateVectors();
-        glm::mat4 lookAt(glm::vec3 position, glm::vec3 target, glm::vec3 worldUp) const;
-
-    private:
-        glm::vec3 m_cameraPos;
-        glm::vec3 m_cameraDirection;
-        glm::vec3 m_worldUp;
-        glm::vec3 m_up;
-        glm::vec3 m_right;
-
         float m_fov;
-        float m_yaw;
-        float m_pitch;
-
-        float m_mouseSensitivity;
-        float m_cameraSpeed;
-
-        unsigned int m_windowWidth;
-        unsigned int m_windowHeight;
     };
 }
 
