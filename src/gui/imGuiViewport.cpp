@@ -53,7 +53,7 @@ namespace engine
 
         notify();
 
-        ImGui::Image((void*) m_framebuffer->getTextureId(), size);
+        ImGui::Image((void*) m_framebuffer->getTextureId(), size, {0,1}, {1,0});
 
         ImGui::End();
         ImGui::PopStyleVar();
