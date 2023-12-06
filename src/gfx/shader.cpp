@@ -155,8 +155,10 @@ namespace engine
                     type = "FRAGMENT";
                     break;
             }
-            std::cout << "ERROR::SHADER::" << type << "::COMPILATION_FAILED" << std::endl
-                << infoLog << std::endl;
+            std::stringstream ss;
+            ss << "Shader compilation failed" << std::endl;
+            ss << infoLog;
+            engineLog.error(ss.str());
             exit(1);
         }
     }
@@ -188,8 +190,11 @@ namespace engine
         if (!success)
         {
             glGetShaderInfoLog(program, 512, nullptr, infoLog);
-            std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED" << std::endl
-                << infoLog << std::endl;
+
+            std::stringstream ss;
+            ss << "Shader linking failed" << std::endl;
+            ss << infoLog;
+            engineLog.error(ss.str());
             exit(1);
         }
     }

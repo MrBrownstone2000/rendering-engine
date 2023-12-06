@@ -41,6 +41,7 @@ namespace engine
             virtual void onUpdate() = 0;
             virtual void swapBuffers() = 0;
             virtual void setVSync(bool enabled) = 0;
+            virtual void setCaptureMouse(bool enabled) = 0;
             void setEventCallback(const EventCallback& cb);
             void setImGuiCallback(std::function<void(void*)> cb);
 

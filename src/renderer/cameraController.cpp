@@ -2,6 +2,7 @@
 #include "cameraController.hpp"
 #include "input/input.hpp"
 #include "events/eventDispatcher.hpp"
+#include "core/app.hpp"
 
 namespace engine
 {
@@ -90,7 +91,8 @@ namespace engine
 
     void PerspectiveCameraController::update(float dt)
     {
-        changeOrientation(input::GetMouseOffsetX(), input::GetMouseOffsetY());
+        if (m_captureMouse)
+            changeOrientation(input::GetMouseOffsetX(), input::GetMouseOffsetY());
 
         if (input::IsKeyPressed(KeyCode::Key_z))
             updatePosition(Direction::Front, dt);
@@ -141,6 +143,16 @@ namespace engine
         m_camera->recomputeViewProjection();
         return false;
     }
+
+    bool PerspectiveCameraController::onKeyPressed(const KeyPressedEvent& event)
+    {
+        if (m_viewport && m_viewport->isFocused() && event.getKeyCode() == KeyCode::Key_c)
+        {
+            m_captureMouse = !m_captureMouse;
+            Application::Get().GetWindow().setCaptureMouse(m_captureMouse);
+        }
+        return false;
+    }
     
     void PerspectiveCameraController::onEvent(Event& event)
     {
@@ -148,5 +160,6 @@ namespace engine
         // d.dispatch<WindowResizeEvent>(M_BIND_EVENT_FN(PerspectiveCameraController::onWindowResize));
         d.dispatch<MouseScrolledEvent>(M_BIND_EVENT_FN(PerspectiveCameraController::onMouseScroll));
         d.dispatch<ViewportResizeEvent>(M_BIND_EVENT_FN(PerspectiveCameraController::onViewportResize));
+        d.dispatch<KeyPressedEvent>(M_BIND_EVENT_FN(PerspectiveCameraController::onKeyPressed));
     }
 }

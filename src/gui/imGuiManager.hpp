@@ -23,6 +23,7 @@ namespace engine
             void endFrame();
 
             void blockEvents(bool block);
+            void disableInputs(bool disable);
 
             std::function<void(void*)> GetEventCallback();
 
@@ -33,6 +34,7 @@ namespace engine
 
         private:
             bool m_blockEvents;
+            bool m_disableInputs;
     };
 }
 

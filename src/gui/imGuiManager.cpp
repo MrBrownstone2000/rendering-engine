@@ -13,6 +13,7 @@
 namespace engine
 {
     ImGuiManager::ImGuiManager()
+        : m_blockEvents(false), m_disableInputs(false)
     {
     }
 
@@ -61,7 +62,7 @@ namespace engine
 
     void ImGuiManager::onEvent(Event& e)
     {
-        if (m_blockEvents)
+        if (!m_disableInputs && m_blockEvents)
         {
             ImGuiIO& io = ImGui::GetIO();
             e.m_handled |= e.isInCategory(EventCategory_Mouse) && io.WantCaptureMouse;
@@ -72,6 +73,13 @@ namespace engine
     void ImGuiManager::blockEvents(bool block)
     {
         m_blockEvents = block;
+    }
+
+    void ImGuiManager::disableInputs(bool disable)
+    {
+        m_disableInputs = disable;
+        ImGuiIO& io = ImGui::GetIO();
+        io.ConfigFlags ^= ImGuiConfigFlags_NoMouse;
     }
 
     void ImGuiManager::EventCallback(void* nativeEvent)

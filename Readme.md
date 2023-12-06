@@ -4,9 +4,6 @@ An attempt at building a well structured 3D rendering engine.
 
 # Features TODO List
 
-- Framebuffers
-- Imgui dockspace + viewport
-
 - Materials
     - Has shader, and can set SOME shader uniforms (the ones material-related)
 - Material instance

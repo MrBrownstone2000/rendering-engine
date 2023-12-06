@@ -7,6 +7,7 @@
 #include "input/sdlKeyCodes.hpp"
 #include "sdlWindow.hpp"
 #include "renderer/renderer.hpp"
+#include "core/app.hpp"
 
 #include <SDL.h>
 #include <GL/glew.h>
@@ -36,6 +37,7 @@ namespace engine
         m_width = p.width;
         m_height = p.height;
         m_vsync = true;
+        m_captureMouse = false;
 
         m_window = SDL_CreateWindow(
                 p.title.c_str(),
@@ -92,6 +94,13 @@ namespace engine
         SDL_GL_SetSwapInterval(enabled);
     }
 
+    void SDLWindow::setCaptureMouse(bool enabled)
+    {
+        m_captureMouse = enabled;
+        SDL_SetRelativeMouseMode(enabled ? SDL_TRUE : SDL_FALSE);
+        Application::Get().GetImGuiManager().disableInputs(enabled);
+    }
+
     bool SDLWindow::isVSync() const
     {
         return m_vsync;
@@ -109,8 +118,8 @@ namespace engine
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
-            // TODO: do not call when enabling "focus" (relative mouse mode)
-            m_imGuiEventCallback(&event);
+            if (!m_captureMouse)
+                m_imGuiEventCallback(&event);
             // ========== Window Events ==========
             if (event.type == SDL_QUIT)
             {

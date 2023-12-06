@@ -6,6 +6,7 @@
 #include "../events/windowEvent.hpp"
 #include "../events/mouseEvent.hpp"
 #include "../events/viewportEvent.hpp"
+#include "../events/keyEvent.hpp"
 #include <memory>
 
 namespace engine
@@ -36,6 +37,7 @@ namespace engine
             bool onMouseScroll(const MouseScrolledEvent& event);
             bool onViewportResize(const ViewportResizeEvent& event);
             bool onWindowResize(const WindowResizeEvent& event);
+            bool onKeyPressed(const KeyPressedEvent& event);
 
         private:
             std::shared_ptr<PerspectiveCamera> m_camera;
@@ -46,6 +48,7 @@ namespace engine
 
             float m_mouseSensitivity;
             float m_cameraSpeed;
+            bool m_captureMouse;
     };
 }
 

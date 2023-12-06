@@ -27,6 +27,7 @@ namespace engine
             void onUpdate() override;
             void swapBuffers() override;
             void setVSync(bool enabled) override;
+            void setCaptureMouse(bool enabled) override;
 
             static void Boot();
 
@@ -37,7 +38,7 @@ namespace engine
             SDL_Window* m_window;
             std::unique_ptr<IRenderingContext> m_context;
             uint m_width, m_height;
-            bool m_vsync;
+            bool m_vsync, m_captureMouse;
 
             static inline bool m_isGlewInit = false;
     };
