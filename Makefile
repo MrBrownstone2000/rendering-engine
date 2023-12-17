@@ -39,9 +39,8 @@ PCH_COMPILED = $(PCH_DIR)/pch.hpp.gch
 SRC_LIST = $(shell find $(SRC) -type f -name "*.cpp")
 HDR_LIST = $(patsubst $(SRC)/%, %, $(shell find $(SRC) -type f -name "*.hpp" ! -name $(notdir $(PCH))))
 
-CONTRIB = contrib
-CONTRIB_SRC = $(wildcard $(CONTRIB)/*/*.cpp)
-CONTRIB_HDR = $(wildcard $(CONTRIB)/*/*.h) $(wildcard $(CONTRIB)/*/*.hpp)
+CONTRIB_SRC = $(wildcard $(CONTRIB)/imgui/*.cpp) $(wildcard $(CONTRIB)/backward/*.cpp)
+# CONTRIB_HDR = $(wildcard $(CONTRIB)/*/*.h) $(wildcard $(CONTRIB)/*/*.hpp)
 
 SRC_LIST += $(CONTRIB_SRC)
 # HDR_LIST += $(CONTRIB_HDR)
@@ -55,9 +54,10 @@ OBJ_DIRS = $(sort $(dir $(OBJ_LIST)))
 .PHONY: all veryclean clean includes $(PROJECTS) $(PROJECTS_RUN)
 
 # ====== Libraries ======
-CFLAGS += -I $(PCH_DIR) $(shell pkg-config --cflags sdl2 glew) -I $(CONTRIB) -I $(SRC) -I $(CONTRIB)/imgui
+CFLAGS += -I $(PCH_DIR) $(shell pkg-config --cflags sdl2 glew) -I $(CONTRIB) -I $(SRC) -I $(CONTRIB)/imgui -I $(CONTRIB)/fastgltf/deps/simdjson -I $(CONTRIB)/fastgltf/include
 # -lstdc++_libbacktrace
-LDFLAGS += $(shell pkg-config --libs sdl2 glew) -ldl -lbfd -lunwind
+LDFLAGS += $(shell pkg-config --libs sdl2 glew) -ldl -lbfd -lunwind 
+# -Wl,--whole-archive -L $(CONTRIB)/fastgltf/build -lfastgltf -l fastgltf_simdjson -Wl,--no-whole-archive 
 
 # ====== Rules ======
 engine: $(LIB) includes

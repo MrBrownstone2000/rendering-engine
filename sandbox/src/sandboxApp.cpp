@@ -17,6 +17,8 @@
 #include "engine/util/observer.hpp"
 #include "engine/gui/imGuiViewport.hpp"
 
+#include "engine/assets/importer.hpp"
+
 #include "imgui/imgui.h"
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -29,6 +31,7 @@ namespace engine
         public:
             ExampleLayer()
             {
+
                 std::vector<Vertex> vertices = {
                     {{ -0.5, -0.5, 0 }, {1, 0, 1}, {0, 0}},
                     {{ 0.5, -0.5, 0 }, {1, 0, 1}, {1, 0}},
@@ -55,6 +58,7 @@ namespace engine
 
                 m_texture_smiley = std::make_shared<Texture>("../data/smiley.png");
                 m_texture_window = std::make_shared<Texture>("../data/window.png");
+                AssetImporter::Import("../data/robot.gltf");
 
                 m_model1 = glm::mat4(1);
                 m_model2 = glm::translate(glm::mat4(1), glm::vec3(1, 0, 1));

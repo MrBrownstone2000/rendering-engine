@@ -4,3 +4,6 @@
 [submodule "contrib/imgui"]
 	path = contrib/imgui
 	url = git@forge.univ-lyon1.fr:p1807560/imgui-fork.git
+[submodule "contrib/fastgltf"]
+	path = contrib/fastgltf
+	url = https://github.com/spnda/fastgltf.git
