@@ -4,6 +4,10 @@ An attempt at building a well structured 3D rendering engine.
 
 # Features TODO List
 
+- ECS
+
+- Mesh loading
+
 - Materials
     - Has shader, and can set SOME shader uniforms (the ones material-related)
 - Material instance
@@ -12,12 +16,7 @@ An attempt at building a well structured 3D rendering engine.
 
 => easier sorting
 
-
-- Basic gui layout
-
-- Mesh loading
-
-- Get locations of all uniforms at shader compile time 
+- Get locations of all uniforms at shader compile time ?
 
 - Assets storing: Virtual File System
     - minimum: mapping from os (actual path) to internal, abstract path
@@ -82,4 +81,7 @@ engine.
 
 # Models and data
 
-Use FBX or DAE format only (full scene format, more descriptive (materials!))
+GLTF (fastgltf)
+OBJ (fast-obj)
+FBX (ufbx)
+Eventually (better materials ?) Blender plugin
