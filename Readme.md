@@ -16,6 +16,8 @@ An attempt at building a well structured 3D rendering engine.
 
 => easier sorting
 
+- Unit Tests: Clean way to intercept calls to Check() / engine::Assertion()
+
 - Get locations of all uniforms at shader compile time ?
 
 - Assets storing: Virtual File System
