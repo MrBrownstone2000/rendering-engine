@@ -15,6 +15,10 @@ using namespace engine;
 void Boot()
 {
     log::Boot();
+
+    // ioc::Get().Register<log::ISeverityLevelPolicy>([] {
+    //     return std::make_shared<log::SeverityLevelPolicy>(log::Level::None);
+    // });
 }
 
 int main()
