@@ -1,6 +1,8 @@
 #ifndef __ENTITY_HPP__
 #define __ENTITY_HPP__
 
+#include <deque>
+
 #include "../util/assert.hpp"
 #include "../engine.hpp"
 #include "../util/types.hpp"
@@ -13,25 +15,12 @@ namespace engine::ecs
 {
     struct Archetype;
 
-    // TODO: reuse Ids
-    class EntityIdGenerator
-    {
-    public:
-        static EntityId get()
-        {
-            static EntityId val = maxComponents;
-            if (val >= maxEntities)
-                engineLog.fatal("Entity id limit exceeded");
-            return val++;
-        }
-    };
-
     class Entity
     {
     public:
-        Entity()
+        Entity(u32 index, u32 generation)
         {
-            m_id = EntityIdGenerator::get();
+            m_id = (u64(generation) << 32) + index;
             EntityRecord record;
             record.archetype = archetypeManager.getDefault();
             record.row = -1;
@@ -52,6 +41,16 @@ namespace engine::ecs
             record.archetype->remove(record.row);
             entityIndex.erase(m_id);
             m_id = 0;
+        }
+
+        u32 index() const
+        {
+            return m_id & entityIndexMask;
+        }
+
+        u32 generation() const
+        {
+            return (m_id >> entityIndexBits) & entityGenerationMask;
         }
 
         // O(1) average
@@ -188,6 +187,61 @@ namespace engine::ecs
 
     private:
         EntityId m_id;
+    };
+
+    // TODO: reuse Ids
+    // see bitsquid blogspot (stingray engine)
+    class EntityManager
+    {
+    private:
+        EntityManager()
+            : m_currentIndex(maxComponents)
+        {
+        }
+
+        EntityId generateIndex()
+        {
+            if (m_currentIndex >= maxEntities)
+                engineLog.fatal("Entity id limit exceeded");
+            return m_currentIndex++;
+        }
+
+        Entity create()
+        {
+            u32 index;
+            u16 generation;
+            if (m_freeIndices.size())
+            {
+                index = m_freeIndices.front();
+                generation = m_generations[index];
+                m_freeIndices.pop_front();
+            }
+            else 
+            {
+                index = m_generations.size();
+                generation = 0;
+                m_generations.push_back(0);
+                Check(index <= entityIndexMask);
+            }
+            return Entity(index, generation);
+        }
+
+        bool alive(Entity e)
+        {
+            return m_generations[e.index()] == e.generation();
+        }
+
+        void destroy(Entity e)
+        {
+            u32 index = e.index();
+            m_generations[index]++;
+            m_freeIndices.push_back(index);
+        }
+
+    private:
+        std::deque<u32> m_freeIndices; // Free indices to be reused
+        std::vector<u16> m_generations; // Current generation number for each entity index
+        EntityId m_currentIndex; // Last used index (used for index generation)
     };
 };
 

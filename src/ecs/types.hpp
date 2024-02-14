@@ -1,16 +1,21 @@
 #ifndef __ECSTYPES_HPP__
 #define __ECSTYPES_HPP__
 
-#include "../util/assert.hpp"
 #include "../engine.hpp"
-#include "../util/types.hpp"
+#include "../util/assert.hpp"
 #include "../util/exception.hpp"
+#include "../util/types.hpp"
 
 namespace engine::ecs
 {
     struct Archetype;
 
     using EntityId = u64;
+    constexpr static u32 entityIndexBits = 32;
+    constexpr static u32 entityIndexMask = (1l << entityIndexBits) - 1;
+    constexpr static u32 entityGenerationBits = 16;
+    constexpr static u32 entityGenerationMask = (1l << entityGenerationBits) - 1;
+
     using ComponentId = EntityId;
     using ArchetypeId = u32;
 

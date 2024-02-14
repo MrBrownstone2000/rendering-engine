@@ -4,8 +4,8 @@
 #include <iostream>
 #include <unordered_set>
 
-#include "../util/assert.hpp"
 #include "../engine.hpp"
+#include "../util/assert.hpp"
 #include "../util/types.hpp"
 
 #include "componentArray.hpp"

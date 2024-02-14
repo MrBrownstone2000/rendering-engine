@@ -3,6 +3,8 @@
 
 #include "engine/ecs/ecs.hpp"
 
+#include <vector>
+
 using namespace engine;
 
 namespace
@@ -50,7 +52,7 @@ TEST_MODULE(ECS_Entity)
 {
     TEST(AddComponent)
     {
-        ecs::Entity e;
+        ecs::Entity e(0,0);
         TestComponent1 c1Start = {1, 2., 'a'};
         TestComponent2 c2Start = {1., 2., 3.};
 
@@ -70,7 +72,7 @@ TEST_MODULE(ECS_Entity)
 
     TEST(RemoveComponent)
     {
-        ecs::Entity e;
+        ecs::Entity e(0,0);
         TestComponent1 c1Start = {1, 2., 'a'};
         TestComponent2 c2Start = {1., 2., 3.};
 
@@ -94,7 +96,7 @@ TEST_MODULE(ECS_Entity)
 
     TEST(ManyEntities)
     {
-        ecs::Entity e[666];
+        std::vector<ecs::Entity> e(666, ecs::Entity(0, 0));
         TestComponent1 c1Special = {1, 2., 'a'};
         TestComponent2 c2Special = {1., 2., 3.};
         TestComponent1 c1Rand = {4, -18., 'i'};

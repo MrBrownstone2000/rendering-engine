@@ -4,8 +4,8 @@
 #include <cstddef>
 #include <cstdlib>
 
-#include "../util/assert.hpp"
 #include "../engine.hpp"
+#include "../util/assert.hpp"
 #include "../util/types.hpp"
 
 namespace engine::ecs
