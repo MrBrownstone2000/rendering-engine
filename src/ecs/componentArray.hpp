@@ -49,6 +49,13 @@ namespace engine::ecs
             return ((T*) m_data)[i];
         }
 
+        const void* get(size_t i) const
+        {
+            Check(m_data);
+            Check(i < m_size);
+            return m_data + m_elementSize * i;
+        }
+
         void* get(size_t i)
         {
             Check(m_data);

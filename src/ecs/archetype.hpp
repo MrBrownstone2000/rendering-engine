@@ -131,29 +131,7 @@ namespace engine::ecs
             return new_archetype;
         }
 
-        std::shared_ptr<Archetype> create(const Type& new_type)
-        {
-            std::shared_ptr<Archetype> new_archetype = std::make_shared<Archetype>();
-            new_archetype->id = ArchetypeIdGenerator::get();
-            new_archetype->type = new_type;
-
-            // Init components array
-            new_archetype->componentsData.resize(new_type.size());
-
-            // Setup the components  array, and
-            // Update componentIndex
-            for (u32 i = 0; i < new_type.size(); ++i)
-            {
-                ComponentInfo c = new_type.at(i); 
-                new_archetype->componentsData[i].setup(c.size);
-                componentIndex[c.id][new_archetype->id] = ComponentRecord{ i };
-            }
-
-            m_archetypes.push_back(new_archetype);
-
-
-            return new_archetype;
-        }
+        std::shared_ptr<Archetype> create(const Type& new_type);
 
         std::shared_ptr<Archetype> getDefault()
         {
@@ -164,8 +142,6 @@ namespace engine::ecs
     private:
         std::vector<std::shared_ptr<Archetype>> m_archetypes;
     };
-
-    extern ArchetypeManager archetypeManager;
 }
 
 #endif

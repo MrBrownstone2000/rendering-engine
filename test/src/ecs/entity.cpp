@@ -52,6 +52,8 @@ TEST_MODULE(ECS_Entity)
 {
     TEST(AddComponent)
     {
+        ecs::World::clear();
+
         ecs::Entity e(0,0);
         TestComponent1 c1Start = {1, 2., 'a'};
         TestComponent2 c2Start = {1., 2., 3.};
@@ -72,6 +74,8 @@ TEST_MODULE(ECS_Entity)
 
     TEST(RemoveComponent)
     {
+        ecs::World::clear();
+
         ecs::Entity e(0,0);
         TestComponent1 c1Start = {1, 2., 'a'};
         TestComponent2 c2Start = {1., 2., 3.};
@@ -96,7 +100,9 @@ TEST_MODULE(ECS_Entity)
 
     TEST(ManyEntities)
     {
-        std::vector<ecs::Entity> e(666, ecs::Entity(0, 0));
+        ecs::World::clear();
+
+        std::vector<ecs::Entity> e;
         TestComponent1 c1Special = {1, 2., 'a'};
         TestComponent2 c2Special = {1., 2., 3.};
         TestComponent1 c1Rand = {4, -18., 'i'};
@@ -104,6 +110,7 @@ TEST_MODULE(ECS_Entity)
 
         for (int i = 0; i < 666; ++i)
         {
+            e.push_back(ecs::Entity(i, 0));
             if (i == 439)
             {
                 e[i].add(c1Special);
@@ -129,6 +136,9 @@ TEST_MODULE(ECS_Entity)
                 test::expect_eq(c2Rand, e[i].get<TestComponent2>());
             }
         }
+
+        for (int i = 0; i < 666; ++i)
+            e[i].remove();
 
     }
 }

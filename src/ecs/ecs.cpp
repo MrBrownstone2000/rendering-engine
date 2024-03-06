@@ -1,10 +1,10 @@
 #include "pch.hpp"
 #include "ecs.hpp"
+#include "world.hpp"
 
 namespace engine::ecs
 {
-    // Definition for the extern variables in the ECS system
-    std::unordered_map<EntityId, EntityRecord> entityIndex;
-    std::unordered_map<ComponentId, ArchetypeMap> componentIndex;
-    ArchetypeManager archetypeManager;
+    std::unordered_map<EntityId, EntityRecord> World::entityIndex;
+    std::unordered_map<ComponentId, ArchetypeMap> World::componentIndex;
+    ArchetypeManager World::archetypeManager;
 }

@@ -54,9 +54,6 @@ namespace engine::ecs
     };
 
     using ArchetypeMap = std::unordered_map<ArchetypeId, ComponentRecord>;
-
-    extern std::unordered_map<ComponentId, ArchetypeMap> componentIndex;
-    extern std::unordered_map<EntityId, EntityRecord> entityIndex;
 } 
 
 #endif
