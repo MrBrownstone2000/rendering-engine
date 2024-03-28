@@ -1,6 +1,6 @@
 #include "pch.hpp"
-#include "input.hpp"
-#include "sdlKeyCodes.hpp"
+#include "input/input.hpp"
+#include "input/sdlKeyCodes.hpp"
 
 #include <SDL.h>
 

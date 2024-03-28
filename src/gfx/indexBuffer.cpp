@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "indexBuffer.hpp"
+#include "gfx/indexBuffer.hpp"
 
 #include <GL/glew.h>
 

@@ -1,7 +1,7 @@
 #include "pch.hpp"
-#include "exception.hpp"
+#include "util/exception.hpp"
 
-#include "debug.hpp"
+#include "util/debug.hpp"
 
 namespace engine
 {

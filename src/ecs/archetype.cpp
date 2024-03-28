@@ -1,6 +1,6 @@
 #include "pch.hpp"
-#include "archetype.hpp"
-#include "world.hpp"
+#include "ecs/archetype.hpp"
+#include "ecs/world.hpp"
 
 namespace engine::ecs
 {

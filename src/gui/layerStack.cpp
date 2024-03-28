@@ -1,6 +1,6 @@
 #include "pch.hpp"
-#include "layerStack.hpp"
-#include "layer.hpp"
+#include "gui/layerStack.hpp"
+#include "gui/layer.hpp"
 
 namespace engine
 {

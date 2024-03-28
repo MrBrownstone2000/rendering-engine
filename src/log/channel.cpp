@@ -1,8 +1,8 @@
 #include "pch.hpp"
-#include "channel.hpp"
+#include "log/channel.hpp"
 
-#include "driver.hpp"
-#include "policy.hpp"
+#include "log/driver.hpp"
+#include "log/policy.hpp"
 
 namespace engine::log
 {

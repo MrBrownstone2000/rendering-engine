@@ -1,9 +1,12 @@
 [submodule "contrib/backward"]
-	path = contrib/backward
+	path = extern/backward
 	url = https://github.com/bombela/backward-cpp.git
 [submodule "contrib/imgui"]
-	path = contrib/imgui
+	path = extern/imgui
 	url = git@forge.univ-lyon1.fr:p1807560/imgui-fork.git
 [submodule "contrib/fastgltf"]
-	path = contrib/fastgltf
+	path = extern/fastgltf
 	url = https://github.com/spnda/fastgltf.git
+[submodule "test/extern/UnitTests"]
+	path = test/extern/UnitTests
+	url = git@github.com:MrBrownstone2000/test-framework.git

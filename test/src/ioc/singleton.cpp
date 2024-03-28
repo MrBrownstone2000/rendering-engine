@@ -1,7 +1,7 @@
-#include "testCore/test.hpp"
+#include "UnitTests/test.hpp"
 
-#include "engine/ioc/container.hpp"
-#include "engine/ioc/singleton.hpp"
+#include "Engine/ioc/container.hpp"
+#include "Engine/ioc/singleton.hpp"
 
 #include <algorithm>
 #include <cassert>

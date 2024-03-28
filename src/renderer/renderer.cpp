@@ -1,7 +1,7 @@
 #include "pch.hpp"
-#include "renderer.hpp"
+#include "renderer/renderer.hpp"
 
-#include "../gfx/commands.hpp"
+#include "gfx/commands.hpp"
 #include <GL/glew.h>
 
 namespace engine::renderer

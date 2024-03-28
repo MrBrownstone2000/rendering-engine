@@ -1,11 +1,11 @@
 #include "pch.hpp"
 #include "events/eventDispatcher.hpp"
-#include "imGuiManager.hpp"
-#include "../core/app.hpp"
+#include "gui/imGuiManager.hpp"
+#include "core/app.hpp"
 
-#include "imgui/imgui.h"
-#include "imgui/backends/imgui_impl_opengl3.h"
-#include "imgui/backends/imgui_impl_sdl2.h"
+#include "imgui.h"
+#include "backends/imgui_impl_opengl3.h"
+#include "backends/imgui_impl_sdl2.h"
 
 #include <SDL.h>
 #include <GL/glew.h>

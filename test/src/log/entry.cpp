@@ -1,9 +1,9 @@
-#include "testCore/asserts.hpp"
-#include "testCore/test.hpp"
+#include "UnitTests/asserts.hpp"
+#include "UnitTests/test.hpp"
 
-#include "engine/log/level.hpp"
-#include "engine/log/entryBuilder.hpp"
-#include "engine/log/channel.hpp"
+#include "Engine/log/level.hpp"
+#include "Engine/log/entryBuilder.hpp"
+#include "Engine/log/channel.hpp"
 
 #include <iostream>
 

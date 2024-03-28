@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "bufferLayout.hpp"
+#include "gfx/bufferLayout.hpp"
 
 #include <GL/glew.h>
 

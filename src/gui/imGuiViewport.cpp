@@ -1,8 +1,8 @@
 #include "pch.hpp"
-#include "imGuiViewport.hpp"
-#include "imgui/imgui.h"
-#include "../core/app.hpp"
-#include "../events/viewportEvent.hpp"
+#include "gui/imGuiViewport.hpp"
+#include "imgui.h"
+#include "core/app.hpp"
+#include "events/viewportEvent.hpp"
 
 #include <GL/glew.h>
 

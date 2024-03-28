@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "cameraController.hpp"
+#include "renderer/cameraController.hpp"
 #include "input/input.hpp"
 #include "events/eventDispatcher.hpp"
 #include "core/app.hpp"

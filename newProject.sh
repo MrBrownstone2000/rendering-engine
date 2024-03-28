@@ -13,10 +13,11 @@ if [[ -f $1 || -d $1 ]]; then
     exit 1
 fi
 
+echo "add_subdirectory($1)" >> CMakeLists.txt
+
 cp -r projectTemplate $1
 cd $1
-sed -i "s/@PROJECT/$1/g" Makefile
-sed -i "/(error /d" Makefile
+sed -i "s/@PROJECT/$1/g" CMakeLists.txt
+sed -i "/message( FATAL_ERROR /d" CMakeLists.txt
 
 echo "The project was succesfully created!"
-echo "You can now add the name of the project to the project list at the top of the main Makefile"

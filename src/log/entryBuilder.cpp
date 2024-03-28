@@ -1,7 +1,7 @@
 #include "pch.hpp"
-#include "entryBuilder.hpp"
+#include "log/entryBuilder.hpp"
 
-#include "channel.hpp"
+#include "log/channel.hpp"
 
 using namespace std::literals;
 

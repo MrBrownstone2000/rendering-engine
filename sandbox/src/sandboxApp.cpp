@@ -2,24 +2,24 @@
 #include <memory>
 #include <vector>
 
-#include "engine/engine.hpp"
+#include "Engine/engine.hpp"
 
-#include "engine/ioc/container.hpp"
-#include "engine/ioc/singleton.hpp"
-#include "engine/log/severityLevelPolicy.hpp"
+#include "Engine/ioc/container.hpp"
+#include "Engine/ioc/singleton.hpp"
+#include "Engine/log/severityLevelPolicy.hpp"
 
-#include "engine/renderer/camera.hpp"
-#include "engine/events/eventDispatcher.hpp"
-#include "engine/events/viewportEvent.hpp"
-#include "engine/renderer/mesh.hpp"
-#include "engine/renderer/cameraController.hpp"
-#include "engine/gfx/texture.hpp"
-#include "engine/util/observer.hpp"
-#include "engine/gui/imGuiViewport.hpp"
+#include "Engine/renderer/camera.hpp"
+#include "Engine/events/eventDispatcher.hpp"
+#include "Engine/events/viewportEvent.hpp"
+#include "Engine/renderer/mesh.hpp"
+#include "Engine/renderer/cameraController.hpp"
+#include "Engine/gfx/texture.hpp"
+#include "Engine/util/observer.hpp"
+#include "Engine/gui/imGuiViewport.hpp"
 
-#include "engine/assets/importer.hpp"
+#include "Engine/assets/importer.hpp"
 
-#include "imgui/imgui.h"
+#include "imgui.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <GL/glew.h>
@@ -46,7 +46,7 @@ namespace engine
 
                 m_mesh = Mesh(std::move(vertices), std::move(indices));
 
-                Shader::setIncludeDirs({ "../shaders" });
+                Shader::setIncludeDirs({ "shaders" });
                 m_shader = std::make_shared<Shader>("vertex_basic.glsl", "frag_basic.glsl");
 
                 renderer::setClearColor(0.2, 0.2, 0.2);
@@ -56,9 +56,9 @@ namespace engine
                 m_camera = PerspectiveCameraController(cameraModel);
                 m_camera.setYaw(90);
 
-                m_texture_smiley = std::make_shared<Texture>("../data/smiley.png");
-                m_texture_window = std::make_shared<Texture>("../data/window.png");
-                AssetImporter::Import("../data/robot.gltf");
+                m_texture_smiley = std::make_shared<Texture>("data/smiley.png");
+                m_texture_window = std::make_shared<Texture>("data/window.png");
+                AssetImporter::Import("data/robot.gltf");
 
                 m_model1 = glm::mat4(1);
                 m_model2 = glm::translate(glm::mat4(1), glm::vec3(1, 0, 1));

@@ -1,7 +1,7 @@
-#include "testCore/asserts.hpp"
-#include "testCore/test.hpp"
+#include "UnitTests/asserts.hpp"
+#include "UnitTests/test.hpp"
 
-#include "engine/ecs/ecs.hpp"
+#include "Engine/ecs/ecs.hpp"
 
 #include <vector>
 

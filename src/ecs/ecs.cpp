@@ -1,6 +1,6 @@
 #include "pch.hpp"
-#include "ecs.hpp"
-#include "world.hpp"
+#include "ecs/ecs.hpp"
+#include "ecs/world.hpp"
 
 namespace engine::ecs
 {

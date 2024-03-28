@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "debug.hpp"
+#include "util/debug.hpp"
 
 #include <cxxabi.h>
 

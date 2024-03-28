@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "sdlKeyCodes.hpp"
+#include "input/sdlKeyCodes.hpp"
 
 #include <SDL.h>
 

@@ -1,7 +1,6 @@
-
 #include "pch.hpp"
-#include "app.hpp"
-#include "boot.hpp"
+#include "core/app.hpp"
+#include "core/boot.hpp"
 #include "ioc/singleton.hpp"
 
 using namespace engine;

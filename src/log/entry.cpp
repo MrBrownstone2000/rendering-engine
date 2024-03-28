@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "entry.hpp"
+#include "log/entry.hpp"
 
 namespace engine::log
 {

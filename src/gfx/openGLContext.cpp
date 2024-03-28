@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "openGLContext.hpp"
+#include "gfx/openGLContext.hpp"
 #include "GL/glew.h"
 
 namespace engine

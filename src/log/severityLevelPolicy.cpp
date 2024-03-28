@@ -1,7 +1,7 @@
 #include "pch.hpp"
-#include "severityLevelPolicy.hpp"
+#include "log/severityLevelPolicy.hpp"
 
-#include "entry.hpp"
+#include "log/entry.hpp"
 
 namespace engine::log
 {

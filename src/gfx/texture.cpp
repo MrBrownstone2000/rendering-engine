@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "texture.hpp"
+#include "gfx/texture.hpp"
 
 #include <GL/glew.h>
 #include <OpenImageIO/imageio.h>

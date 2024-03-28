@@ -1,11 +1,12 @@
 #include "pch.hpp"
+#include "window/sdlWindow.hpp"
+
 #include "events/keyEvent.hpp"
 #include "events/mouseEvent.hpp"
 #include "events/windowEvent.hpp"
 #include "gfx/openGLContext.hpp"
 #include "input/input.hpp"
 #include "input/sdlKeyCodes.hpp"
-#include "sdlWindow.hpp"
 #include "renderer/renderer.hpp"
 #include "core/app.hpp"
 

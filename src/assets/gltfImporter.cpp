@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "gltfImporter.hpp"
+#include "assets/gltfImporter.hpp"
 
 #include <fastgltf/parser.hpp>
 #include <fastgltf/types.hpp>

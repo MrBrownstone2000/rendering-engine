@@ -1,6 +1,7 @@
 #include "pch.hpp"
-#include "window.hpp"
-#include "sdlWindow.hpp"
+#include "window/window.hpp"
+
+#include "window/sdlWindow.hpp"
 #include "ioc/container.hpp"
 
 

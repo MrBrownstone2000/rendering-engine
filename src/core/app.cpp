@@ -1,15 +1,16 @@
 #include "pch.hpp"
-#include "app.hpp"
+#include "core/app.hpp"
+
 #include "events/eventDispatcher.hpp"
-#include "ioc/singleton.hpp"
-#include "gui/layer.hpp"
-#include "log/log.hpp"
-#include "log/severityLevelPolicy.hpp"
 #include "events/keyEvent.hpp"
 #include "gfx/commands.hpp"
+#include "gui/layer.hpp"
+#include "ioc/singleton.hpp"
+#include "log/log.hpp"
+#include "log/severityLevelPolicy.hpp"
 #include "renderer/renderer.hpp"
 
-#include "imgui/imgui.h"
+#include "imgui.h"
 
 namespace engine
 {

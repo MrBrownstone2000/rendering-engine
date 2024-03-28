@@ -1,9 +1,9 @@
 #include "pch.hpp"
-#include "stacktrace.hpp"
+#include "util/stacktrace.hpp"
 
 #define BACKWARD_HAS_BFD 1
 #define BACKWARD_HAS_LIBUNWIND 1
-#include "backward/backward.hpp"
+#include "backward.hpp"
 
 namespace engine
 {

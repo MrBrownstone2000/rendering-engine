@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "commands.hpp"
+#include "gfx/commands.hpp"
 
 #include <GL/glew.h>
 

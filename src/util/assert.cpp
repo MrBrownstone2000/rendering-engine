@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "assert.hpp"
+#include "util/assert.hpp"
 
 #include "log/log.hpp"
 #include "log/channel.hpp"

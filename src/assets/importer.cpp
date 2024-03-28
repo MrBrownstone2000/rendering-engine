@@ -1,7 +1,7 @@
 #include "pch.hpp"
-#include "importer.hpp"
+#include "assets/importer.hpp"
 
-#include "gltfImporter.hpp"
+#include "assets/gltfImporter.hpp"
 
 namespace engine
 {

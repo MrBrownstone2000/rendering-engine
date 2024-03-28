@@ -1,11 +1,11 @@
-#include "testCore/asserts.hpp"
-#include "testCore/test.hpp"
+#include "UnitTests/asserts.hpp"
+#include "UnitTests/test.hpp"
 
-#include "engine/log/level.hpp"
-#include "engine/log/entryBuilder.hpp"
-#include "engine/log/channel.hpp"
-#include "engine/log/driver.hpp"
-#include "engine/log/severityLevelPolicy.hpp"
+#include "Engine/log/level.hpp"
+#include "Engine/log/entryBuilder.hpp"
+#include "Engine/log/channel.hpp"
+#include "Engine/log/driver.hpp"
+#include "Engine/log/severityLevelPolicy.hpp"
 
 using namespace engine;
 

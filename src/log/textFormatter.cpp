@@ -1,8 +1,8 @@
 #include "pch.hpp"
-#include "textFormatter.hpp"
+#include "log/textFormatter.hpp"
 
-#include "level.hpp"
-#include "entry.hpp"
+#include "log/level.hpp"
+#include "log/entry.hpp"
 
 namespace engine::log
 {

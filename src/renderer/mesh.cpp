@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "mesh.hpp"
+#include "renderer/mesh.hpp"
 
 namespace engine
 {

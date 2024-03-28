@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "camera.hpp"
+#include "renderer/camera.hpp"
 
 #include "input/input.hpp"
 

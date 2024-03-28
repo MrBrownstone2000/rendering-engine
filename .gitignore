@@ -1,6 +1,8 @@
 .cache/
 compile_commands.json
 
+build/
+install/
 obj/
 logs/
 data/

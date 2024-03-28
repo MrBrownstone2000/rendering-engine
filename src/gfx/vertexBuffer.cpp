@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "vertexBuffer.hpp"
+#include "gfx/vertexBuffer.hpp"
 
 #include <GL/glew.h>
 
