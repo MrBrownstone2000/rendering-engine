@@ -10,7 +10,7 @@ endif
 
 # To print the compilation commands:   -DBUILD_TESTS=ON -DCMAKE_VERBOSE_MAKEFILE=ON
 build:
-	@cmake -DCMAKE_BUILD_TYPE=$(target) -DBUILD_TESTS=ON -S . -B build >> /dev/null
+	@cmake -DCMAKE_BUILD_TYPE=$(target) -DBUILD_TESTS=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B build >> /dev/null
 	@cmake --build build --target install -j12
 
 clean:

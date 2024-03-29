@@ -2,9 +2,13 @@
 
 An attempt at building a well structured 3D rendering engine.
 
-# Features TODO List
+# Controls
 
-- ECS
+- When the viewport is in focus:
+    - ZQSD: move the camera position
+    - C: Enable / Disable Camera rotation with mouse movements
+
+# Features TODO List
 
 - Mesh loading
 
@@ -34,15 +38,12 @@ An attempt at building a well structured 3D rendering engine.
             - read only (for read write, research actual file systems !!)
             - groups for assets loaded together ?
             - headers of group loaded first, then assets on read
+- Frame Graph
 
 
 # Issues
 
-- imgui headers copied for release ?
 - Use modern opengl: https://github.com/fendevel/Guide-to-Modern-OpenGL-Functions
-- Test framework: 
-    - build test core files to shared lib
-    - Test framework as submodule
 
 # Design improvements ideas
 
@@ -79,6 +80,7 @@ Even a simulated command buffer accelerates rendering!
 
 Due to better cache utilization, with less back and forth between driver and
 engine.
+
 
 
 # Models and data
