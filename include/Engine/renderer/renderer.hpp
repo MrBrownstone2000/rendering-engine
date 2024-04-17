@@ -6,6 +6,7 @@
 #include "../gfx/framebuffer.hpp"
 #include "camera.hpp"
 #include "mesh.hpp"
+#include "model.hpp"
 
 #include <memory>
 #include <vector>
@@ -21,10 +22,15 @@ namespace engine::renderer
 
     void submit(const std::shared_ptr<const Shader>& shader,
                 const std::shared_ptr<const Texture>& texture,
-                const glm::mat4& model, const Mesh& mesh);
+                const glm::mat4& mat, const Model& model);
+
     void submit(const std::shared_ptr<const Shader>& shader,
                 const std::shared_ptr<const Texture>& texture,
-                const glm::mat4& model, 
+                const glm::mat4& mat, const Mesh& mesh);
+
+    void submit(const std::shared_ptr<const Shader>& shader,
+                const std::shared_ptr<const Texture>& texture,
+                const glm::mat4& mat, 
                 const std::shared_ptr<const VertexArray>& vao);
 }
 

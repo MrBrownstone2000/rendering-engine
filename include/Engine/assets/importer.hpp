@@ -3,13 +3,13 @@
 
 #include <filesystem>
 
-#include "../renderer/mesh.hpp"
+#include "../renderer/model.hpp"
 
 namespace engine
 {
     namespace AssetImporter
     {
-        Mesh Import(const std::filesystem::path& path);
+        Model Import(const std::filesystem::path& path);
     }
 }
 

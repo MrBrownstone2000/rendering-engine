@@ -21,7 +21,7 @@ namespace engine
         });
         m_vao->attachVertexBuffer(vbo);
 
-        m_vao->attachIndexBuffer(IndexBuffer(m_indices.data(), 6));
+        m_vao->attachIndexBuffer(IndexBuffer(m_indices.data(), m_indices.size()));
     }
 
     Mesh::Mesh(float* vertices, size_t sv, uint32_t* indices, size_t si)

@@ -13,6 +13,9 @@ out vec2 tc;
 void main()
 {
     gl_Position = vp * model * vec4(position, 1.f);
-    n = normal;
+
+    // Should normal be in object or view coordinates ???
+    // inverse(transpose(view * model))
+    n = vec4(inverse(transpose(model)) * vec4(normal, 0.f)).xyz;
     tc = texCoords;
 }

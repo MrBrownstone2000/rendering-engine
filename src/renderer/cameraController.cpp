@@ -14,6 +14,11 @@ namespace engine
         m_camera->recomputeViewProjection();
     }
 
+    void PerspectiveCameraController::setSpeed(float speed)
+    {
+        m_cameraSpeed = speed;
+    }
+
     void PerspectiveCameraController::setPitch(float pitch)
     {
         m_pitch = pitch;
@@ -63,10 +68,10 @@ namespace engine
             m_camera->setPosition(cameraPos + dt * m_cameraSpeed * cameraRight);
             break;
         case Direction::Up:
-            m_camera->setPosition(cameraPos + dt * 0.7f * m_cameraSpeed * cameraUp);
+            m_camera->setPosition(cameraPos + dt * m_cameraSpeed * cameraUp);
             break;
         case Direction::Down:
-            m_camera->setPosition(cameraPos - dt * 0.7f * m_cameraSpeed * cameraUp);
+            m_camera->setPosition(cameraPos - dt * m_cameraSpeed * cameraUp);
             break;
 
         default:

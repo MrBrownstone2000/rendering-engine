@@ -7,9 +7,9 @@ namespace engine
 {
     namespace AssetImporter
     {
-        Mesh Import(const std::filesystem::path& path)
+        Model Import(const std::filesystem::path& path)
         {
-            return ImporterGltf::ImportText(path);
+            return ImporterGltf::Import(path);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace engine
             void update(float dt);
             void onEvent(Event& event);
 
+            void setSpeed(float speed);
             void setPitch(float pitch);
             void setYaw(float yaw);
             void setViewport(std::shared_ptr<ImGuiViewport> viewport);

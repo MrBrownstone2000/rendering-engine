@@ -6,6 +6,7 @@
 
 #include <chrono>
 #include <optional>
+#include <sstream>
 
 namespace engine::log
 {

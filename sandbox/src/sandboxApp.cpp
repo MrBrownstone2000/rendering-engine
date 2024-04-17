@@ -47,7 +47,8 @@ namespace engine
                 m_mesh = Mesh(std::move(vertices), std::move(indices));
 
                 Shader::setIncludeDirs({ "shaders" });
-                m_shader = std::make_shared<Shader>("vertex_basic.glsl", "frag_basic.glsl");
+                // m_shader = std::make_shared<Shader>("vertex_basic.glsl", "frag_basic.glsl");
+                m_shader = std::make_shared<Shader>("vertex_basic.glsl", "frag_debug.glsl");
 
                 renderer::setClearColor(0.2, 0.2, 0.2);
 
@@ -55,10 +56,12 @@ namespace engine
                 cameraModel->setPosition({0, 0, -1});
                 m_camera = PerspectiveCameraController(cameraModel);
                 m_camera.setYaw(90);
+                m_camera.setSpeed(1);
 
                 m_texture_smiley = std::make_shared<Texture>("data/smiley.png");
                 m_texture_window = std::make_shared<Texture>("data/window.png");
-                AssetImporter::Import("data/robot.gltf");
+                m_model = AssetImporter::Import("data/robot.gltf");
+                // m_model = AssetImporter::Import("data/cube.gltf");
 
                 m_model1 = glm::mat4(1);
                 m_model2 = glm::translate(glm::mat4(1), glm::vec3(1, 0, 1));
@@ -76,6 +79,7 @@ namespace engine
             {
                 if (m_viewport->isFocused())
                     m_camera.update(dt);
+                m_model1 = glm::rotate(m_model1, dt, glm::vec3(0, 1, 0));
             }
 
             void onNotify() override
@@ -88,8 +92,9 @@ namespace engine
                 m_shader->bind();
                 renderer::beginFrame(m_fb, m_camera.getCamera());
 
-                renderer::submit(m_shader, m_texture_smiley, m_model2, m_mesh);
-                renderer::submit(m_shader, m_texture_window, m_model1, m_mesh);
+                // renderer::submit(m_shader, m_texture_smiley, m_model2, m_mesh);
+                // renderer::submit(m_shader, m_texture_window, m_model1, m_mesh);
+                renderer::submit(m_shader, m_texture_window, m_model1, m_model);
 
                 renderer::endFrame();
             }
@@ -110,6 +115,8 @@ namespace engine
             std::shared_ptr<Framebuffer> m_fb;
             Mesh m_mesh;
             glm::mat4 m_model1, m_model2;
+
+            Model m_model;
 
             PerspectiveCameraController m_camera;
 

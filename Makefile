@@ -16,8 +16,11 @@ build:
 clean:
 	@rm -rf install build
 
-runTest:
+runTest: build
 	@build/test/EngineTest
 
-runSandbox:
+runSandbox: build
 	@build/sandbox/Sandbox
+
+renderdoc: build
+	@qrenderdoc renderdoc-settings.cap
